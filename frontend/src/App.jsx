@@ -24,7 +24,7 @@ function App() {
             <Route element={<Protected />}>
               <Route path="/newproyect" element={<NewProyectPage />} />
               <Route path="/proyects" element={<ProyectFormPage />} />
-              <Route path="/proyect/:id" element={<ProyectFormPage />} />
+              <Route path="/proyect/:id" element={<NewProyectPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

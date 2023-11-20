@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   const singin = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res);
+      console.log(res.data);
       setIsAuthenticated(true);
       setUser(res.data);
     } catch (error) {
@@ -99,7 +99,8 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         errors,
         singin,
-        logout
+        logout,
+        setUser,
       }}
     >
       {children}

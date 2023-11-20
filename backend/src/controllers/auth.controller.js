@@ -92,7 +92,8 @@ export const verifyToken = async (req, res) => {
 
     return res.json({
       id: userFound._id,
-      username: userFound.username,
+      name: userFound.name,
+      lastname: userFound.lastname,
       email: userFound.email,
     });
   });

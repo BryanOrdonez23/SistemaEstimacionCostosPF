@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { createProyectRequest, getProyectsRequest } from "../api/proyect";
+import {
+  createProyectRequest,
+  getProyectsRequest,
+  getProyectRequest,
+  updateProyectRequest,
+  deleteProyectRequest,
+} from "../api/proyect";
 export const ProyectContext = createContext();
 
 export const useProyect = () => {
@@ -21,13 +27,45 @@ export const ProyectProvider = ({ children }) => {
       setProyects(res.data);
       console.log(res.data);
     } catch (error) {
-        console.error(error);
+      console.error(error);
+    }
+  };
+
+  const getProyect = async (id) => {
+    try {
+      const res = await getProyectRequest(id);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateProyect = async (id, proyect) => {
+    try {
+      const res = await updateProyectRequest(id, proyect);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteProyect = async (id) => {
+    try {
+      const res = await deleteProyectRequest(id);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const createProyect = async (proyect) => {
-    const res = await createProyectRequest(proyect);
-    console.log(res);
+    try {
+      const res = await createProyectRequest(proyect);
+      console.log(res);
+      getProyects();
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <ProyectContext.Provider
@@ -35,6 +73,9 @@ export const ProyectProvider = ({ children }) => {
         proyects,
         createProyect,
         getProyects,
+        getProyect,
+        updateProyect,
+        deleteProyect,
       }}
     >
       {children}

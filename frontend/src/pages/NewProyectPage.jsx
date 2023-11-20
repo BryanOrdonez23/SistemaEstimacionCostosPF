@@ -1,29 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useProyect } from "../context/ProyectContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function NewProyectPage() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
+  const params = useParams();
 
   const { user } = useAuth();
-  const { proyects, createProyect, getProyects } = useProyect();
+  const { proyects, createProyect, getProyects, getProyect, updateProyect } =
+    useProyect();
 
   //console.log(proyects);
+  useEffect(() => {
+    async function loadProyect() {
+      if (params.id) {
+        const proyectfound = await getProyect(params.id);
+        console.log(proyectfound);
+        setValue("title", proyectfound.title);
+        setValue("description", proyectfound.description);
+        setValue("category", proyectfound.category);
+        setValue("technology", proyectfound.technology);
+      }
+    }
+    loadProyect();
+  }, []);
 
   const onSubmit = handleSubmit(async (data) => {
-    createProyect(data);
+    if (params.id) {
+      await updateProyect(params.id, data);
+    } else {
+      createProyect(data);
+    }
     getProyects();
-
     navigate("/proyects");
   });
 
   return (
     <div>
       <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold mb-6 text-black">Crear Nuevo Proyecto de Estimación</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-black">
+          Crear Nuevo Proyecto de Estimación
+        </h2>
         <form onSubmit={onSubmit}>
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
@@ -70,7 +90,22 @@ function NewProyectPage() {
               </option>
             </select>
           </div>
-
+          <div className="mb-4">
+            <label className="block text-gray-600 text-sm font-medium mb-2">
+              Tecnologías
+            </label>
+            <select
+              id="technology"
+              name="technology"
+              className="w-full border p-2 rounded text-black"
+              {...register("technology", { required: true })}
+            >
+              <option value="">Seleccione una tecnologia</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="Python">Python</option>
+              <option value="Php">php</option>
+            </select>
+          </div>
           <button
             type="submit"
             className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
