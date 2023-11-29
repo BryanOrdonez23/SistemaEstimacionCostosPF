@@ -47,7 +47,7 @@ function ProyectFormPage() {
                 <td className="py-2 px-4 border-b">{new Date (proyect.updatedAt).toLocaleDateString()}</td>
                 <td className="py-2 px-4 border-b">
                   <Link
-                    to={`/details/${proyect._id}`}
+                    to={`/fases/${proyect._id}`}
                     className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded border border-blue-600 mr-2"
                   >
                     Detalles

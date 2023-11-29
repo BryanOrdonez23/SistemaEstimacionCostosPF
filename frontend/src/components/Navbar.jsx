@@ -8,7 +8,10 @@ export function Navbar() {
     <nav className="bg-zinc-700 py-4 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 rounded-lg shadow-md">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white">
-          <Link to={isAuthenticated ? "/proyects" : "/"}>
+          <Link
+            to={isAuthenticated ? "/proyects" : "/"}
+            className="transition duration-300 hover:text-gray-300"
+          >
             UNL - Estimación de Costos por Puntos de Función
           </Link>
         </h1>
@@ -21,7 +24,11 @@ export function Navbar() {
               <li>
                 <Link
                   to="/newproyect"
-                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-1 rounded-sm"
+                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-2 rounded-md
+                             sm:inline-block sm:px-4 sm:py-2
+                             md:inline-block md:px-6 md:py-3
+                             lg:inline-block lg:px-8 lg:py-3
+                             xl:inline-block xl:px-10 xl:py-3"
                 >
                   Nuevo Proyecto
                 </Link>
@@ -41,7 +48,7 @@ export function Navbar() {
               <li>
                 <Link
                   to="/login"
-                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-1 rounded-sm"
+                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-2 rounded-sm"
                 >
                   Iniciar Sesión
                 </Link>
@@ -49,9 +56,9 @@ export function Navbar() {
               <li>
                 <Link
                   to="/register"
-                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-1 rounded-sm"
+                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-2 rounded-sm"
                 >
-                  Registrarce
+                  Registrarse
                 </Link>
               </li>
             </>

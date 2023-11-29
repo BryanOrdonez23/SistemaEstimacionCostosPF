@@ -15,13 +15,12 @@ const funcionesSchema = new mongoose. Schema ({
         type: String,
         required: true,
     },
-    proyecto:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Proyect',
-        required: true
-    }
+    cantidad:{
+        type: Number,
+        required: true,
+    },
 },{
     timestamps: true
 })
 
-export default mongoose.model('Funciones', funcionesSchema)
+export default mongoose.model('Functions', funcionesSchema)

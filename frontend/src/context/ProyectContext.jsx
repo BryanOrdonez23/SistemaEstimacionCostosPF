@@ -20,6 +20,7 @@ export const useProyect = () => {
 
 export const ProyectProvider = ({ children }) => {
   const [proyects, setProyects] = useState([]);
+  const [proyect, setProyect] = useState([]);
 
   const getProyects = async () => {
     try {
@@ -34,6 +35,7 @@ export const ProyectProvider = ({ children }) => {
   const getProyect = async (id) => {
     try {
       const res = await getProyectRequest(id);
+      setProyect(res.data);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -76,6 +78,7 @@ export const ProyectProvider = ({ children }) => {
         getProyect,
         updateProyect,
         deleteProyect,
+        proyect,
       }}
     >
       {children}
