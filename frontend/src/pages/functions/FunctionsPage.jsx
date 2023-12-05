@@ -1,13 +1,13 @@
 import React from "react";
-import { useProyect } from "../context/ProyectContext";
-import { useAuth } from "../context/AuthContext";
+import { useProyect } from "../../context/ProyectContext";
+import { useAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useFunctions } from "../context/FunctionsContext";
+import { useFunctions } from "../../context/FunctionsContext";
 function FunctionsPage() {
   const { user } = useAuth();
   const { getProyect, proyect } = useProyect();
-  const { getFunctions, funciones } = useFunctions();
+  const { getFunctions, funciones, deleteFunctions } = useFunctions();
   const params = useParams();
 
   useEffect(() => {
@@ -15,12 +15,21 @@ function FunctionsPage() {
       if (params.id) {
         const res = await getFunctions(params.id);
         await getProyect(params.id);
-        console.log(res);
       }
-      console.log(funciones);
     }
     loadFunciones();
   }, []);
+
+  const handleDeleteFunctions = async (proyectid, functionid) => {
+    try {
+      console.log(proyectid, functionid);
+      await deleteFunctions(proyectid, functionid);
+      //const res = await getFunctions(proyectid);
+      //await getProyect(proyectid);
+    } catch (error) {
+      console.error("Error al eliminar el proyecto:", error);
+    }
+  };
 
   return (
     <div className="container mx-auto my-8 bg-zinc-700 text-white p-8 rounded-md">
@@ -59,13 +68,15 @@ function FunctionsPage() {
                 <td className="py-2 px-4 border-b">{funcion.cantidad}</td>
                 <td className="py-2 px-4 border-b">
                   <Link
-                    to={`/proyect/${funcion._id}`}
+                    to={`/updatefuncion/${proyect._id}/${funcion._id}`}
                     className="bg-yellow-500 hover:bg-yellow-700 text-white px-2 py-1 rounded border border-yellow-600 mr-2"
                   >
                     Editar
                   </Link>
                   <button
-                    onClick={() => handleDeleteProyect(funcion._id)}
+                    onClick={() =>
+                      handleDeleteFunctions(proyect._id, funcion._id)
+                    }
                     className="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded border border-red-600"
                   >
                     Eliminar

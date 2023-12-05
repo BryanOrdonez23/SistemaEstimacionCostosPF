@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/AuthContext";
-import { useProyect } from "../context/ProyectContext";
-import { useFunctions } from "../context/FunctionsContext";
+import { useAuth } from "../../context/AuthContext";
+import { useProyect } from "../../context/ProyectContext";
+import { useFunctions } from "../../context/FunctionsContext";
 import { useNavigate, useParams } from "react-router-dom";
 
 

@@ -10,9 +10,13 @@ import NewProyectPage from "./pages/NewProyectPage";
 import ProyectFormPage from "./pages/Dashboard";
 import Protected from "./Protected";
 import { Navbar } from "./components/Navbar";
-import Fases from "./pages/Fases";
-import Funciones from "./pages/FunctionsPage";
-import NewFuncionPage from "./pages/NewFunctionPage";
+import Fases from "./pages/functions/Fases";
+import Funciones from "./pages/functions/FunctionsPage";
+import NewFuncionPage from "./pages/functions/NewFunctionPage";
+import UpdateFuncionPage from "./pages/functions/UpdateFunctionPage";
+
+//pf
+import PuntosDeFuncionCalculadora from "./pages/pf/CalcuiloPFSA";
 
 function App() {
   return (
@@ -29,9 +33,14 @@ function App() {
                 <Route path="/newproyect" element={<NewProyectPage />} />
                 <Route path="/proyects" element={<ProyectFormPage />} />
                 <Route path="/proyect/:id" element={<NewProyectPage />} />
+        
                 <Route path="/fases/:id" element={<Fases />} />
                 <Route path="/funciones/:id" element={<Funciones />} />
                 <Route path="/newfunciones/:id" element={<NewFuncionPage />} />
+                <Route path="/updatefuncion/:id1/:id2" element={<UpdateFuncionPage />} />
+
+                
+                <Route path="/calculopfsa/:id" element={<PuntosDeFuncionCalculadora />} />
               </Route>
             </Routes>
           </BrowserRouter>

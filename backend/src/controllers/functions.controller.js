@@ -105,10 +105,16 @@ export const updateFunctions = async (req, res) => {
       , complejidad: complejidad
       , cantidad: cantidad });
 
-    await functionnew.save();
+    //await functionnew.save();
 
     // Retornar la función actualizada en la respuesta JSON
-    res.json(functionnew);
+    const functionupdate = await Functions.findByIdAndUpdate(id2, req.body, {
+      new: true,
+    });
+    if (!functionupdate)
+      return res.status(404).json({ message: "Funcion no encontrado." });
+    console.log(functionupdate);
+    res.json(functionupdate);
 
   } catch (error) {
     console.error(error);

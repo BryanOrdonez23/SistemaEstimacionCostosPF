@@ -5,6 +5,8 @@ import authRoutes from "./routes/auth.routes.js";
 import proyectRoutes from './routes/proyect.routes.js';
 import proyectShareRoutes from './routes/share.routes.js';
 import proyectFunctionRoutes from './routes/functions.routes.js';
+import adminRoutes from './routes/admin.routes.js';
+import pfroutes from './routes/pf.routes.js';
 import cors from 'cors';
 const app = express();
 app.use(cors({
@@ -19,6 +21,9 @@ app.use("/api", authRoutes);
 app.use("/api", proyectRoutes);
 app.use("/api", proyectShareRoutes);
 app.use("/api", proyectFunctionRoutes);
+app.use("/api", pfroutes);
+app.use("/admin", adminRoutes);
+
 
 
 export default app;

@@ -1,7 +1,7 @@
 // Fases.js
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useProyect } from '../context/ProyectContext';
+import { useProyect } from '../../context/ProyectContext';
 import { useParams } from 'react-router-dom';
 
 
@@ -26,7 +26,7 @@ const Fases = () => {
     async function loadFunciones() {
       if (params.id) {
         const res = await getProyect(params.id);
-        console.log(proyect);
+        console.log(res);
       }
     }
     loadFunciones();
@@ -42,7 +42,7 @@ const Fases = () => {
       <Fase
         title="Fase 2"
         description="Calculo de puntos de función sin el ajuste"
-        path="/fase2"
+        path={`/calculopfsa/${proyect._id}`}
       />
       <Fase
         title="Fase 3"
