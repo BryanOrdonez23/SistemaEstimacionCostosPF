@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProyect } from '../../context/ProyectContext';
+import {useEstimacionPF} from '../../context/EstimacionPFContext';
 import { useParams } from 'react-router-dom';
 
 
@@ -21,12 +22,14 @@ const Fase = ({ title, description, path }) => {
 const Fases = () => {
   const params = useParams();
   const { getProyect, proyect } = useProyect();
+  const {setPuntosFuncionTotal} = useEstimacionPF();
 
   useEffect(() => {
     async function loadFunciones() {
       if (params.id) {
         const res = await getProyect(params.id);
         console.log(res);
+        setPuntosFuncionTotal(0);
       }
     }
     loadFunciones();
@@ -47,7 +50,7 @@ const Fases = () => {
       <Fase
         title="Fase 3"
         description="Calculo de puntos de función con el ajuste"
-        path="/fase3"
+        path= {`/fasePFAjustado/${proyect._id}`}
       />
       <Fase
         title="Fase 4"

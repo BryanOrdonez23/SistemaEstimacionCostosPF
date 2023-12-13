@@ -1,4 +1,5 @@
 import Proyect from "../models/proyect.model.js";
+import FunctionPoints from "../models/functionPoints.model.js";
 
 export const getProyects = async (req, res) => {
   try {
@@ -23,6 +24,7 @@ export const createProyect = async (req, res) => {
       user: req.user.payload.id,
     });
     const proyectSaved = await newProyect.save();
+    await crearEstimacionPF(proyectSaved._id);
     res.json(proyectSaved);
   } catch (error) {
     return res.status(500).json({ message: "Error al crear el proyecto." });
@@ -70,3 +72,22 @@ export const deleteProyect = async (req, res) => {
     return res.status(404).json({ message: "Proyecto no encontrado." });
   }
 };
+
+
+/// utilidad para poder crear la estimacion de puntos de funcion en el proyecto
+
+const crearEstimacionPF = async (id) => {
+  try {
+    const newEstimacionPF = new FunctionPoints({
+      calculoSA: 0,
+      calculoCA: 0,
+      horasPF: 0,
+      proyect: id,
+    }); 
+    const estimacionPF = await newEstimacionPF.save();
+    console.log(estimacionPF);
+  } catch (error) {
+    console.error(error);
+  }
+ 
+}

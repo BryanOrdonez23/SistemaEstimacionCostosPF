@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const functionPointsSchema = new mongoose.Schema({
-  CalculoSA: {
+  calculoSA: {
     type: Number,
     trim: true,
   },
-  CalculoCA: {
+  calculoCA: {
     type: Number,
     trim: true,
   },
-  HorasPF: {
+  horasPF: {
     type: Number,
     trim: true,
   },

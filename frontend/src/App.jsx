@@ -5,6 +5,7 @@ import RegisterPage from "../src/pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import { ProyectProvider } from "./context/ProyectContext";
 import { FunctionsProvider } from "./context/FunctionsContext";
+import { EstimacionPFProvider } from "./context/EstimacionPFContext";
 import Homepage from "../src/pages/Homepage";
 import NewProyectPage from "./pages/NewProyectPage";
 import ProyectFormPage from "./pages/Dashboard";
@@ -17,12 +18,14 @@ import UpdateFuncionPage from "./pages/functions/UpdateFunctionPage";
 
 //pf
 import PuntosDeFuncionCalculadora from "./pages/pf/CalcuiloPFSA";
+import FactoresAjuste from "./pages/pf/FactoresAjuste";
 
 function App() {
   return (
     <AuthProvider>
       <ProyectProvider>
         <FunctionsProvider>
+        <EstimacionPFProvider>
           <BrowserRouter>
             <Navbar />
             <Routes>
@@ -41,9 +44,11 @@ function App() {
 
                 
                 <Route path="/calculopfsa/:id" element={<PuntosDeFuncionCalculadora />} />
+                <Route path="/fasePFAjustado/:id" element={<FactoresAjuste />} />
               </Route>
             </Routes>
           </BrowserRouter>
+          </EstimacionPFProvider>
         </FunctionsProvider>
       </ProyectProvider>
     </AuthProvider>
