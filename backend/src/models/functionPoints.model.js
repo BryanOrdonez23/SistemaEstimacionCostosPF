@@ -9,6 +9,10 @@ const functionPointsSchema = new mongoose.Schema({
     type: Number,
     trim: true,
   },
+  SumaFA: {
+    type: Number,
+    trim: true,
+  },
   horasPF: {
     type: Number,
     trim: true,

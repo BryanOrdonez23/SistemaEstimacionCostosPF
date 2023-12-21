@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const involucradosProyectoSchema = new mongoose.Schema({      
     nombre: {
         type: String,
-        ref: "User",
         required: true,
     },
     rol:{

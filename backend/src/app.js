@@ -7,6 +7,8 @@ import proyectShareRoutes from './routes/share.routes.js';
 import proyectFunctionRoutes from './routes/functions.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import pfroutes from './routes/pf.routes.js';
+import involucradosRoutes from './routes/involucrados.routes.js';
+import otrosGastos from './routes/otrosGastos.routes.js';
 import cors from 'cors';
 const app = express();
 app.use(cors({
@@ -23,7 +25,7 @@ app.use("/api", proyectShareRoutes);
 app.use("/api", proyectFunctionRoutes);
 app.use("/api", pfroutes);
 app.use("/admin", adminRoutes);
-
-
+app.use("/api", involucradosRoutes);
+app.use("/api", otrosGastos);
 
 export default app;

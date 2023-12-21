@@ -2,72 +2,72 @@ import mongoose from "mongoose";
 
 const valorFactoresAjusteSchema = mongoose.Schema(
   {
-    ValorFA1: {
+    valorFA1: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA2: {
+    valorFA2: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA3: {
+    valorFA3: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA4: {
+    valorFA4: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA5: {
+    valorFA5: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA6: {
+    valorFA6: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA7: {
+    valorFA7: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA8: {
+    valorFA8: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA9: {
+    valorFA9: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA10: {
+    valorFA10: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA11: {
+    valorFA11: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA12: {
+    valorFA12: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA13: {
+    valorFA13: {
       type: Number,
       required: true,
       trim: true,
     },
-    ValorFA14: {
+    valorFA14: {
       type: Number,
       required: true,
       trim: true,

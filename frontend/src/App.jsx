@@ -19,7 +19,8 @@ import UpdateFuncionPage from "./pages/functions/UpdateFunctionPage";
 //pf
 import PuntosDeFuncionCalculadora from "./pages/pf/CalcuiloPFSA";
 import FactoresAjuste from "./pages/pf/FactoresAjuste";
-
+import CalculoPFCA from "./pages/pf/CalculoPFCA";
+import EsfuerzoPF from "./pages/pf/EsfuerzoPF";
 function App() {
   return (
     <AuthProvider>
@@ -44,7 +45,9 @@ function App() {
 
                 
                 <Route path="/calculopfsa/:id" element={<PuntosDeFuncionCalculadora />} />
-                <Route path="/fasePFAjustado/:id" element={<FactoresAjuste />} />
+                <Route path="/fasePFAjustado/:id" element={<FactoresAjuste />} />                
+                <Route path="/calculopfca/:id" element={<CalculoPFCA />} />
+                <Route path="/esfuerzopf/:id" element={<EsfuerzoPF />} />
               </Route>
             </Routes>
           </BrowserRouter>

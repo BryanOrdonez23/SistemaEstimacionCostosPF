@@ -39,7 +39,7 @@ export const createFunctions = async (req, res) => {
     if (!proyecto) {
       return res.status(404).json({ error: "Proyecto no encontrado" });
     }
-    console.log(proyecto);
+    //console.log(proyecto);
 
     const nuevaFuncion = new Functions({
       funcionalidad: req.body.funcionalidad,

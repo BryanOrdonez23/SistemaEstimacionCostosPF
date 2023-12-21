@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { calcuarPFSARequest, getFactoresAjusteRequest } from "../api/pf";
+import { sumaValorFactoresAjusteRequest, getPuntosFuncionRequest,calcuarPFSARequest, getFactoresAjusteRequest, getValorFactoresAjusteRequest, createValorFactoresAjusteRequest } from "../api/pf";
 
 export const EstimacionPFContext = createContext();
 
@@ -16,6 +16,9 @@ export const useEstimacionPF = () => {
 export const EstimacionPFProvider = ({ children }) => {
   const [puntosFuncionTotal, setPuntosFuncionTotal] = useState(0);
   const [factoresAjuste, setFactoredAjuste] = useState([]);
+  const [valorfactoresAjuste, setvalorfactoresAjuste ] = useState([]);
+  const [datosPuntosFuncion, setdatosPuntosFuncion] = useState([]);
+
 
   const pfsaCalculo = async (id) => {
     try {
@@ -36,6 +39,45 @@ export const EstimacionPFProvider = ({ children }) => {
     }
   }
 
+  const getValorFactoresAjuste = async (id) => {
+    try {
+      const response = await getValorFactoresAjusteRequest(id);
+      setvalorfactoresAjuste(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const createValorFactoresAjuste = async (id, valor) => {
+    try {
+      console.log(valor);
+      const response = await createValorFactoresAjusteRequest(id, valor);
+      setvalorfactoresAjuste(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getPuntosFuncion = async (id) => {
+    try {
+      const response = await getPuntosFuncionRequest(id);
+      setdatosPuntosFuncion(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const sumaValorFactoresAjuste = async (id) => {
+    try {
+      const response = await sumaValorFactoresAjusteRequest(id);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <EstimacionPFContext.Provider
       value={{
@@ -43,7 +85,13 @@ export const EstimacionPFProvider = ({ children }) => {
         pfsaCalculo,
         setPuntosFuncionTotal,
         factoresAjuste,
-        getFactoresAjuste
+        getFactoresAjuste,
+        getValorFactoresAjuste,
+        createValorFactoresAjuste,
+        valorfactoresAjuste,
+        datosPuntosFuncion,
+        getPuntosFuncion,
+        sumaValorFactoresAjuste
       }}
     >
       {children}

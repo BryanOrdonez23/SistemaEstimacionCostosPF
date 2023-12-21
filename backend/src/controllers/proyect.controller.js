@@ -81,6 +81,7 @@ const crearEstimacionPF = async (id) => {
     const newEstimacionPF = new FunctionPoints({
       calculoSA: 0,
       calculoCA: 0,
+      SumaFA:0,
       horasPF: 0,
       proyect: id,
     }); 
