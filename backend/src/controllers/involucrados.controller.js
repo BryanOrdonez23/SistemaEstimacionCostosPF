@@ -152,4 +152,111 @@ export const eliminarInvolucrado = async (req, res) => {
       }
 };
 
-export const calcularGastoInvolucrados = async (req, res) => {};
+export const sumatoriaCostosInvolucrados = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pf = await FunctionPoints.findOne({ proyect: id });
+    if (!pf) {
+      return res.status(404).json({ error: "Puntos de funcion, no encontrado" });
+    }
+    const involucradosArray = pf.involucrados;
+    if (!involucradosArray || involucradosArray.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se encontraron involucraedos" });
+    }
+    const foundinvolucrados = await InvolucradosProyecto.find({
+      _id: { $in: involucradosArray },
+    });
+    if (foundinvolucrados.length === 0) {
+      return res
+        .status(404)
+        .json({
+          message: "No se encontraron funciones con los IDs proporcionados.",
+        });
+    }
+    let sumatoria = 0;
+    foundinvolucrados.forEach((involucrado) => {
+      sumatoria += involucrado.sueldo;
+    });
+    res.status(200).json({ sumatoria });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener el involucrado" });
+  }
+}
+
+
+export const promedioSueldosInvolucrados = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pf = await FunctionPoints.findOne({ proyect: id });
+    
+    if (!pf) {
+      return res.status(404).json({ error: "Puntos de función no encontrado" });
+    }
+
+    const involucradosArray = pf.involucrados;
+
+    if (!involucradosArray || involucradosArray.length === 0) {
+      return res.status(404).json({ message: "No se encontraron involucrados" });
+    }
+
+    const foundInvolucrados = await InvolucradosProyecto.find({
+      _id: { $in: involucradosArray },
+    });
+
+    if (foundInvolucrados.length === 0) {
+      return res.status(404).json({
+        message: "No se encontraron involucrados con los IDs proporcionados.",
+      });
+    }
+
+    let sumatoria = 0;
+
+    foundInvolucrados.forEach((involucrado) => {
+      sumatoria += involucrado.sueldo;
+    });
+
+    const promedio = sumatoria / foundInvolucrados.length;
+
+    res.status(200).json({ promedio });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener el involucrado" });
+  }
+};
+
+export const contarInvolucrados = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pf = await FunctionPoints.findOne({ proyect: id });
+
+    if (!pf) {
+      return res.status(404).json({ error: "Puntos de función no encontrado" });
+    }
+
+    const involucradosArray = pf.involucrados;
+
+    if (!involucradosArray || involucradosArray.length === 0) {
+      return res.status(404).json({ message: "No se encontraron involucrados" });
+    }
+
+    const foundInvolucrados = await InvolucradosProyecto.find({
+      _id: { $in: involucradosArray },
+    });
+
+    if (foundInvolucrados.length === 0) {
+      return res.status(404).json({
+        message: "No se encontraron involucrados con los IDs proporcionados.",
+      });
+    }
+
+    const numeroInvolucrados = foundInvolucrados.length;
+
+    res.status(200).json({ numeroInvolucrados });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener el número de involucrados" });
+  }
+};

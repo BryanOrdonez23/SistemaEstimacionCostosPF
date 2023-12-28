@@ -8,3 +8,5 @@ export const getValorFactoresAjusteRequest = async (id) => axios.get(`/getvalorf
 export const createValorFactoresAjusteRequest = async (id, valorFactoresAjuste) => axios.post(`/createvalorfactoresajuste/${id}`, valorFactoresAjuste);
 export const getPuntosFuncionRequest = async (id) => axios.get(`/getPuntosFuncion/${id}`);
 export const sumaValorFactoresAjusteRequest = async (id) => axios.get(`/sumaValorFactoresAjsute/${id}`);
+
+export const actualizarDatosPFRequest = async (id, datosPF) => axios.post(`/actualizarDatosPF/${id}`, datosPF);

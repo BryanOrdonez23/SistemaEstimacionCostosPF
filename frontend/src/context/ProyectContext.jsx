@@ -6,6 +6,8 @@ import {
   updateProyectRequest,
   deleteProyectRequest,
 } from "../api/proyect";
+
+import {createProyectSharedRequest, getProyectsSharedRequest} from "../api/shared";
 export const ProyectContext = createContext();
 
 export const useProyect = () => {
@@ -18,9 +20,12 @@ export const useProyect = () => {
   return context;
 };
 
+
+
 export const ProyectProvider = ({ children }) => {
   const [proyects, setProyects] = useState([]);
   const [proyect, setProyect] = useState([]);
+  const [proyectShared, setProyectShared] = useState([]);
 
   const getProyects = async () => {
     try {
@@ -69,6 +74,29 @@ export const ProyectProvider = ({ children }) => {
       console.error(error);
     }
   };
+
+  const getProyectsShared = async () => {
+    try {
+      const res = await getProyectsSharedRequest();
+      setProyectShared(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+  const createProyectShared = async (proyect) => {
+    try {
+      const res = await createProyectSharedRequest(proyect);
+      console.log(res);
+      getProyectsShared();
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <ProyectContext.Provider
       value={{
@@ -79,6 +107,9 @@ export const ProyectProvider = ({ children }) => {
         updateProyect,
         deleteProyect,
         proyect,
+        getProyectsShared,
+        proyectShared,
+        createProyectShared
       }}
     >
       {children}

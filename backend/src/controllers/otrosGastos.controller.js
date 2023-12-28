@@ -40,7 +40,7 @@ export const getOtrosGastos = async (req, res) => {
     if (!otrosGastosArray || otrosGastosArray.length === 0) {
       return res
         .status(404)
-        .json({ message: "No se encontraron involucraedos" });
+        .json({ message: "No se encontraron otros gastos" });
     }
 
     const foundotrosGastos = await OtrosGastos.find({
@@ -48,10 +48,7 @@ export const getOtrosGastos = async (req, res) => {
     });
     if (foundotrosGastos.length === 0) {
       return res
-        .status(404)
-        .json({
-          message: "No se encontraron funciones con los IDs proporcionados.",
-        });
+        .status(404).json({message: "No se encontraron otros gastos con los IDs proporcionados.",});
     }
 
     // Retornar las funciones encontradas en la respuesta JSON
@@ -148,5 +145,42 @@ export const eliminarOtrosGastos = async (req, res) => {
         return res.status(500).json({ message: 'Error interno del servidor.' });
       }
 };
+
+export const sumatoriaCostosOtrosGastos = async (req, res) => {
+    try {
+      const IDproyecto = req.params.id;
+      const pf = await FunctionPoints.findOne({ proyect: IDproyecto });
+  
+      const otrosGastosArray = pf.otrosGastos;
+      console.log(otrosGastosArray);
+      if (!pf) {
+        return res.status(404).json({ message: "pf no encontrados." });
+      }
+      if (!otrosGastosArray || otrosGastosArray.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No se encontraron otros gastos" });
+      }
+  
+      const foundotrosGastos = await OtrosGastos.find({
+        _id: { $in: otrosGastosArray },
+      });
+      if (foundotrosGastos.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No se encontraron otros gastos con los IDs proporcionados." });
+      }
+  
+      // Calcular la sumatoria de los valores del atributo "costo"
+      const totalCosto = foundotrosGastos.reduce((acc, otroGasto) => acc + otroGasto.costo, 0);
+  
+      // Retornar las funciones encontradas y la sumatoria en la respuesta JSON
+      res.json({ totalCosto });
+    } catch (error) {
+      console.error(error);
+      return res.status(404).json({ error });
+    }
+  };
+
 
 

@@ -1,8 +1,8 @@
 // Fases.js
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useProyect } from "../../context/ProyectContext";
-import { useEstimacionPF } from "../../context/EstimacionPFContext";
+import { useProyect } from "../context/ProyectContext";
+import { useEstimacionPF } from "../context/EstimacionPFContext";
 import { useParams } from "react-router-dom";
 
 const Fase = ({ title, description, path }) => {
@@ -41,7 +41,7 @@ const Fases = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4 w-full max-w-8xl">
         <Fase
           title="Fase 1"
-          description="Agregar funcionalidades del software"
+          description="Agregar las funcionalidades o requerimientos del software"
           path={`/funciones/${proyect._id}`}
         />
         <Fase
@@ -64,15 +64,15 @@ const Fases = () => {
           description="Calculo del esfuerzo y presunto costo del software"
           path={`/esfuerzopf/${proyect._id}`}
         />
-                <Fase
-          title="Fase 5"
-          description="Calculo del esfuerzo y presunto costo del software"
-          path={`/esfuerzopf/${proyect._id}`}
+        <Fase
+          title="Fase 6"
+          description="Cálculaar el presupuesto del proyecto"
+          path={`/presupuesto/${proyect._id}`}
         />
-                <Fase
-          title="Fase 5"
-          description="Calculo del esfuerzo y presunto costo del software"
-          path={`/esfuerzopf/${proyect._id}`}
+        <Fase
+          title="Fase 7"
+          description="Descargar Informe de estimación de costos"
+          path={`/informe/${proyect._id}`}
         />
       </div>
     </div>

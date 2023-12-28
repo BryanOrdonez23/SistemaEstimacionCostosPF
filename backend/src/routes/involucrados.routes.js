@@ -1,7 +1,7 @@
 import {Router} from 'express';  
 
 
-import {crearInvolucrado, getInvolucrados, eliminarInvolucrado, getInvolucrado,  actualizarInvolucrado} from "../controllers/involucrados.controller.js";
+import {contarInvolucrados, promedioSueldosInvolucrados, sumatoriaCostosInvolucrados, crearInvolucrado, getInvolucrados, eliminarInvolucrado, getInvolucrado,  actualizarInvolucrado} from "../controllers/involucrados.controller.js";
 
 
 const router = Router();
@@ -11,5 +11,9 @@ router.get("/involucrado/:id", getInvolucrado);
 router.post("/guardarInvolucrado/:id", crearInvolucrado);
 router.delete("/eliminarInvolucrado/:id1/:id2", eliminarInvolucrado);
 router.put("/actualizarInvolucrado/:id1/:id2", actualizarInvolucrado);
+
+router.get("/sumaInvolucrados/:id", sumatoriaCostosInvolucrados);
+router.get("/promedioSueldosInvolucrados/:id/", promedioSueldosInvolucrados);
+router.get("/contarInvolucrados/:id", contarInvolucrados);
 
 export default router;

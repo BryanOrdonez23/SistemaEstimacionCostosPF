@@ -29,8 +29,8 @@ const CalcuiloPFSA = () => {
     
     <div className="flex items-center justify-center h-screen flex-col bg-blue-100">
       <br />
-      <div className="max-w-md mb-4 text-center bg-white p-6 rounded-md shadow-md">
-        <h1 className="text-blue-950 text-3xl font-bold mb-4">Puntos de Función sin Ajustar</h1>
+      <div className="max-w-6x1 mb-4 text-center bg-white p-6 rounded-md shadow-md">
+        <h1 className="text-blue-950 text-3xl font-bold mb-4"> Cálculo de Puntos de Función sin Ajustar</h1>
   
         <button
           className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded w-full transition-transform transform-gpu active:scale-95"
@@ -52,8 +52,11 @@ const CalcuiloPFSA = () => {
           </div>
         )}
       </div>
+
+      <h1 className='text-gray-800  text-2xl font-bold mb-4'>Listado de funcionalidades:</h1>
   
-      <div className={`max-w-2xl overflow-x-auto ${funciones.length > 5 ? 'overflow-y-auto max-h-100' : ''} bg-white p-6 rounded-md shadow-md mt-4`}>
+  
+      <div className={`max-w-3x1 overflow-x-auto ${funciones.length > 5 ? 'overflow-y-auto max-h-100' : ''} bg-white p-6 rounded-md shadow-md mt-4`}>
         {funciones.length === 0 ? (
           <h1 className="text-xl mb-4">No hay funciones agregadas</h1>
         ) : (

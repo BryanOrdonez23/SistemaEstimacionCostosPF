@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { authRequired } from "../middlewares/validateToken.js";
 import {
-  createProyect,
-  getProyects
+  createProyectShared,
+  getProyectsShared
 } from "../controllers/shareproyect.controller.js";
 const router = Router();
 
-router.post("/share/:id", authRequired, createProyect);
-router.get("/share", authRequired, getProyects);
+router.post("/share", authRequired, createProyectShared);
+router.get("/share", authRequired, getProyectsShared);
 
 export default router;

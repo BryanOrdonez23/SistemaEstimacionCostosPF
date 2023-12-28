@@ -11,7 +11,6 @@ const otrosGastosSchema = new mongoose.Schema({
     },
     observacion:{
         type: String,
-        required: true,
     }
 },{
     timestamps: true

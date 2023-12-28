@@ -5,7 +5,6 @@ export const getFunctions = async (req, res) => {
   try {
     console.log(req.params.id);
     const proyects = await Proyect.find({
-      user: req.user.payload.id,
       status: true,
       _id: req.params.id,
     }).populate("user");
@@ -17,13 +16,14 @@ export const getFunctions = async (req, res) => {
     if (!funcionesArray || funcionesArray.length === 0) {
       return res.status(404).json({ message: "No se encontraron funciones para este proyecto." });
     }
-
     const foundFunctions = await Functions.find({
       _id: { $in: funcionesArray },
     });
     if (foundFunctions.length === 0) {
       return res.status(404).json({ message: "No se encontraron funciones con los IDs proporcionados." });
     }
+
+
 
     // Retornar las funciones encontradas en la respuesta JSON
     res.json(foundFunctions);

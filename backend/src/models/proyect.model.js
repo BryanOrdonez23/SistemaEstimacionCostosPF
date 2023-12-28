@@ -23,6 +23,10 @@ const proyectSchema = new mongoose. Schema ({
         type: Boolean,
         required: true,
     },
+    keyShared:{
+        type: String,
+        required: true,
+    },
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

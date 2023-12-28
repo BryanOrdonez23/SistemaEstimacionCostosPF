@@ -18,7 +18,7 @@ const CalculoPFCA = () => {
   const handleCalcularPuntos = async () => {
     try {
         setArreglo(datosPuntosFuncion.functionPoints[0].calculoCA);
-        console.log(arreglo);
+        console.log(datosPuntosFuncion.functionPoints[0].calculoCA);
         
     } catch (error) {
       console.error(error);
@@ -27,9 +27,9 @@ const CalculoPFCA = () => {
   return (
     <div className="flex items-center justify-center h-screen flex-col bg-blue-100">
       <br />
-      <div className="max-w-2xl mb-4 text-center bg-white p-6 rounded-md shadow-md">
+      <div className="max-w-6xl mb-4 text-center bg-white p-6 rounded-md shadow-md">
         <h1 className="text-blue-950 text-3xl font-bold mb-4">
-          Puntos de Función sin Ajustar
+          Cálculo de Puntos de Función con Ajuste
         </h1>
 
         <button

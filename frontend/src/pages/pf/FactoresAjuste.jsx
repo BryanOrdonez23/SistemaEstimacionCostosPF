@@ -16,6 +16,7 @@ const FactoresAjuste = () => {
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  
   const handleSuccessClose = () => {
     setShowSuccess(false);
     setSuccessMessage("");

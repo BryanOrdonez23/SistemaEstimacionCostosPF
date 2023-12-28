@@ -232,6 +232,35 @@ export const getFunctionPoints = async (req, res) => {
   }
 }
 
+export const guardaryActualizarDatosPF = async (req, res) => {
+  try {
+    const {diasTrabajados, horasPF, horasDia} = req.body; 
+    const id = req.params.id;
+    const functionPoints = await FunctionPoints.findOne({ proyect: id });
 
+    if (functionPoints) {
+      // Si ya existe, actualiza los campos necesarios
+      functionPoints.diasTrabajados = diasTrabajados; // Ajusta según tus necesidades
+      functionPoints.horasPF = horasPF; // Ajusta según tus necesidades
+      functionPoints.horasDia = horasDia; // Ajusta según tus necesidades
+      // Actualiza otros campos según sea necesario
+
+      if(functionPoints.diasTrabajados > 0 && functionPoints.horasPF > 0 && functionPoints.horasDia > 0){
+        functionPoints.esfuerzo = functionPoints.calculoCA * functionPoints.horasPF;
+        functionPoints.diasEstimados = functionPoints.esfuerzo / functionPoints.horasDia;
+        functionPoints.mesesEstimados = functionPoints.diasEstimados / functionPoints.diasTrabajados;
+      }
+      await functionPoints.save();
+    } else {
+      // Si no existe, puedes manejar este caso según tus necesidades
+      console.error('Documento de FunctionPoints no encontrado para el proyecto con ID:');
+    }
+    res.status(200).json({ functionPoints });
+  } catch (error) {
+    console.error('Error al actualizar FunctionPoints:', error);
+    // Manejar el error según tus necesidades
+  }
+
+}
 
 

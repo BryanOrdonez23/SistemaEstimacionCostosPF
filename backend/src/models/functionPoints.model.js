@@ -9,11 +9,35 @@ const functionPointsSchema = new mongoose.Schema({
     type: Number,
     trim: true,
   },
+  esfuerzo: {
+    type: Number,
+    trim: true,
+  },
   SumaFA: {
     type: Number,
     trim: true,
   },
   horasPF: {
+    type: Number,
+    trim: true,
+  },
+  horasDia: {
+    type: Number,
+    trim: true,
+  },
+  diasTrabajados: {
+    type: Number,
+    trim: true,
+  },
+  diasEstimados: {
+    type: Number,
+    trim: true,
+  },
+  mesesEstimados: {
+    type: Number,
+    trim: true,
+  },
+  presupuesto:{
     type: Number,
     trim: true,
   },

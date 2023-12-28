@@ -11,7 +11,7 @@ import NewProyectPage from "./pages/NewProyectPage";
 import ProyectFormPage from "./pages/Dashboard";
 import Protected from "./Protected";
 import { Navbar } from "./components/Navbar";
-import Fases from "./pages/functions/Fases";
+import Fases from "./pages/Fases";
 import Funciones from "./pages/functions/FunctionsPage";
 import NewFuncionPage from "./pages/functions/NewFunctionPage";
 import UpdateFuncionPage from "./pages/functions/UpdateFunctionPage";
@@ -21,6 +21,29 @@ import PuntosDeFuncionCalculadora from "./pages/pf/CalcuiloPFSA";
 import FactoresAjuste from "./pages/pf/FactoresAjuste";
 import CalculoPFCA from "./pages/pf/CalculoPFCA";
 import EsfuerzoPF from "./pages/pf/EsfuerzoPF";
+import EsfuerzoExplicacion from "./pages/pf/EsfuerzoExplicacion";
+
+// involucrados
+import NewInvolucrados from "./pages/involucrados/NewInvolucrados";
+import InicioInvolucrados from "./pages/involucrados/InicioInvolucrados";
+
+//Otros gastos
+
+import NewOtrosGastos from "./pages/otrosGastos/NewOtrosGastos";
+import InicioOtrosGastos from "./pages/otrosGastos/InicioOtrosGastos";
+
+// presupuesto
+
+import Presupuesto from "./pages/presupuesto/Presupuesto";
+
+
+// compartir
+import Compartir from "./pages/compartir/CompartirProyecto";
+
+// inforeme
+
+import InformeFinal from "./pages/informe/InformeFinal";
+
 function App() {
   return (
     <AuthProvider>
@@ -48,6 +71,23 @@ function App() {
                 <Route path="/fasePFAjustado/:id" element={<FactoresAjuste />} />                
                 <Route path="/calculopfca/:id" element={<CalculoPFCA />} />
                 <Route path="/esfuerzopf/:id" element={<EsfuerzoPF />} />
+                <Route path="/esfuerzoExplicacion/:id" element={<EsfuerzoExplicacion />} />
+
+
+                <Route path="/newinvolucrados/:id" element={<NewInvolucrados />} />
+                <Route path="/updateinvolucrado/:id/:id2" element={<NewInvolucrados />} />
+                <Route path="/involucrados/:id" element={<InicioInvolucrados />} />
+
+
+                <Route path="/newotrosGastos/:id" element={<NewOtrosGastos />} />
+                <Route path="/updateotrosGastos/:id/:id2" element={<NewOtrosGastos />} />
+                <Route path="/otrosGastos/:id" element={<InicioOtrosGastos />} />
+
+                <Route path="/presupuesto/:id" element={<Presupuesto />} />
+
+                <Route path="/compartir" element={<Compartir />} />
+
+                <Route path="/informe/:id" element={<InformeFinal />} />
               </Route>
             </Routes>
           </BrowserRouter>

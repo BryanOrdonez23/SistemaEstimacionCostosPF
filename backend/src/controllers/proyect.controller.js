@@ -21,6 +21,7 @@ export const createProyect = async (req, res) => {
       category,
       technology,
       status: true,
+      keyShared: generarCodigoProyecto(),
       user: req.user.payload.id,
     });
     const proyectSaved = await newProyect.save();
@@ -81,8 +82,14 @@ const crearEstimacionPF = async (id) => {
     const newEstimacionPF = new FunctionPoints({
       calculoSA: 0,
       calculoCA: 0,
+      esfuerzo: 0,
       SumaFA:0,
       horasPF: 0,
+      horasDia: 0,
+      diasTrabajados: 0,
+      diasEstimados: 0,
+      mesesEstimados: 0,
+      presupuesto:0,
       proyect: id,
     }); 
     const estimacionPF = await newEstimacionPF.save();
@@ -91,4 +98,24 @@ const crearEstimacionPF = async (id) => {
     console.error(error);
   }
  
+}
+
+const generarCodigoProyecto = () => {
+  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  const fechaActual = new Date();
+  const diaActual = fechaActual.getDate();
+  const segundosActuales = fechaActual.getSeconds();
+
+  let codigo = '';
+  codigo += String(diaActual).padStart(2, '0'); // Agrega el día actual (asegurando dos dígitos)
+  codigo += String(segundosActuales).padStart(2, '0'); // Agrega los segundos actuales (asegurando dos dígitos)
+
+  // Agrega 6 caracteres alfanuméricos adicionales
+  for (let i = 0; i < 7; i++) {
+    const indice = Math.floor(Math.random() * caracteres.length);
+    codigo += caracteres.charAt(indice);
+  }
+
+  return codigo;
 }
