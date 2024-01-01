@@ -93,7 +93,7 @@ const crearEstimacionPF = async (id) => {
       proyect: id,
     }); 
     const estimacionPF = await newEstimacionPF.save();
-    console.log(estimacionPF);
+    //console.log(estimacionPF);
   } catch (error) {
     console.error(error);
   }
