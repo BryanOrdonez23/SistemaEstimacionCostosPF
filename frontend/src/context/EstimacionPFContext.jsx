@@ -235,7 +235,6 @@ const calculoPresupuesto = async (nd, cm,  ps, og) => {
   const calculo = (nd * cm * ps) + og;
 
   return calculo;
-
 }
 
 

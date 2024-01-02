@@ -52,7 +52,6 @@ export const calcularPuntosDeFuncionsinAjuste = async (req, res) => {
     res.status(500).json({ error: 'Error al calcular los Puntos de Función.' });
   }
 };
- 
 //
 const actualizarFunctionPoints = async (id, puntosFuncionTotal) => {
   try {
@@ -170,12 +169,9 @@ export const createValorFactoresAjuste = async (req, res) => {
     const { FA1, FA2, FA3, FA4, FA5, FA6, FA7, FA8, FA9, FA10, FA11, FA12, FA13, FA14 } = req.body;
 
     const idproyecto = req.params.id;
-
-    // Buscar si ya existe un registro para el proyecto
     const existingRegistro = await ValorFactoresAjuste.findOne({ proyect: idproyecto });
 
     if (existingRegistro) {
-      // Ya existe un registro, actualiza los valores existentes
       existingRegistro.valorFA1 = parseInt(FA1, 10);
       existingRegistro.valorFA2 = parseInt(FA2, 10);
       existingRegistro.valorFA3 = parseInt(FA3, 10);
@@ -194,7 +190,6 @@ export const createValorFactoresAjuste = async (req, res) => {
       const updatedRegistro = await existingRegistro.save();
       res.status(200).json({ valorFactoresAjuste: updatedRegistro });
     } else {
-      // No existe un registro, crea uno nuevo
       const newValorFactoresAjuste = new ValorFactoresAjuste({
         valorFA1: parseInt(FA1, 10),
         valorFA2: parseInt(FA2, 10),
@@ -262,5 +257,4 @@ export const guardaryActualizarDatosPF = async (req, res) => {
   }
 
 }
-
 

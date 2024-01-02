@@ -53,6 +53,7 @@ export const updateProyect = async (req, res) => {
     return res.status(404).json({ message: "Proyecto no encontrado." });
   }
 };
+
 //export const deleteProyect = async (req, res) => {
  // const proyect = await Proyect.findByIdAndDelete(req.params.id);
   //if (!proyect)

@@ -27,6 +27,7 @@ export const crearInvolucrado = async (req, res) => {
     res.status(500).json({ error: "Error al crear el involucrado" });
   }
 };
+
 export const getInvolucrados = async (req, res) => {
   try {
     const IDproyecto = req.params.id;

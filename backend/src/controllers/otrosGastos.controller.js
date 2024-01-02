@@ -31,7 +31,6 @@ export const getOtrosGastos = async (req, res) => {
   try {
     const IDproyecto = req.params.id;
     const pf = await FunctionPoints.findOne({ proyect: IDproyecto });
-
     const otrosGastosArray = pf.otrosGastos;
     console.log(otrosGastosArray);
     if (!pf) {
@@ -42,7 +41,6 @@ export const getOtrosGastos = async (req, res) => {
         .status(404)
         .json({ message: "No se encontraron otros gastos" });
     }
-
     const foundotrosGastos = await OtrosGastos.find({
       _id: { $in: otrosGastosArray },
     });
@@ -50,8 +48,6 @@ export const getOtrosGastos = async (req, res) => {
       return res
         .status(404).json({message: "No se encontraron otros gastos con los IDs proporcionados.",});
     }
-
-    // Retornar las funciones encontradas en la respuesta JSON
     res.json(foundotrosGastos);
   } catch (error) {
     console.error(error);
@@ -73,8 +69,6 @@ export const getOtroGasto = async (req, res) => {
 export const actualizarOtrosGastos = async (req, res) => {
     try {
         const { id1, id2 } = req.params;
-
-    
         const pf = await FunctionPoints.findOne({proyect: id1});
     
         if (!pf) {
@@ -85,19 +79,14 @@ export const actualizarOtrosGastos = async (req, res) => {
           return res.status(404).json({ message: 'Pf no contiene involucrados.' });
         }
         const idEncontrado = pf.otrosGastos.some(id => id.equals(id2));
-    
-    
         if (!idEncontrado) {
           return res.status(404).json({ message: 'No se encontró el otro gasto en el proyecto.' });
-        }
-    
+        }   
         // Verificar si la función existe y pertenece al usuario
         const otrogasto = await OtrosGastos.findById(id2);
-    
         if (!otrogasto) {
           return res.status(404).json({ message: 'otro gasto no encontrado.' });
         }
-    
         const otroGastoupdate = await OtrosGastos.findByIdAndUpdate(id2, req.body, {
           new: true,
         });
@@ -105,7 +94,6 @@ export const actualizarOtrosGastos = async (req, res) => {
           return res.status(404).json({ message: "Otro gasto no actualizado" });
         console.log(otroGastoupdate);
         res.json(otroGastoupdate);
-    
       } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Error interno del servidor.' });
@@ -122,18 +110,15 @@ export const eliminarOtrosGastos = async (req, res) => {
         if (!pf) {
           return res.status(404).json({ message: 'puntos de función no encontrado.' });
         }
-       // console.log(project);
     
         // Verificar si la propiedad 'funciones' existe en el proyecto
         if (pf.otrosGastos.length === 0) {
           return res.status(404).json({ message: 'no existen involucrados' });
         }
         const idEncontrado = pf.otrosGastos.some(id => id.equals(id2));
-    
         if (!idEncontrado) {
           return res.status(404).json({ message: 'No se encontró la función en el proyecto.' });
         }
-    
         pf.otrosGastos = pf.otrosGastos.filter(id => !id.equals(req.params.id2));
     
         await pf.save();
