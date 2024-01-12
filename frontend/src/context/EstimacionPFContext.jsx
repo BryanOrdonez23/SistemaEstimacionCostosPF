@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { actualizarDatosPFRequest, sumaValorFactoresAjusteRequest, getPuntosFuncionRequest,calcuarPFSARequest, getFactoresAjusteRequest, getValorFactoresAjusteRequest, createValorFactoresAjusteRequest } from "../api/pf";
+import { actualizarDatosPFRequest, sumaValorFactoresAjusteRequest, getPuntosFuncionRequest,calcuarPFSARequest, getFactoresAjusteRequest, getValorFactoresAjusteRequest, createValorFactoresAjusteRequest, calcularPresupuestoRequest, createPDFRequest } from "../api/pf";
 // involucrados
 import { createInvolucradosRequest, getInvolucradosRequest, deleteInvolucradoRequest, getInvolucradoRequest, updateInvolucradoRequest, sumatoriaCostosInvolucradosRequest, promedioSueldosInvolucradosRequest, contarInvolucradosRequest } from "../api/involucrados";
 
@@ -209,7 +209,7 @@ const promedioSueldosInvolucrados = async (id) => {
     const response = await promedioSueldosInvolucradosRequest(id);
     return response.data;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 
@@ -218,7 +218,7 @@ const contarInvolucrados = async (id) => {
     const response = await contarInvolucradosRequest(id);
     return response.data;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 
@@ -227,7 +227,7 @@ const sumaotroGastos = async (id) => {
     const response = await sumatoriaCostosOtrosGastosRequest(id);
     return response.data;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 
@@ -257,6 +257,24 @@ const generarCodigoProyecto = () => {
   }
 
   return codigo;
+}
+
+const calcularPresupuestoEstimado = async (id) => {
+  try {
+    const response = await calcularPresupuestoRequest(id);
+    //console.log(response.data);
+    return response.data.presupuesto;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const createPDF = async () => {
+  try {
+    await createPDFRequest("informe.pdf");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
   return (
@@ -291,7 +309,9 @@ const generarCodigoProyecto = () => {
         promedioSueldosInvolucrados,
         contarInvolucrados,
         sumaotroGastos,
-        calculoPresupuesto
+        calculoPresupuesto,
+        calcularPresupuestoEstimado,
+        createPDF
       }}
     >
       {children}

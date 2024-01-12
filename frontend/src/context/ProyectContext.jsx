@@ -4,10 +4,10 @@ import {
   getProyectsRequest,
   getProyectRequest,
   updateProyectRequest,
-  deleteProyectRequest,
+  deleteProyectRequest  
 } from "../api/proyect";
 
-import {createProyectSharedRequest, getProyectsSharedRequest} from "../api/shared";
+import {createProyectSharedRequest, getProyectsSharedRequest, getProyectsSharedByProyectRequest, deleteProyectSharedRequest} from "../api/shared";
 export const ProyectContext = createContext();
 
 export const useProyect = () => {
@@ -26,6 +26,7 @@ export const ProyectProvider = ({ children }) => {
   const [proyects, setProyects] = useState([]);
   const [proyect, setProyect] = useState([]);
   const [proyectShared, setProyectShared] = useState([]);
+  const [proyectsSharedByProyect, setProyectsSharedByProyect] = useState([]);
 
   const getProyects = async () => {
     try {
@@ -81,17 +82,37 @@ export const ProyectProvider = ({ children }) => {
       setProyectShared(res.data);
       console.log(res.data);
     } catch (error) {
+      setProyectShared([]);
       console.error(error);
     }
   }
-
-
+  
   const createProyectShared = async (proyect) => {
     try {
       const res = await createProyectSharedRequest(proyect);
       console.log(res);
       getProyectsShared();
       return res;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getProyectsSharedByProyect = async (proyectId) => {
+    try {
+      const res = await getProyectsSharedByProyectRequest({proyectId});
+      setProyectsSharedByProyect(res.data);
+      //console.log(res.data);
+    } catch (error) {
+      setProyectsSharedByProyect([]);
+      console.error(error);
+    }
+  }
+
+  const deleteProyectShared = async (id) => {
+    try {
+      const res = await deleteProyectSharedRequest(id);
+      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -109,7 +130,10 @@ export const ProyectProvider = ({ children }) => {
         proyect,
         getProyectsShared,
         proyectShared,
-        createProyectShared
+        createProyectShared,
+        getProyectsSharedByProyect,
+        proyectsSharedByProyect,
+        deleteProyectShared
       }}
     >
       {children}

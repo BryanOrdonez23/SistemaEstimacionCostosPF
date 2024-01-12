@@ -98,3 +98,22 @@ export const verifyToken = async (req, res) => {
     });
   });
 };
+
+export const getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+    } catch (error) {
+    console.error(error);
+  }
+}

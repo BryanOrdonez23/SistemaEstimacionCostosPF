@@ -126,12 +126,20 @@ function EsfuerzoExplicacion() {
           </div>
         )}
         <br />
+        <div className="flex flex-col md:flex-row justify-between mt-5">
         <Link
-          to={`/esfuerzopf/${params.id}`}
-          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded w-full  transition-transform transform-gpu active:scale-95"
+          to={`/fases/${params.id}`}
+          className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
         >
-          Regresar al menu principal
+          Fases del proyecto
         </Link>
+        <Link
+          to={`/presupuesto/${params.id}`}
+          className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
+        >
+          Ir a la Fase 6
+        </Link>
+      </div>
       </div>
     </div>
   );

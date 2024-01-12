@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { useProyect } from "../../context/ProyectContext";
 import { useFunctions } from "../../context/FunctionsContext";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import CustomPopup from "../../components/CustomPopup";
 
 function NewProyectPage() {
   const { register, handleSubmit, setValue } = useForm();
@@ -15,7 +17,7 @@ function NewProyectPage() {
   const { proyects, createProyect, getProyects, getProyect, updateProyect } =
     useProyect();
   const { functions, createFunctions, getFunctions } = useFunctions();
-
+  const [showCustomPopup, setShowCustomPopup] = useState(null);
   const { proyect } = useProyect();
 
   //console.log(proyects);
@@ -23,10 +25,17 @@ function NewProyectPage() {
   const onSubmit = handleSubmit(async (data) => {
     getProyect(params.id);
     console.log(data);
-    createFunctions(params.id,data);
+    createFunctions(params.id, data);
     getProyects();
     navigate(`/funciones/${proyect._id}`);
   });
+  const mostrarPopUp = (key) => {
+    setShowCustomPopup(key);
+  };
+
+  const handlePopUpClose = () => {
+    setShowCustomPopup(null);
+  };
 
   return (
     <div>
@@ -50,8 +59,15 @@ function NewProyectPage() {
           </div>
 
           <div className="mb-4">
+           
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Tipo
+              <FontAwesomeIcon
+              icon={faInfoCircle}
+              onClick={() => mostrarPopUp("Tipo")}
+              className="ml-2 text-blue-500 cursor-pointer"
+              size="1x"
+            />
             </label>
             <select
               id="tipo"
@@ -72,6 +88,12 @@ function NewProyectPage() {
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Complejidad
+              <FontAwesomeIcon
+              icon={faInfoCircle}
+              onClick={() => mostrarPopUp("Complejidad")}
+              className="ml-2 text-blue-500 cursor-pointer"
+              size="1x"
+            />
             </label>
             <select
               id="complejidad"
@@ -104,6 +126,11 @@ function NewProyectPage() {
             Guardar
           </button>
         </form>
+        <CustomPopup
+          isOpen={showCustomPopup}
+          message={showCustomPopup}
+          onClose={handlePopUpClose}
+        />
       </div>
     </div>
   );

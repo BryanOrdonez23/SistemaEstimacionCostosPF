@@ -11,7 +11,7 @@ import PopupError from "../../components/PopuoError";
 
 function CompartirProyecto() {
   const {createProyectShared} = useProyect();
-  const { register, handleSubmit} = useForm();
+  const { register, handleSubmit, setValue} = useForm();
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -33,13 +33,16 @@ const handleErrorClose = () => {
         if (res.status === 200) {
             setSuccessMessage("Ingreso exitoso");
             setShowSuccess(true);
+            setValue("keyShared", "");
             //navigate("/proyects");
         }else{
+          setValue("keyShared", "");
             setErrorMessage("No se pudo ingresar al proyecto");
             setShowError(true);
         }
 
     } catch (error) {
+      setValue("keyShared", "");
         setErrorMessage("No se pudo ingresar al proyecto, ingrese un código de invitación válido");
         setShowError(true);
         console.error(error);
@@ -62,7 +65,10 @@ const handleErrorClose = () => {
         <form onSubmit={onSubmit}>
           <input
             type="text"
-            placeholder="Ingresa el código alfanumérico"
+            id="keyShared"
+            name="keyShared"
+            placeholder="Ingresa el código de invitación"
+            required
             className="border border-gray-300 text-gray-800 p-4 mb-4 rounded-md w-full text-center text-3xl"
             {...register("keyShared", { required: true })}
           />{" "}

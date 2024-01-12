@@ -1,4 +1,5 @@
 import ProyectShares from "../models/proyecShrare.model.js";
+import User from "../models/user.model.js";
 import Proyect from "../models/proyect.model.js";
 
 export const createProyectShared = async (req, res) => {
@@ -27,7 +28,7 @@ export const getProyectsShared = async (req, res) => {
   try {
     const proyects = await ProyectShares.find({
       user: req.user.payload.id,
-    }).populate("proyect");
+    }).populate("proyect").populate("user");
 
     // Verificar el estado de cada proyecto
     const proyectosValidos = await Promise.all(
@@ -81,3 +82,33 @@ const validarEstado = async (key) => {
     return false; // Manejo del error
   }
 };
+
+export const deleteProyectShared = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const proyect = await ProyectShares.findByIdAndDelete(id);
+    res.json(proyect);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getProyectsSharedByProyect = async (req, res) => {
+  try {
+    const { proyectId } = req.body;
+    console.log(proyectId);
+
+    const proyects = await ProyectShares.find({
+      proyect: proyectId,
+    }).populate("user");
+
+    if (proyects.length > 0) {
+      res.json(proyects);
+    } else {
+      return res.status(400).json({ message: "Este proyecto no ha sido compartido" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener los proyectos compartidos" });
+  }
+}

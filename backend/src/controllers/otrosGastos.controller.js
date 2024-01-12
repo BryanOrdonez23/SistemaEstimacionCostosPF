@@ -184,3 +184,5 @@ export const sumatoriaCostosOtrosGastos = async (req, res) => {
 
 
 
+// funciones para calcular el presupuesto del poyecto
+

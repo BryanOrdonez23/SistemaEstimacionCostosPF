@@ -14,6 +14,7 @@ const Presupuesto = () => {
     contarInvolucrados,
     sumaotroGastos,
     calculoPresupuesto,
+    calcularPresupuestoEstimado,
   } = useEstimacionPF();
   const { proyect, getProyect } = useProyect();
 
@@ -24,64 +25,66 @@ const Presupuesto = () => {
   const [mesesEstimados, setmesesEstimados] = useState(0);
   const [presupuesto, setpresupuesto] = useState("");
   const [bandera, setBandera] = useState(false);
+  const [bandera2, setBandera2] = useState(false);  
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
     async function loadFunciones() {
-      const res = await getPuntosFuncion(params.id);
-      await getProyect(params.id);
-      const promedio = await promedioSueldosInvolucrados(params.id);
-      const contar = await contarInvolucrados(params.id);
-      const sumaOtrosGastos = await sumaotroGastos(params.id);
+      try {
+        const promedio = await promedioSueldosInvolucrados(params.id);
+        const contar = await contarInvolucrados(params.id);
+        const sumaOtrosGastos = await sumaotroGastos(params.id);
 
-      setconteo(contar.numeroInvolucrados);
-      setprom(promedio.promedio);
+        const res = await getPuntosFuncion(params.id);
 
-      if (sumaOtrosGastos.totalCosto > 0) {
-        setsumaotrosGastos(sumaOtrosGastos.totalCosto);
-      }else{
-        setsumaotrosGastos(0);
+        setconteo(contar.numeroInvolucrados);
+        setprom(promedio.promedio);
+
+        if (sumaOtrosGastos.totalCosto > 0) {
+          setsumaotrosGastos(sumaOtrosGastos.totalCosto);
+        } else {
+          setsumaotrosGastos(0);
+        }
+        console.log(res.functionPoints[0]);
+        if (res.functionPoints[0].mesesEstimados > 0) {
+          carga(res.functionPoints[0].mesesEstimados.toFixed(2));
+        }
+      } catch (error) {
+        console.error(error);
       }
-      
-
-      if (res.functionPoints[0].mesesEstimados > 0) {
-        carga(res.functionPoints[0].mesesEstimados.toFixed(2));
-      }
-      //setmesesEstimados(datosPuntosFuncion.functionsPoints[0].mesesEstimados);
     }
     loadFunciones();
     carga();
-  }, []);
+  }, [bandera]);
 
   const carga = async (meses) => {
     setmesesEstimados(meses);
   };
 
   const mostrar = async () => {
-    const presu = await calculoPresupuesto(
-      conteo,
-      mesesEstimados,
-      prom,
-      sumaotrosGastos
-    );
-    console.log(presu);
-    const mensaje =
-      "El costo estimado del proyecto es = " + presu.toFixed(3) + " $";
-    setpresupuesto(mensaje);
+    try {
+      const presu = await calcularPresupuestoEstimado(params.id);
+      const mensaje =
+        "hola \n El costo estimado del proyecto es = " +
+        presu.toFixed(3) +
+        " $";
+      setpresupuesto(mensaje);
+      setBandera2(true);
 
-    if (conteo >= 1 && mesesEstimados > 0 && prom > 0) {
-      setBandera(true);
+      if (conteo >= 1 && mesesEstimados > 0 && prom > 0) {
+        setBandera(true);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const onSubmit = handleSubmit(async (data) => {});
-
   return (
-    <div className="flex items-center justify-center h-screen flex-col mt-32">
-      <div className="max-w-4xl mb-8 text-center bg-white p-8 rounded-md shadow-md">
-        <h1 className="text-blue-950 text-4xl font-bold mb-6">
-          Presupuesto del proyecto
+    <div className="flex items-center justify-center w-full flex-col bg-blue-100 ">
+      <div className="max-w-4xl mb-11 mt-10 text-center bg-white p-8 rounded-md shadow-md">
+        <h1 className="text-blue-950 text-4xl font-bold mb-2">
+          Fase 6: Presupuesto del proyecto
         </h1>
         <p className="text-blue-950 text-1xl font-bold mb-6 text-justify">
           Antes de realizar el cáclculo del esfuerzo es recomendable agregar los
@@ -143,22 +146,24 @@ const Presupuesto = () => {
             </p>
 
             {bandera ? (
-              <p className="text-gray-800 mb-2">
-                <span className="font-semibold">Aplicando las formula: </span>{" "}
-                <br />
-                <span className="italic">
-                  Costo = ({conteo} ∗ {mesesEstimados} ∗ {prom.toFixed(2)}) +{" "}
-                  {sumaotrosGastos}
-                </span>{" "}
-                <br />
-                <span className="italic">{presupuesto}</span> <br />
-              </p>
+              <div>
+                <p className="text-gray-800 mb-2">
+                  <span className="font-semibold">Aplicando las formula: </span>{" "}
+                  <br />
+                  <span className="italic">
+                    Costo = ({conteo} ∗ {mesesEstimados} ∗ {prom.toFixed(2)}) +{" "}
+                    {sumaotrosGastos}
+                  </span>{" "}
+                  <br />
+                  <span className="italic">{presupuesto}</span> <br />
+                </p>
+              </div>
             ) : (
               <p className="text-gray-800 mb-2 text-justify">
                 {/* Alternative content when conditions are not met */}
-                Para cálcular el presupuesto del proyecto se necesita al menos: <br />
-                - 1 involucrado agregado (que tenga un sueldo superior a 0 $) <br />
-                - 1 otro gasto agregado.
+                Para cálcular el presupuesto del proyecto se necesita al menos:{" "}
+                <br />- 1 involucrado agregado (que tenga un sueldo superior a 0
+                $) <br />- 1 otro gasto agregado.
               </p>
             )}
           </div>
@@ -168,8 +173,25 @@ const Presupuesto = () => {
           onClick={() => mostrar()}
           className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded w-full transition-transform transform-gpu active:scale-95"
         >
-          Calcular el Esfuerzo del Proyecto
+          Calcular el presupuesto del Proyecto
         </button>
+
+        {bandera2 ? (
+        <div className="flex flex-col md:flex-row justify-between mt-5">
+        <Link
+          to={`/fases/${params.id}`}
+          className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
+        >
+          Fases del proyecto
+        </Link>
+        <Link
+          to={`/informe/${params.id}`}
+          className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
+        >
+          Ir a la Fase 7
+        </Link>
+      </div>
+      ): <div></div>}
       </div>
     </div>
   );

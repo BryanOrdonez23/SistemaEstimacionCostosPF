@@ -53,10 +53,10 @@ const EsfuerzoPF = () => {
   });
 
   return (
-    <div className="flex items-center justify-center h-screen flex-col mt-44">
-      <div className="max-w-4xl mb-8 text-center bg-white p-8 rounded-md shadow-md">
+    <div className="flex items-center justify-center w-full flex-col bg-blue-100">
+      <div className="max-w-4xl mb-8 text-center bg-white p-8 rounded-md shadow-md mt-10">
         <h1 className="text-blue-950 text-4xl font-bold mb-6">
-          Cálculo del Esfuerzo del Proyecto
+          Fase 5: Cálculo del Esfuerzo del Proyecto
         </h1>
 
         {bandera && (
@@ -196,6 +196,14 @@ const EsfuerzoPF = () => {
           <button className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded w-full transition-transform transform-gpu active:scale-95">
             Calcular el Esfuerzo del Proyecto
           </button>
+          <div className="flex flex-col md:flex-row justify-center mt-6">
+              <Link
+                to={`/fases/${params.id}`}
+                className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-10 py-3 rounded mb-2 md:mb-0"
+              >
+                Volver a las fases del proyecto
+              </Link>
+            </div>
         </form>
       </div>
     </div>

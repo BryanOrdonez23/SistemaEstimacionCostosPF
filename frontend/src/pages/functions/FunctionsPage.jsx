@@ -36,21 +36,35 @@ function FunctionsPage() {
   };
 
   return (
-    <div className="container mx-auto my-8 bg-white text-gray-800 p-8 rounded-md">
-      <h1 className="text-3xl font-bold mb-4">
-        Lista de funcionalidades del proyecto de software.
-      </h1>
-      <div className="flex items-center justify-center mb-4">
+<div className="container mx-auto my-8 bg-white text-gray-800 p-8 rounded-md">
+  <h1 className="text-3xl font-bold mb-4">
+    Fase 1: Funcionalidades del proyecto de software.
+  </h1>
+  <div className="flex items-center justify-center mb-4">
+    <Link
+      to={`/newfunciones/${proyect._id}`}
+      className="text-justify bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+    >
+      + Agregar una nueva funcionalidad
+    </Link>
+  </div>
+  {funciones.length === 0 ? (
+    <div className="">
+      <div>
+        <h1 className="text-xl mb-4">No hay funciones agregadas</h1>
+      </div>
+      <div className="flex items-center justify-start mb-4">
         <Link
-          to={`/newfunciones/${proyect._id}`}
-          className="text-justify bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+          to={`/fases/${params.id}`}
+          className=" bg-blue-500 hover:bg-blue-600 font-semibold text-white px-3 py-2 rounded"
         >
-          + Agregar una nueva funcionalidad
+          Volver a las fases del proyecto
         </Link>
       </div>
-      {funciones.length === 0 ? (
-        <h1 className="text-xl mb-4">No hay funciones agregadas</h1>
-      ) : (
+    </div>
+  ) : (
+    <>
+      <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-100 border border-gray-300 text-sm">
           <thead>
             <tr>
@@ -64,7 +78,9 @@ function FunctionsPage() {
           <tbody>
             {funciones.map((funcion) => (
               <tr key={funcion._id} className="hover:bg-gray-200">
-                <td className="py-2 px-4 border-b">{funcion.funcionalidad}</td>
+                <td className="py-2 px-4 border-b">
+                  {funcion.funcionalidad}
+                </td>
                 <td className="py-2 px-4 border-b">{funcion.tipo}</td>
                 <td className="py-2 px-4 border-b">{funcion.complejidad}</td>
                 <td className="py-2 px-4 border-b">{funcion.cantidad}</td>
@@ -76,7 +92,9 @@ function FunctionsPage() {
                     Editar
                   </Link>
                   <button
-                    onClick={() => handleDeleteFunctions(proyect._id, funcion._id)}
+                    onClick={() =>
+                      handleDeleteFunctions(proyect._id, funcion._id)
+                    }
                     className="bg-red-300 hover:bg-red-400 text-red-950 px-3 py-1 rounded-full border border-red-400"
                   >
                     Eliminar
@@ -86,10 +104,25 @@ function FunctionsPage() {
             ))}
           </tbody>
         </table>
-      )}
-    </div>
+      </div>
+      <div className="flex flex-col md:flex-row justify-between mt-5">
+        <Link
+          to={`/fases/${params.id}`}
+          className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
+        >
+          Fases del proyecto
+        </Link>
+        <Link
+          to={`/calculopfsa/${params.id}`}
+          className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
+        >
+          Ir a la Fase 2
+        </Link>
+      </div>
+    </>
+  )}
+</div>
   );
- 
 }
 
 export default FunctionsPage;
