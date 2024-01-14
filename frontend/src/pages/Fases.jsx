@@ -6,9 +6,10 @@ import { useEstimacionPF } from "../context/EstimacionPFContext";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomPopup from "../components/CustomPopup";
 
-const Fase = ({ title, description, path, icon, isEnabled }) => {
+const Fase = ({ title, description, path, icon, isEnabled, iconok }) => {
   const linkClass = isEnabled
     ? "bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-300 ease-in-out"
     : "bg-gray-400 text-white px-4 py-2 rounded-full cursor-not-allowed";
@@ -20,7 +21,9 @@ const Fase = ({ title, description, path, icon, isEnabled }) => {
           {icon}
         </div>
       )}
-      <h2 className="text-gray-600 text-2xl font-bold mb-4">{title}</h2>
+
+      <h2 className="text-gray-600 text-2xl font-bold">{title}</h2>
+
       <p className="text-gray-600 mb-6">{description}</p>
       <Link
         to={isEnabled ? path : '#'} // Si no está habilitado, puedes redirigir a una página especial o simplemente ignorar el enlace
@@ -28,6 +31,12 @@ const Fase = ({ title, description, path, icon, isEnabled }) => {
       >
         {isEnabled ? 'Ir al detalle' : 'No disponible'}
       </Link>
+      {isEnabled && (title !== "Fase 7")  && (
+        <div className="text-xs italic text-gray-400 mt-4">
+          Volver a ejecutarce en caso de modificaciónes
+        </div>
+      )}
+
     </div>
   );
 };
@@ -77,7 +86,8 @@ const Fases = () => {
           icon={<FontAwesomeIcon icon={faInfoCircle} onClick={() => mostrarPopUp("Fase1")}  className="mr-2 text-blue-500 cursor-pointer" size="1x" />}
           icon2={<FontAwesomeIcon icon={faInfoCircle} onClick={() => mostrarPopUp("Fase1")}  className="mr-2 text-blue-500 cursor-pointer" size="1x" />}
           isEnabled={true}
-          
+          iconok={<FontAwesomeIcon icon={faCheckCircle}  className="text-green-600 mr-4" size="1x" />}
+
         />
         <Fase
           title="Fase 2"
@@ -85,6 +95,7 @@ const Fases = () => {
           path={`/calculopfsa/${proyect._id}`}
           icon={<FontAwesomeIcon icon={faInfoCircle} onClick={() => mostrarPopUp("Fase2")}  className="mr-2 text-blue-500 cursor-pointer" size="1x" />}
           isEnabled={isFasesEnabled}
+          iconok={<FontAwesomeIcon icon={faCheckCircle}  className="text-green-600 mr-4" size="1x" />}
         />
         <Fase
           title="Fase 3"
@@ -92,6 +103,7 @@ const Fases = () => {
           path={`/fasePFAjustado/${proyect._id}`}
           icon={<FontAwesomeIcon icon={faInfoCircle} onClick={() => mostrarPopUp("Fase3")}  className="mr-2 text-blue-500 cursor-pointer" size="1x" />}
           isEnabled={isFasesEnabled2}
+          iconok={<FontAwesomeIcon icon={faCheckCircle}  className="text-green-600 mr-4" size="1x" /> && isFasesEnabled3}
         />
         <Fase
           title="Fase 4"
@@ -99,6 +111,7 @@ const Fases = () => {
           path={`/calculopfca/${proyect._id}`}
           icon={<FontAwesomeIcon icon={faInfoCircle} onClick={() => mostrarPopUp("Fase4")}  className="mr-2 text-blue-500 cursor-pointer" size="1x" />}
           isEnabled={isFasesEnabled2 && isFasesEnabled && isFasesEnabled3}
+          iconok={<FontAwesomeIcon icon={faCheckCircle}  className="text-green-600 mr-4" size="1x" />}
       />
         <Fase
           title="Fase 5"
@@ -106,6 +119,7 @@ const Fases = () => {
           path={`/esfuerzopf/${proyect._id}`}
           icon={<FontAwesomeIcon icon={faInfoCircle} onClick={() => mostrarPopUp("Fase5")}  className="mr-2 text-blue-500 cursor-pointer" size="1x" />}
           isEnabled={isFasesEnabled2 && isFasesEnabled && isFasesEnabled3 && isFasesEnabled4}
+          iconok={<FontAwesomeIcon icon={faCheckCircle}  className="text-green-600 mr-4" size="1x" />}
         />
         <Fase
           title="Fase 6"
@@ -113,7 +127,8 @@ const Fases = () => {
           path={`/presupuesto/${proyect._id}`}
           icon={<FontAwesomeIcon icon={faInfoCircle} onClick={() => mostrarPopUp("Fase6")}  className="mr-2 text-blue-500 cursor-pointer" size="1x" />}
           isEnabled={isFasesEnabled2 && isFasesEnabled && isFasesEnabled3 && isFasesEnabled4 && isFasesEnabled5}
-        />
+          iconok={<FontAwesomeIcon icon={faCheckCircle}  className="text-green-600 mr-4" size="1x" />}
+       />
         <Fase
           title="Fase 7"
           description="Informe de estimación de costos"

@@ -199,7 +199,7 @@ const EsfuerzoPF = () => {
           <div className="flex flex-col md:flex-row justify-center mt-6">
               <Link
                 to={`/fases/${params.id}`}
-                className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-10 py-3 rounded mb-2 md:mb-0"
+                className="bg-zinc-500 hover:bg-blue-600 font-semibold text-center text-white px-8 py-2 rounded mb-2 md:mb-0"
               >
                 Volver a las fases del proyecto
               </Link>

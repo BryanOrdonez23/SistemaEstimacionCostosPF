@@ -62,7 +62,7 @@ const CalcuiloPFSA = () => {
 
   return (
     
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-100 mt-4">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-blue-100 mt-4">
       <div className="w-full max-w-screen-md mb-4 text-center bg-white p-6 rounded-md shadow-md">
         <h1 className="text-blue-950 text-3xl font-bold mb-4"> Fase 2: Cálculo de Puntos de Función sin Ajustar</h1>
   
@@ -81,7 +81,7 @@ const CalcuiloPFSA = () => {
   
             <div className="text-base">
               <p className="text-gray-800">Fórmula:</p>
-              <p className="text-gray-800">PF = Σ (Cantidad * Peso)</p>
+              <p className="text-gray-800">PFSA = Σ (Cantidad * Peso)</p>
             </div>
           </div>
         )}

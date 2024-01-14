@@ -166,19 +166,19 @@ function ProyectFormPage() {
                   <td className="py-2 px-2 md:px-4 border-b space-y-2 md:space-x-2 md:space-y-0">
                     <Link
                       to={`/fases/${proyect._id}`}
-                      className="block md:inline-block bg-blue-500 hover:bg-blue-400 text-white px-1 py-1 rounded border border-blue-300 mb-2 md:mb-0 md:mr-2"
+                      className="block md:inline-block bg-blue-500 hover:bg-blue-400 font-semibold text-white px-1 py-1 rounded border border-blue-300 mb-2 md:mb-0 md:mr-2"
                     >
                       Detalles
                     </Link>
                     <Link
                       to={`/proyect/${proyect._id}`}
-                      className="block md:inline-block bg-yellow-300 hover:bg-yellow-300 text-yellow-900 px-1 py-1 rounded border border-yellow-300 mb-2 md:mb-0 md:mr-2"
+                      className="block md:inline-block bg-yellow-300 font-semibold hover:bg-yellow-300 text-yellow-900 px-1 py-1 rounded border border-yellow-300 mb-2 md:mb-0 md:mr-2"
                     >
                       Editar
                     </Link>
                     <button
                       onClick={() => handleDeleteProyect(proyect._id)}
-                      className="block md:inline-block bg-red-300 hover:bg-red-400 text-red-950 px-1 py-1 rounded border border-red-300"
+                      className="block md:inline-block bg-red-300 font-semibold hover:bg-red-400 text-red-950 px-1 py-1 rounded border border-red-300"
                     >
                       Eliminar
                     </button>
@@ -186,7 +186,7 @@ function ProyectFormPage() {
                       onClick={() =>
                         handleProyectShared(proyect.keyShared, proyect._id)
                       }
-                      className="block md:inline-block bg-green-300 hover:green-red-400 text-zinc-900 px-1 py-1 rounded border border-red-300"
+                      className="block md:inline-block font-semibold bg-green-300 hover:green-red-400 text-zinc-900 px-1 py-1 rounded border border-red-300"
                     >
                       Compartir
                     </button>
@@ -246,13 +246,13 @@ function ProyectFormPage() {
                   <td className="py-2 px-2 md:px-4 border-b space-y-2 md:space-x-2 md:space-y-0">
                     <Link
                       to={`/fases/${proyect.proyect._id}`}
-                      className="block md:inline-block bg-blue-500 hover:bg-blue-400 text-white px-1 py-1 rounded border border-blue-300 mb-2 md:mb-0 md:mr-2"
+                      className="block md:inline-block bg-blue-500 hover:bg-blue-400 font-semibold text-white px-1 py-1 rounded border border-blue-300 mb-2 md:mb-0 md:mr-2"
                     >
                       Detalles
                     </Link>
                     <button
                       onClick={() => handleEliminarElementoProyect(proyect._id)}
-                      className="block md:inline-block bg-red-300 hover:bg-red-400 text-red-950 px-1 py-1 rounded border border-red-300"
+                      className="block md:inline-block bg-red-300  font-semibold hover:bg-red-400 text-red-950 px-1 py-1 rounded border border-red-300"
                     >
                       Salir del proyecto
                     </button>

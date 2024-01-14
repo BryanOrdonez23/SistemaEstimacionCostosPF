@@ -143,10 +143,10 @@ const FactoresAjuste = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-8">
             <button
               type="submit"
-              className="w-96 bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+              className="w-96 bg-blue-500 text-white p-3  font-bold text-base rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
             >
               Guardar factores de ajuste
             </button>
@@ -157,7 +157,7 @@ const FactoresAjuste = () => {
           message={successMessage}
           onClose={handleSuccessClose}
         />
-        <div className="flex flex-col md:flex-row justify-between mt-5">
+        <div className="flex flex-col md:flex-row justify-between mt-2">
           <Link
             to={`/fases/${params.id}`}
             className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
