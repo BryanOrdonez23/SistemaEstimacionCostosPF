@@ -25,3 +25,36 @@ export const getTipoFunciones = async (req, res) => {
     console.log(error);
   }
 };
+
+export const deleteTipoFuncion = async (req, res) => {
+  try {
+    const tipoFuncion = await TiposFunciones.findByIdAndDelete(req.params.id);
+    res.json(tipoFuncion);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const updateTipoFuncion = async (req, res) => {
+  try {
+    const { tipo, valorAlto, valorMedio, valorBajo } = req.body;
+    const tipoFuncion = await TiposFunciones.findByIdAndUpdate(req.params.id, {
+      tipo,
+      valorAlto,
+      valorMedio,
+      valorBajo,
+    });
+    res.json(tipoFuncion);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getTipoFuncion = async (req, res) => {
+  try {
+    const tipoFuncion = await TiposFunciones.findById(req.params.id);
+    res.json(tipoFuncion);
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 const CalculoPFCA = () => {
   const { datosPuntosFuncion, getPuntosFuncion, sumaValorFactoresAjuste } =
@@ -8,7 +9,13 @@ const CalculoPFCA = () => {
   const [arreglo, setArreglo] = useState([]);
   const params = useParams();
 
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+  ];
+
   useEffect(() => {
+    document.title = 'Fase 4 - App costos';
     async function loadFunciones() {
       await sumaValorFactoresAjuste(params.id);
       await getPuntosFuncion(params.id);
@@ -25,9 +32,9 @@ const CalculoPFCA = () => {
     }
   };
   return (
-    <div className="flex items-center justify-start h-screen flex-col bg-blue-100">
-      <br />
-      <div className="max-w-6xl mb-4 text-center bg-white p-6 rounded-md shadow-md">
+    <div className="flex items-center justify-start h-screen flex-col bg-CCE3FF mt-6">
+      <div className="w-full max-w-screen-lg mb-2 text-center bg-white p-6 rounded-md shadow-md">
+      <Breadcrumbs routes={routes} />
         <h1 className="text-blue-950 text-3xl font-bold mb-4">
           Fase 4: Cálculo de Puntos de Función con Ajuste
         </h1>
@@ -40,7 +47,7 @@ const CalculoPFCA = () => {
         </button>
 
         {arreglo > 0 && (
-          <div className="bg-gray-200 p-4 rounded-md mt-8">
+          <div className="bg-gray-200 p-4 rounded-md mt-6">
             <p className="mb-2 text-blue-700 font-bold">
               Puntos de Función Totales (con ajuste): {arreglo.toFixed(2)}
               <br />
@@ -74,13 +81,7 @@ const CalculoPFCA = () => {
                 {arreglo.toFixed(2)}
               </p>
             </div>
-            <div className="flex flex-col md:flex-row justify-between mt-20">
-              <Link
-                to={`/fases/${params.id}`}
-                className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
-              >
-                Fases del proyecto
-              </Link>
+            <div className="flex flex-col md:flex-row justify-end mt-4">
               <Link
                 to={`/esfuerzopf/${params.id}`}
                 className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"

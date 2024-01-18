@@ -7,6 +7,8 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { useParams, Link } from "react-router-dom";
 import Popup from "../../components/Popup";
 import CustomPopup from "../../components/CustomPopup";
+import Breadcrumbs from "../../components/Breadcrumbs ";
+
 const FactoresAjuste = () => {
   const { register, handleSubmit, setValue } = useForm();
   const {
@@ -16,6 +18,11 @@ const FactoresAjuste = () => {
   } = useEstimacionPF();
   const { getProyect, proyect } = useProyect();
   const params = useParams();
+
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' }
+  ];
 
   //popup
 
@@ -51,6 +58,7 @@ const FactoresAjuste = () => {
   };
 
   useEffect(() => {
+    document.title = 'Fase 3 - App costos';
     async function loadFactoresAjuste() {
       const res = await getValorFactoresAjuste(params.id);
       console.log(res);
@@ -100,8 +108,9 @@ const FactoresAjuste = () => {
   const factoresAjusteKeys = Object.keys(factoresAjusteSubset);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <div className="max-w-6xl mx-auto mt-2 p-7 bg-white rounded-md shadow-md">
+    <div className="bg-CCE3FF min-h-screen my-4">
+      <div className="max-w-6xl mx-auto mt- p-6 bg-white rounded-md shadow-md">
+        <Breadcrumbs routes={routes} />
         <h2 className="text-2xl font-semibold mb-6 text-black">
           Fase 3: Factores de Ajuste
         </h2>
@@ -157,13 +166,7 @@ const FactoresAjuste = () => {
           message={successMessage}
           onClose={handleSuccessClose}
         />
-        <div className="flex flex-col md:flex-row justify-between mt-2">
-          <Link
-            to={`/fases/${params.id}`}
-            className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
-          >
-            Fases del proyecto
-          </Link>
+        <div className="flex flex-col md:flex-row justify-end mt-2">
           {bandera && (
             <Link
               to={`/calculopfca/${params.id}`}

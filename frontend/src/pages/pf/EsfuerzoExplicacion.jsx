@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import { Navigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../../components/Breadcrumbs ";
 function EsfuerzoExplicacion() {
   const { getPuntosFuncion, datosPuntosFuncion } = useEstimacionPF();
   const [bandera, setBandera] = useState(false);
@@ -14,14 +15,16 @@ function EsfuerzoExplicacion() {
     }
     loadFunciones();
   }, []);
-
-
-
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
+    { path: `/esfuerzopf/${params.id}`, displayName: 'Fase 5: Cálculo del Esfuerzo del Proyecto' }
+  ];
 
   return (
-    <div className="flex items-center justify-center w-full flex-col bg-blue-100">
-      <br />
+    <div className="flex items-center justify-center w-full flex-col bg-CCE3FF my-4">
       <div className="max-w-3x1 mb-4 text-center bg-white p-6 rounded-md shadow-md">
+      <Breadcrumbs routes={routes} />
         <h1 className="text-blue-950 text-3xl font-bold mb-4">
           Detalles del cálculo del esfuerzo del proyecto
         </h1>

@@ -5,14 +5,20 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useFunctions } from "../../context/FunctionsContext";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
+import Breadcrumbs from "../../components/Breadcrumbs ";
+
 function FunctionsPage() {
   const { user } = useAuth();
   const { getProyect, proyect } = useProyect();
   const { pfsaCalculo } = useEstimacionPF();
   const { getFunctions, funciones, deleteFunctions } = useFunctions();
   const params = useParams();
-
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+  ];
   useEffect(() => {
+    document.title = 'Fase 1- App costos';
     async function loadFunciones() {
       if (params.id) {
         const res = await getFunctions(params.id);
@@ -36,7 +42,8 @@ function FunctionsPage() {
   };
 
   return (
-<div className="container mx-auto my-8 bg-white text-gray-800 p-8 rounded-md">
+<div className="container mx-auto my-4 bg-white text-gray-800 p-6 rounded-md">
+  <Breadcrumbs routes={routes} />
   <h1 className="text-3xl font-bold mb-4">
     Fase 1: Funcionalidades del proyecto de software.
   </h1>
@@ -105,13 +112,7 @@ function FunctionsPage() {
           </tbody>
         </table>
       </div>
-      <div className="flex flex-col md:flex-row justify-between mt-5">
-        <Link
-          to={`/fases/${params.id}`}
-          className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
-        >
-          Fases del proyecto
-        </Link>
+      <div className="flex flex-col md:flex-row justify-end mt-5">
         <Link
           to={`/calculopfsa/${params.id}`}
           className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"

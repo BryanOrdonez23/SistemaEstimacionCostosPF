@@ -4,7 +4,8 @@ import {
   getProyectsRequest,
   getProyectRequest,
   updateProyectRequest,
-  deleteProyectRequest  
+  deleteProyectRequest  ,
+  getAllProyectsRequest
 } from "../api/proyect";
 
 import {createProyectSharedRequest, getProyectsSharedRequest, getProyectsSharedByProyectRequest, deleteProyectSharedRequest} from "../api/shared";
@@ -24,6 +25,7 @@ export const useProyect = () => {
 
 export const ProyectProvider = ({ children }) => {
   const [proyects, setProyects] = useState([]);
+  const [allproyects, setAllProyects] = useState([]);
   const [proyect, setProyect] = useState([]);
   const [proyectShared, setProyectShared] = useState([]);
   const [proyectsSharedByProyect, setProyectsSharedByProyect] = useState([]);
@@ -117,6 +119,15 @@ export const ProyectProvider = ({ children }) => {
       console.error(error);
     }
   }
+  const getAllProyects = async () => {
+    try {
+      const res = await getAllProyectsRequest();
+      setAllProyects(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <ProyectContext.Provider
@@ -133,7 +144,9 @@ export const ProyectProvider = ({ children }) => {
         createProyectShared,
         getProyectsSharedByProyect,
         proyectsSharedByProyect,
-        deleteProyectShared
+        deleteProyectShared,
+        getAllProyects,
+        allproyects
       }}
     >
       {children}

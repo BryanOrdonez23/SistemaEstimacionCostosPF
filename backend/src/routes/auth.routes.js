@@ -6,7 +6,10 @@ import {
   logout,
   profile,
   verifyToken,
-  getUserById
+  getUserById,
+  changePassword,
+  updateUser,
+  updateUserwoPassword
 } from "../controllers/auth.controller.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
@@ -19,4 +22,7 @@ router.post("/logout", logout);
 router.get("/profile", authRequired, profile);
 router.get("/verify", verifyToken);
 router.get("/getUser/:id", getUserById);
+router.put("/changePassword", authRequired, changePassword);
+router.put("/updateUser", authRequired, updateUser);
+router.put("/updateUserwoPassword", authRequired, updateUserwoPassword);
 export default router;

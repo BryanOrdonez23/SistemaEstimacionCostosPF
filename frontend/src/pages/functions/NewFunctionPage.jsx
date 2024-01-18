@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomPopup from "../../components/CustomPopup";
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function NewProyectPage() {
   const { register, handleSubmit, setValue } = useForm();
@@ -21,6 +22,9 @@ function NewProyectPage() {
   const { proyect } = useProyect();
 
   //console.log(proyects);
+  useEffect(() => {
+    document.title = "Nueva Funcionalidad - App costos";
+  }, []);
 
   const onSubmit = handleSubmit(async (data) => {
     getProyect(params.id);
@@ -36,10 +40,18 @@ function NewProyectPage() {
   const handlePopUpClose = () => {
     setShowCustomPopup(null);
   };
-
+  const routes = [
+    { path: "/proyects", displayName: "Inicio" },
+    { path: `/fases/${params.id}`, displayName: "Fases del proyecto" },
+    {
+      path: `/funciones/${params.id}`,
+      displayName: "Fase 1: Funcionalidades del proyecto de software",
+    },
+  ];
   return (
-    <div>
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+    <div className="flex flex-col items-center justify-center  bg-CCE3FF my-2">
+      <Breadcrumbs routes={routes} />
+      <div className="max-w-xl mx-auto mt-4 p-6 bg-white rounded-md shadow-md md:w-3/4 lg:w-1/2">
         <h2 className="text-2xl font-semibold mb-6 text-black">
           Agregar una nueva funcionalidad
         </h2>
@@ -59,15 +71,14 @@ function NewProyectPage() {
           </div>
 
           <div className="mb-4">
-           
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Tipo
               <FontAwesomeIcon
-              icon={faInfoCircle}
-              onClick={() => mostrarPopUp("Tipo")}
-              className="ml-2 text-blue-500 cursor-pointer"
-              size="1x"
-            />
+                icon={faInfoCircle}
+                onClick={() => mostrarPopUp("Tipo")}
+                className="ml-2 text-blue-500 cursor-pointer"
+                size="1x"
+              />
             </label>
             <select
               id="tipo"
@@ -89,11 +100,11 @@ function NewProyectPage() {
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Complejidad
               <FontAwesomeIcon
-              icon={faInfoCircle}
-              onClick={() => mostrarPopUp("Complejidad")}
-              className="ml-2 text-blue-500 cursor-pointer"
-              size="1x"
-            />
+                icon={faInfoCircle}
+                onClick={() => mostrarPopUp("Complejidad")}
+                className="ml-2 text-blue-500 cursor-pointer"
+                size="1x"
+              />
             </label>
             <select
               id="complejidad"

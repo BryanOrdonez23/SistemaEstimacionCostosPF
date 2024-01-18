@@ -5,6 +5,7 @@ import { useProyect } from "../../context/ProyectContext";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { useParams } from "react-router-dom";
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function InformeFinal() {
   const contentRef = useRef(null);
@@ -29,7 +30,13 @@ function InformeFinal() {
   const [prom, setprom] = useState(0);
   const [sumaotrosGastos, setsumaotrosGastos] = useState(0);
 
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+  ];
+
   useEffect(() => {
+    document.title = 'Fase 7 - App costos';
     async function loadFunciones() {
       if (params.id) {
         await getFunctions(params.id);
@@ -132,7 +139,7 @@ function InformeFinal() {
 
       // Agrega el título
       pdf.setFont("helvetica", "bold");
-      pdf.text("Informe de Estimación de Costos", 65, 15);
+      pdf.text("Informe de Estimación de Costos - Método de Puntos de Función", 25, 15);
       pdf.setFontSize(10);
       pdf.text("Proyecto: ",15,25)
       pdf.setFont("helvetica", "normal");
@@ -147,7 +154,7 @@ function InformeFinal() {
       ////
       pdf.text("Fecha del informe: ",15,35)
       pdf.setFont("helvetica", "normal");
-      pdf.text(""+ new Date().toLocaleString(),45,35)
+      pdf.text(""+ new Date().toLocaleString(),48,35)
       pdf.setFont("helvetica", "bold");
       ////
       // Primer bloque: Tabla con las columnas originales
@@ -309,7 +316,7 @@ function InformeFinal() {
       );
       posy = validacion(pdf, posy, 5);
       pdf.text(
-        "PFAjustados = " + datosPuntosFuncion.functionPoints[0].calculoCA,
+        "PFAjustados = " + datosPuntosFuncion.functionPoints[0].calculoCA.toFixed(2),
         88,
         posy
       );
@@ -581,9 +588,9 @@ function InformeFinal() {
         95,
         posy
       );
-      posy = validacion(pdf, posy, 10);
+      posy = validacion(pdf, posy, 20);pdf.setFontSize(11);
       pdf.text(
-        `El costo del proyecto es de: ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(2)}+ $`,
+        `El costo estimado del proyecto es de: ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(2)} USD`,
         20,
         posy
       );
@@ -596,6 +603,7 @@ function InformeFinal() {
 
   return (
     <div className="max-w-3xl mx-auto mt-8 p-8 bg-white rounded shadow-md">
+      <Breadcrumbs routes={routes} />
       <h1 className="text-3xl font-bold mb-4 text-black">
         Fase 7: Informe Final
       </h1>
@@ -604,7 +612,7 @@ function InformeFinal() {
           Este informe proporciona una estimación de costos basada en Puntos de
           Función.
         </p>
-        <p className="mb-4">Otra información relevante...</p>
+        <p className="mb-4">De clic en el botón "Descargar Informe", y espere unos segundos.</p>
       </div>
       <button
         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"

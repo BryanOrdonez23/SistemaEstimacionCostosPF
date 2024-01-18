@@ -117,3 +117,73 @@ export const getUserById = async (req, res) => {
     console.error(error);
   }
 }
+
+
+export const changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.user.payload.id; // Obtener el ID del usuario desde el token
+
+  try {
+    // Obtener el usuario actual
+    const userFound = await User.findById(userId);
+    if (!userFound) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    // Verificar la contraseña actual
+    const isMatch = await bcrypt.compare(currentPassword, userFound.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Contraseña actual incorrecta" });
+    }
+
+    // Validar que la nueva contraseña tenga al menos 6 caracteres
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: "La nueva contraseña debe tener al menos 6 caracteres" });
+    }
+
+    // Cifrar la nueva contraseña
+    const newPasshash = await bcrypt.hash(newPassword, 10);
+
+    // Actualizar la contraseña en la base de datos
+    userFound.password = newPasshash;
+    await userFound.save();
+
+    res.json({ message: "Contraseña actualizada exitosamente" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { name, lastname, email, password } = req.body;
+  try {
+    const passhash = await bcrypt.hash(password, 10); // String aleatorio para cifrado.
+    const userUpdated = await User.findByIdAndUpdate(id, {
+      name,
+      lastname,
+      email,
+      password : passhash,
+    });
+    res.json(userUpdated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
+export const updateUserwoPassword = async (req, res) => {
+  const idUser = req.user.payload.id;
+  const { name, lastname, email } = req.body;
+  try {
+    const userUpdated = await User.findByIdAndUpdate(idUser, {
+      name,
+      lastname,
+      email
+    });
+    res.json(userUpdated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

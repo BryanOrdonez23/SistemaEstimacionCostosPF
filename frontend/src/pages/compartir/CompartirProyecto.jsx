@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 
 import Popup from "../../components/Popup";
 import PopupError from "../../components/PopuoError";
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function CompartirProyecto() {
   const {createProyectShared} = useProyect();
@@ -17,6 +18,10 @@ function CompartirProyecto() {
   const [showError, setShowError] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    document.title = "Compartir Proyecto - App costos";
+  }, []);
   
   const handleSuccessClose = () => {
     setShowSuccess(false);
@@ -34,7 +39,7 @@ const handleErrorClose = () => {
             setSuccessMessage("Ingreso exitoso");
             setShowSuccess(true);
             setValue("keyShared", "");
-            //navigate("/proyects");
+            navigate("/proyects");
         }else{
           setValue("keyShared", "");
             setErrorMessage("No se pudo ingresar al proyecto");
@@ -51,9 +56,15 @@ const handleErrorClose = () => {
     //navigate("/proyects");
   });
 
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio /' }
+  ];
+
+
   return (
-    <div className="flex items-center justify-center h-screen flex-col bg-blue-100">
-      <div className="max-w-6x1 mb-4 text-center bg-white p-6 rounded-md shadow-md">
+    <div className="flex items-center justify-start my-12 h-screen flex-col bg-CCE3FF">
+      <Breadcrumbs routes={routes} />
+      <div className="max-w-xl mb-4 text-center bg-white p-6 rounded-md shadow-md">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
           Ingresar a un Proyecto:
         </h1>

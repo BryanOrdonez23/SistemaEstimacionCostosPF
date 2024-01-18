@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
-
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function InicioInvolucrados() {
 
@@ -10,6 +10,7 @@ function InicioInvolucrados() {
   const params = useParams();
 
   useEffect(() => {
+    document.title = "Involucrados - App costos";
     async function loadFunciones() {
       if (params.id) {
         await getInvolucrados(params.id);
@@ -27,9 +28,15 @@ function InicioInvolucrados() {
       console.error("Error al eliminar el proyecto:", error);
     }
   };
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
+    { path: `/presupuesto/${params.id}`, displayName: 'Fase 6: Presupuesto del proyecto' }
+  ];
 
   return (
     <div className="container mx-auto my-8 bg-white text-gray-800 p-4 sm:p-8 rounded-md">
+      <Breadcrumbs routes={routes} />
       <h1 className="text-3xl font-bold mb-4">Lista de involucrados del proyecto</h1>
       <div className="flex items-center justify-center mb-4">
         <Link

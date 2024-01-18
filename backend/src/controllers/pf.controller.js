@@ -58,7 +58,6 @@ export const calcularPuntosDeFuncionsinAjuste = async (req, res) => {
     res.status(500).json({ error: "Error al calcular los Puntos de Función." });
   }
 };
-
 //
 const actualizarFunctionPoints = async (id, puntosFuncionTotal) => {
   try {

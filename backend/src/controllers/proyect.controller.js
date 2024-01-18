@@ -67,6 +67,15 @@ export const deleteProyect = async (req, res) => {
   }
 };
 
+export const getAllProyects = async (req, res) => {
+  try {
+    const proyects = await Proyect.find({status: true}).populate("user");
+    res.json(proyects);
+  } catch (error) {
+    return res.status(404).json({ message: "Proyectos no encontrados." });
+  }
+
+}
 
 /// utilidad para poder crear la estimacion de puntos de funcion en el proyecto
 

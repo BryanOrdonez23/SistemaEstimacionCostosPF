@@ -53,8 +53,14 @@ const Fases = () => {
   const isFasesEnabled4 = datosPuntosFuncion && datosPuntosFuncion.functionPoints && datosPuntosFuncion.functionPoints[0].calculoCA > 0;
   const isFasesEnabled5 = datosPuntosFuncion && datosPuntosFuncion.functionPoints && datosPuntosFuncion.functionPoints[0].esfuerzo > 0;
   const isFasesEnabled6 = datosPuntosFuncion && datosPuntosFuncion.functionPoints && datosPuntosFuncion.functionPoints[0].presupuesto > 0;
- 
+
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio /' }
+  ];
+
+
   useEffect(() => {
+    document.title = 'App costos - Fases';
     async function loadFunciones() {
       if (params.id) {
         const res = await getProyect(params.id);
@@ -76,8 +82,8 @@ const Fases = () => {
   };
 
   return (
-    <div>
-    <div className="flex justify-center mt-8">
+    <div  className=" mt-2">
+    <div className="flex justify-center mt-3">      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-8xl">
         <Fase
           title="Fase 1"

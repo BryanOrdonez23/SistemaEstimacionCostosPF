@@ -1,22 +1,20 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/AuthContext";
-import { useProyect } from "../context/ProyectContext";
+import { useAuth } from "../../../context/AuthContext";
+import { useAdmin } from "../../../context/AdminContext";
 import { useNavigate, useParams } from "react-router-dom";
-import Breadcrumbs from "../components/Breadcrumbs ";
 
-function NewProyectPage() {
+function UpdateProyectAdmin() {
   const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
   const params = useParams();
 
   const { user } = useAuth();
-  const { proyects, createProyect, getProyects, getProyect, updateProyect } =
-    useProyect();
+  const { proyects, getAllProyects, getProyect, updateProyect } =
+    useAdmin();
 
   //console.log(proyects);
   useEffect(() => {
-    document.title = 'Nuevo/Actualizar Proyecto - App costos';
     async function loadProyect() {
       if (params.id) {
         const proyectfound = await getProyect(params.id);
@@ -31,25 +29,16 @@ function NewProyectPage() {
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
-    if (params.id) {
-      await updateProyect(params.id, data);
-    } else {
-      createProyect(data);
-    }
-    getProyects();
-    navigate("/proyects");
+    await updateProyect(params.id, data);
+    getAllProyects();
+    navigate("/administrador/proyects");
   });
 
-  const routes = [
-    { path: "/proyects", displayName: "Inicio /" }
-  ];
-
   return (
-    <div className="flex flex-col items-center justify-center  bg-CCE3FF">
-      <Breadcrumbs routes={routes} />
-      <div className="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
+    <div>
+      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-6 text-black">
-          Crear Nuevo Proyecto de Estimación
+          Editar Proyecto de Estimación
         </h2>
         <form onSubmit={onSubmit}>
           <div className="mb-4">
@@ -97,7 +86,7 @@ function NewProyectPage() {
               </option>
             </select>
           </div>
-          <div className="mb-2">
+          <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Tecnologías
             </label>
@@ -124,5 +113,4 @@ function NewProyectPage() {
     </div>
   );
 }
-
-export default NewProyectPage;
+export default UpdateProyectAdmin;

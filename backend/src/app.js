@@ -24,7 +24,7 @@ app.use("/api", proyectRoutes);
 app.use("/api", proyectShareRoutes);
 app.use("/api", proyectFunctionRoutes);
 app.use("/api", pfroutes);
-app.use("/admin", adminRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api", involucradosRoutes);
 app.use("/api", otrosGastos);
 

@@ -18,6 +18,7 @@ function LoginPage() {
   });
 
   useEffect(() => {
+    document.title = 'App costos - Iniciar Sesión';
     if (isAuthenticated) {
       navigate("/proyects");
     }

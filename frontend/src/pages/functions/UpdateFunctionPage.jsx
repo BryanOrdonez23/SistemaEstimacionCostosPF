@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useProyect } from "../../context/ProyectContext";
 import { useFunctions } from "../../context/FunctionsContext";
 import { useNavigate, useParams } from "react-router-dom";
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function NewProyectPage() {
   const { register, handleSubmit, setValue } = useForm();
@@ -38,10 +39,16 @@ function NewProyectPage() {
     await updateFunction(params.id1, params.id2, data);
     navigate(`/funciones/${params.id1}`);
   });
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id1}`, displayName: 'Fases del proyecto' },
+    { path: `/funciones/${params.id1}`, displayName: 'Fase 1: Funcionalidades del proyecto de software' },
+  ];
 
   return (
-    <div>
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+    <div className="flex flex-col items-center justify-center  bg-CCE3FF my-2">
+      <Breadcrumbs routes={routes} />
+      <div className="max-w-xl mx-auto mt-4 p-6 bg-white rounded-md shadow-md md:w-3/4 lg:w-1/2">
         <h2 className="text-2xl font-semibold mb-6 text-black">
           Actualizar funcionalidad
         </h2>

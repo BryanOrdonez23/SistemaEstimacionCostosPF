@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../../components/Breadcrumbs ";
+
 const EsfuerzoPF = () => {
   const { actualizarDatosPF, getPuntosFuncion, datosPuntosFuncion } =
     useEstimacionPF();
@@ -20,6 +22,7 @@ const EsfuerzoPF = () => {
   const params = useParams();
 
   useEffect(() => {
+    document.title = 'Fase 5 - App costos';
     async function loadFunciones() {
       const res = await getPuntosFuncion(params.id);
       await getProyect(params.id);
@@ -52,9 +55,15 @@ const EsfuerzoPF = () => {
     navigate(`/esfuerzoExplicacion/${params.id}`);
   });
 
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+  ];
+
   return (
     <div className="flex items-center justify-center w-full flex-col bg-blue-100">
-      <div className="max-w-4xl mb-8 text-center bg-white p-8 rounded-md shadow-md mt-10">
+      <div className="w-full max-w-screen-md mb-4 text-center bg-white p-8 rounded-md shadow-md mt-5">
+        <Breadcrumbs routes={routes} />
         <h1 className="text-blue-950 text-4xl font-bold mb-6">
           Fase 5: Cálculo del Esfuerzo del Proyecto
         </h1>
@@ -196,14 +205,6 @@ const EsfuerzoPF = () => {
           <button className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded w-full transition-transform transform-gpu active:scale-95">
             Calcular el Esfuerzo del Proyecto
           </button>
-          <div className="flex flex-col md:flex-row justify-center mt-6">
-              <Link
-                to={`/fases/${params.id}`}
-                className="bg-zinc-500 hover:bg-blue-600 font-semibold text-center text-white px-8 py-2 rounded mb-2 md:mb-0"
-              >
-                Volver a las fases del proyecto
-              </Link>
-            </div>
         </form>
       </div>
     </div>

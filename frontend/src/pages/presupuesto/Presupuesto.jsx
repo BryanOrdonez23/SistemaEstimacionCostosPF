@@ -4,6 +4,8 @@ import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import { useProyect } from "../../context/ProyectContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../../components/Breadcrumbs ";
+
 const Presupuesto = () => {
   const {
     actualizarDatosPF,
@@ -30,6 +32,7 @@ const Presupuesto = () => {
   const params = useParams();
 
   useEffect(() => {
+    document.title = 'Fase 6 - App costos';
     async function loadFunciones() {
       try {
         const promedio = await promedioSueldosInvolucrados(params.id);
@@ -61,7 +64,10 @@ const Presupuesto = () => {
   const carga = async (meses) => {
     setmesesEstimados(meses);
   };
-
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+  ];
   const mostrar = async () => {
     try {
       const presu = await calcularPresupuestoEstimado(params.id);
@@ -82,12 +88,13 @@ const Presupuesto = () => {
 
   return (
     <div className="flex items-center justify-center w-full flex-col bg-blue-100 ">
-      <div className="max-w-4xl mb-11 mt-10 text-center bg-white p-8 rounded-md shadow-md">
-        <h1 className="text-blue-950 text-4xl font-bold mb-2">
+      <div className="max-w-4xl  mt-6 text-center bg-white p-8 rounded-md shadow-md">
+        <Breadcrumbs routes={routes} />
+        <h1 className="text-blue-950 text-4xl font-bold mb-1">
           Fase 6: Presupuesto del proyecto
         </h1>
         <p className="text-blue-950 text-1xl font-bold mb-6 text-justify">
-          Antes de realizar el cáclculo del esfuerzo es recomendable agregar los
+          Antes de realizar el cálculo del esfuerzo es recomendable agregar los
           involucrados y otros gastos del proyecto.
         </p>
         <div className="flex justify-between mb-4">
@@ -177,13 +184,7 @@ const Presupuesto = () => {
         </button>
 
         {bandera2 ? (
-        <div className="flex flex-col md:flex-row justify-between mt-5">
-        <Link
-          to={`/fases/${params.id}`}
-          className="bg-blue-500 hover:bg-blue-600 font-semibold text-center text-white px-3 py-2 rounded mb-2 md:mb-0"
-        >
-          Fases del proyecto
-        </Link>
+        <div className="flex flex-col md:flex-row justify-end mt-5">
         <Link
           to={`/informe/${params.id}`}
           className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"

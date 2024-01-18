@@ -15,6 +15,7 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = 'App costos - Registrarse';
     if (isAuthenticated) navigate("/proyects");
   }, [isAuthenticated]);
 

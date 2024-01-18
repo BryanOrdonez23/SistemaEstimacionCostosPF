@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import { useNavigate, useParams } from "react-router-dom";
-
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function NewOtrosGastos() {
   const { register, handleSubmit, setValue} = useForm();
@@ -12,6 +12,7 @@ function NewOtrosGastos() {
   const { getOtrosGastos, getOtroGasto, createOtrosGastos, updateOtroGasto, eliminarOtroGasto} = useEstimacionPF();
 
   useEffect(() => {
+    document.title = "Nuevo Otros Gastos - App costos";
     async function loadfunction() {
       if (params.id2) {
         const otrosgastosfound = await getOtroGasto(params.id2);
@@ -40,9 +41,18 @@ function NewOtrosGastos() {
     }
   });
 
+  
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
+    { path: `/presupuesto/${params.id}`, displayName: 'Fase 6: Presupuesto del proyecto' },
+    { path: `/otrosGastos/${params.id}`, displayName: 'Menú otros gastos' }
+  ];
+
   return (
-    <div>
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+    <div className="flex flex-col items-center justify-center  bg-CCE3FF my-2">
+      <Breadcrumbs routes={routes} />
+      <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-md shadow-md md:w-3/4 lg:w-1/2">
         <h2 className="text-2xl font-semibold mb-6 text-black">
         {params.id2 ? "Actualizar el  gasto" : "Agregar un nuevo gasto"}
         </h2>

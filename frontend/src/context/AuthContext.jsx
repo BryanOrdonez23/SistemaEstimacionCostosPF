@@ -1,8 +1,8 @@
 import { createContext, useState, useContext, useEffect} from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, getUserByIdRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, getUserByIdRequest, changePasswordRequest, updateUserwoPasswordRequest } from "../api/auth";
 import Cookies from "js-cookie";
-export const AuthContext = createContext();
 
+export const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -54,6 +54,26 @@ const getUserById = async (id) => {
     return res.data;
   } catch (error) {
     console.log(error);
+  }
+}
+
+const changePassword = async (data) => {
+  try {
+    const res = await changePasswordRequest(data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    setErrors([error.response.data.message]);
+  }
+}
+
+const updateUserwoPassword = async (data) => {
+  try {
+    const res = await updateUserwoPasswordRequest(data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    setErrors([error.response.data.message]);
   }
 }
 
@@ -110,7 +130,9 @@ const getUserById = async (id) => {
         singin,
         logout,
         setUser,
-        getUserById
+        getUserById,
+        changePassword,
+        updateUserwoPassword
       }}
     >
       {children}

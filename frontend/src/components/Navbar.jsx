@@ -1,74 +1,136 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useAdmin } from "../context/AdminContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faUser } from "@fortawesome/free-solid-svg-icons";
 
-export function Navbar() {
+const Navbar = () => {
+  const [showMenu, setShowMenu] = useState(false);
   const { isAuthenticated, logout, user } = useAuth();
+  const { isAuthenticated: adminCorrecto, logout: cerrar } = useAdmin();
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/administrador/");
+  const menuRef = useRef(null);
+
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
 
   return (
-      <nav className="bg-zinc-700 py-4 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12  shadow-md">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">
-            <Link
-              to={isAuthenticated ? "/proyects" : "/"}
-              className="transition duration-300 hover:text-gray-300"
-            >
-              App para estimación de Costos por PF
-            </Link>
-          </h1>
-          <ul className="flex items-center gap-x-4">
-            {isAuthenticated ? (
-              <>
-                <li className="hidden sm:block text-gray-400">
-                  Bienvenido, {user.name + " " + user.lastname}
-                </li>
-                <li>
-                  <Link
-                    to="/login"
-                    onClick={() => logout()}
-                    className="text-white hover:text-gray-300 text-center transition duration-300 bg-indigo-500 px-4 py-2 rounded-md
-                    sm:inline-block sm:px-4 sm:py-2
-                    md:inline-block md:px-6 md:py-2
-                    lg:inline-block lg:px-8 lg:py-2
-                    xl:inline-block xl:px-10 xl:py-2
-                    block sm:w-full md:w-auto lg:w-auto xl:w-auto"
-                  >
-                    Cerrar Sesión
-                  </Link>
-                </li>
-              </>
+    <nav className="bg-zinc-700 py-2 sm:py-4 px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
+      <div className="flex items-center space-x-64 justify-around flex-wrap">
+        <Link
+          to={
+            isAdminPage
+              ? adminCorrecto
+                ? "/administrador/menu"
+                : "/administrador/login"
+              : isAuthenticated
+              ? "/proyects"
+              : "/"
+          }
+          className="text-lg sm:text-lg font-bold text-white mb-2 sm:mb-0 transition duration-300 hover:text-gray-300 flex items-center"
+        >
+          <FontAwesomeIcon icon={faHome} className="ml-2" />
+          <span className="ml-2">
+            {isAdminPage
+              ? "  App para estimación de Costos por PF"
+              : "  Estimación de Costos por Puntos de Función"}
+          </span>
+        </Link>
+
+        <div className="flex items-center gap-2 sm:gap-4">
+          <ul className="flex flex-wrap sm:flex-row items-center gap-2 sm:gap-4">
+            {isAdminPage ? (
+              <li>
+                <Link
+                  to="/administrador/login"
+                  onClick={() => cerrar()}
+                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                >
+                  Cerrar Sesión
+                </Link>
+              </li>
             ) : (
               <>
-                <li>
-                  <Link
-                    to="/login"
-                    className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-2 rounded-sm
-                    sm:inline-block sm:px-4 sm:py-2
-                    md:inline-block md:px-6 md:py-3
-                    lg:inline-block lg:px-8 lg:py-3
-                    xl:inline-block xl:px-10 xl:py-3
-                    block sm:w-full md:w-auto lg:w-auto xl:w-auto"
-                  >
-                    Iniciar Sesión
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/register"
-                    className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-4 py-2 rounded-sm
-                    sm:inline-block sm:px-4 sm:py-2
-                    md:inline-block md:px-6 md:py-3
-                    lg:inline-block lg:px-8 lg:py-3
-                    xl:inline-block xl:px-10 xl:py-3
-                    block sm:w-full md:w-auto lg:w-auto xl:w-auto"
-                  >
-                    Registrarse
-                  </Link>
-                </li>
+                {!isAuthenticated && (
+                  <>
+                    <li>
+                      <Link
+                        to="/login"
+                        className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                      >
+                        Iniciar Sesión
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/register"
+                        className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                      >
+                        Registrarse
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {isAuthenticated && (
+                  <li className="relative group" ref={menuRef}>
+                    <div
+                      className={`text-white cursor-pointer hover:text-gray-300 transition duration-300 ${
+                        showMenu ? "bg-gray-800" : ""
+                      }`}
+                      onClick={() => setShowMenu(!showMenu)}
+                    >
+                      <FontAwesomeIcon icon={faUser} size="xl" />
+                    </div>
+                    {showMenu && (
+                      <ul className="absolute z-50 right-0 mt-2 min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg">
+                        <li>
+                          <Link
+                            to="/perfil"
+                            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
+                          >
+                            Ver Perfil
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/login"
+                            onClick={() => {
+                              setShowMenu(false);
+                              logout();
+                            }}
+                            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
+                          >
+                            Cerrar Sesión
+                          </Link>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                )}
               </>
             )}
           </ul>
         </div>
-      </nav>
+      </div>
+    </nav>
   );
-  
-}
+};
+
+export default Navbar;

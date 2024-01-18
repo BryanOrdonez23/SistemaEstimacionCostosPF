@@ -22,9 +22,9 @@ function ProyectFormPage() {
   const [userNames, setUserNames] = useState({});
 
   useEffect(() => {
+    document.title = 'App costos - Inicio';
     const fetchUserNames = async () => {
       const names = {};
-
       await Promise.all(
         proyectShared.map(async (proyect) => {
           try {
@@ -110,11 +110,11 @@ function ProyectFormPage() {
   };
 
   return (
-    <div className="container mx-auto my-8 bg-white text-gray-800 p-4 md:p-8 rounded-md shadow-md">
-      <div className="flex justify-center ">
+    <div className="container mx-auto my-6 bg-white text-gray-800 p-4 md:p-8 rounded-md shadow-md">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 my-4">
         <Link
           to={`/newproyect`}
-          className="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 mr-20"
+          className="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
         >
           + Agregar un nuevo proyecto
         </Link>
@@ -125,12 +125,12 @@ function ProyectFormPage() {
           + Ingresar a un proyecto existente
         </Link>
       </div>
-      <h1 className="text-blue-900 text-2xl font-bold">Lista de Proyectos</h1>
+      <h1 className="text-blue-900 text-lg sm:text-2xl font-bold my-1">Lista de Proyectos</h1>
       {proyects.length === 0 ? (
-        <p className="text-xl mb-4">No hay proyectos</p>
+        <p className="text-xl sm:text-2xl mb-4">No hay proyectos</p>
       ) : (
         <div className="overflow-x-auto overflow-y-auto max-h-[500px]">
-          <table className="min-w-full bg-gray-200 border border-gray-300 text-sm">
+          <table className="min-w-full bg-gray-200 border border-gray-300 text-sm sm:text-base">
             <thead>
               <tr>
                 <th className="py-2 px-2 md:px-4 border-b text-center">
@@ -199,7 +199,7 @@ function ProyectFormPage() {
       )}
       <br />
 
-      <h1 className="text-blue-900 text-2xl font-bold mb-4">
+      <h1 className="text-blue-900 text-lg sm:text-2xl font-bold my-1">
         Lista de Proyectos Compartidos
       </h1>
       {proyectShared.length === 0 ? (
