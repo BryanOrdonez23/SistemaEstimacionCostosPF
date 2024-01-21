@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
 import { useAdmin } from "../../../context/AdminContext";
 import { useNavigate, useParams } from "react-router-dom";
+import Breadcrumbs from "../../../components/Breadcrumbs ";
 
 function UpdateProyectAdmin() {
   const { register, handleSubmit, setValue } = useForm();
@@ -34,9 +35,17 @@ function UpdateProyectAdmin() {
     navigate("/administrador/proyects");
   });
 
+  const routes = [
+    { path: '/administrador/menu', displayName: 'Inicio' },
+    { path: `/administrador/proyects`, displayName: 'Configuraciones del proyecto' },
+    { path: `/administrador/proyects/${params.id}`, displayName: 'Actualizar Proyecto' },
+  ];
+  
+
   return (
     <div>
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+      <div className="max-w-3xl mx-auto mt-4 p-6 bg-white rounded-md shadow-md">
+        <Breadcrumbs routes={routes} />
         <h2 className="text-2xl font-semibold mb-6 text-black">
           Editar Proyecto de Estimación
         </h2>

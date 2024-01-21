@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAdmin } from "../../../context/AdminContext";
 import { Link } from "react-router-dom";
-
+import Breadcrumbs from "../../../components/Breadcrumbs ";
 function ConfigTipoAdmin() {
   const {
     createTipoFuncion,
@@ -23,19 +23,22 @@ function ConfigTipoAdmin() {
     getTipoFunciones();
   };
 
+  const routes = [
+    { path: '/administrador/menu', displayName: 'Inicio' },
+    { path: `/administrador/tipofunciones`, displayName: 'Configuraciones del proyecto' },
+  ];
+
   const filteredTipoFunciones = tipoFunciones
     ? tipoFunciones.filter(
         (tipoFuncion) =>
           tipoFuncion.tipo.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
-
-  console.log(tipoFunciones);
-
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg text-gray-800">
-      <h2 className="text-2xl font-bold mb-4">ConfigTipoAdmin</h2>
-      <Link to="/administrador/tipofunciones/nuevo">
+      <Breadcrumbs routes={routes} />
+      <h2 className="text-2xl font-bold mb-4">Configuraciones</h2>
+      <Link to="/administrador/tipofunciones/newtipofunciones">
         <button className="bg-green-500 text-white px-4 py-2 rounded mb-4">
           Agregar Nuevo Tipo
         </button>
@@ -70,14 +73,14 @@ function ConfigTipoAdmin() {
                 <td className="border px-4 py-2">
                   <Link to={`/administrador/tipofunciones/${tipoFuncion._id}`}>
                     <button className="mr-2 bg-blue-500 text-white px-4 py-2 rounded">
-                      Update
+                      Actualizar
                     </button>
                   </Link>
                   <button
                     onClick={() => handleDeleteTipoFuncion(tipoFuncion._id)}
                     className="bg-red-500 text-white px-4 py-2 rounded"
                   >
-                    Delete
+                    Eliminar
                   </button>
                 </td>
               </tr>

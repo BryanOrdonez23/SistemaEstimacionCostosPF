@@ -11,7 +11,8 @@ const CalculoPFCA = () => {
 
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto'},
+    { path: `/calculopfca/${params.id}`, displayName: 'Fase 4: Puntos de Función con Ajuste'}
   ];
 
   useEffect(() => {

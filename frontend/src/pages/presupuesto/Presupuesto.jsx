@@ -66,7 +66,8 @@ const Presupuesto = () => {
   };
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto'},
+    { path: `/presupuesto/${params.id}`, displayName: 'Fase 6: Presupuesto del Proyecto'},
   ];
   const mostrar = async () => {
     try {

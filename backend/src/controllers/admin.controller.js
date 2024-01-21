@@ -163,6 +163,22 @@ export const getUserById = async (req, res) => {
     res.status(404).json({ message: "Fallo en la busqueda del usuario" });
   }
 }
+
+export const changePasswordOnly = async (req, res) => {
+  const { id } = req.params;
+  const { newPassword } = req.body;
+  try {
+    const passhash = await bcrypt.hash(newPassword, 10); // String aleatorio para cifrado.
+    const userUpdated = await User.findByIdAndUpdate(id, {
+      password : passhash,
+    });
+    res.json(userUpdated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+}
+
   const crearAdminPrincipal = async () => {
     try {
       const admins = await Admin.find();
@@ -180,3 +196,82 @@ export const getUserById = async (req, res) => {
       console.log(error);      
     }
   }
+
+  //
+
+  export const getAdminById = async (req, res) => {
+    try {
+      const admin = await Admin.findById(req.params.id);
+      if (!admin) return res.status(400).json({ message: "Admin not found" });
+      res.json(admin);
+    } catch (error) {
+      res.status(404).json({ message: "Fallo en la busqueda del admin" });
+    }
+  }
+
+  export const changePasswordOnlyAdmin = async (req, res) => {
+    const { id } = req.params;
+    const { newPassword } = req.body;
+    try {
+      const passhash = await bcrypt.hash(newPassword, 10); // String aleatorio para cifrado.
+      const adminUpdated = await Admin.findByIdAndUpdate(id, {
+        password : passhash,
+      });
+      res.json(adminUpdated);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  
+  }
+
+  export const updateAdmin = async (req, res) => {
+    const { id } = req.params;
+    const { name, lastname, email} = req.body;
+    try {
+      const adminUpdated = await Admin.findByIdAndUpdate(id, {
+        name,
+        lastname,
+        email
+      });
+      res.json(adminUpdated);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  export const deleteAdmin = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const adminDeleted = await Admin.findByIdAndDelete(id);
+      res.json(adminDeleted);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+export const createAdmin = async (req, res) => {
+  const { name, lastname, email, password } = req.body;
+  try {
+    // Verificar si el correo electrónico ya existe
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      return res.status(400).json({ message: 'El correo electrónico ya está en uso.' });
+    }
+    // Hashear la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Crear un nuevo administrador
+    const newAdmin = new Admin({
+      name,
+      lastname,
+      email,
+      password: hashedPassword,
+    });
+
+    // Guardar el nuevo administrador en la base de datos
+    const savedAdmin = await newAdmin.save();
+    res.status(201).json(savedAdmin);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}

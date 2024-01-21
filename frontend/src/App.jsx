@@ -19,6 +19,7 @@ import UpdateFuncionPage from "./pages/functions/UpdateFunctionPage";
 
 import Perfil from "./pages/profile/ProfilePage";
 import CambioContra from "./pages/profile/CambioContra";
+import UpdateDatosUser from "./pages/profile/UpdateDatosUser";
 
 //pf
 import PuntosDeFuncionCalculadora from "./pages/pf/CalcuiloPFSA";
@@ -59,6 +60,14 @@ import UserUpdate from "./pages/admin/users/UserUpdate"
 import ProyectMainAdmin from "./pages/admin/proyects/ProyectMainAdmin";
 import UpdateProyectAdmin from "./pages/admin/proyects/UpdateProyectAdmin";
 import ConfigTipoAdmin from "./pages/admin/configs/ConfigTipoAdmin";
+import NewTipoAdmin from "./pages/admin/configs/NewTipoAdmin";
+import UpdateTipoAdmin from "./pages/admin/configs/UpdateTipoAdmin";
+import UserUpdatePass from "./pages/admin/users/UserUpdatePass";
+import UserAdminsMainPage from "./pages/admin/usersAdmin/UserAdminsMainPage";
+import CreateAdminPage from "./pages/admin/usersAdmin/CreateAdminPage";
+import UpdateAdminPage from "./pages/admin/usersAdmin/UpdateAdminPage";
+import CambioPassAdmin from "./pages/admin/usersAdmin/CambioPassAdmin";
+
 
 function App() {
   return (
@@ -82,11 +91,19 @@ function App() {
               <Route path="/administrador/proyects" element={<ProyectMainAdmin />} />
               <Route path="/administrador/proyects/:id" element={<UpdateProyectAdmin />} />
               <Route path="/administrador/tipofunciones" element={<ConfigTipoAdmin />} />
+              <Route path="/administrador/tipofunciones/newtipofunciones" element={<NewTipoAdmin />} />
+              <Route path="/administrador/tipofunciones/:id" element={<UpdateTipoAdmin />} />
+              <Route path="/administrador/users/cambio/:id" element={<UserUpdatePass />} />
+              <Route path="/administrador/admins" element={<UserAdminsMainPage />} />
+              <Route path="/administrador/admins/create" element={<CreateAdminPage />} />
+              <Route path="/administrador/admins/:id" element={<UpdateAdminPage />} />
+              <Route path="/administrador/admins/cambio/:id" element={<CambioPassAdmin />} />
               </Route> 
-
               <Route element={<Protected />}>
                 <Route path="/perfil" element={<Perfil />} />
                 <Route path="/editar-password" element={<CambioContra />} />
+                <Route path="/editar-datos" element={<UpdateDatosUser />} />
+
 
                 <Route path="/newproyect" element={<NewProyectPage />} />
                 <Route path="/proyects" element={<ProyectFormPage />} />

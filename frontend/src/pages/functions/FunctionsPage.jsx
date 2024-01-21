@@ -15,7 +15,8 @@ function FunctionsPage() {
   const params = useParams();
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' },
+    { path: `/funciones/${params.id}`, displayName: 'Fase 1: Funciones del Proyecto' }
   ];
   useEffect(() => {
     document.title = 'Fase 1- App costos';

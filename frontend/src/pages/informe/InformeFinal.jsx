@@ -32,7 +32,8 @@ function InformeFinal() {
 
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto'},
+    { path: `/informe/${params.id}`, displayName: 'Fase 7: Informe Final'},
   ];
 
   useEffect(() => {

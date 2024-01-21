@@ -12,7 +12,7 @@ import {
   updateUserwoPassword
 } from "../controllers/auth.controller.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
-import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
+import { registerSchema, loginSchema, cambiodatosSchema } from "../schemas/auth.schema.js";
 
 const router = Router();
 
@@ -21,8 +21,8 @@ router.post("/login", validateSchema(loginSchema), login);
 router.post("/logout", logout);
 router.get("/profile", authRequired, profile);
 router.get("/verify", verifyToken);
-router.get("/getUser/:id", getUserById);
+router.get("/getUser", authRequired, getUserById);
 router.put("/changePassword", authRequired, changePassword);
 router.put("/updateUser", authRequired, updateUser);
-router.put("/updateUserwoPassword", authRequired, updateUserwoPassword);
+router.put("/updateUserwoPassword",validateSchema(cambiodatosSchema), authRequired, updateUserwoPassword);
 export default router;

@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { useAdmin } from "../../../context/AdminContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Breadcrumbs from "../../../components/Breadcrumbs ";
+
 function UserUpdate() {
   const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
   const params = useParams();
-  const { updateUser, getUser, user} = useAdmin();
+  const { updateUser, getUser, errors} = useAdmin();
 
   useEffect(() => {
     async function loadfunction() {
@@ -27,18 +29,35 @@ function UserUpdate() {
     navigate(`/administrador/users`);
   });
 
+  const routes = [
+    { path: '/administrador/menu', displayName: 'Inicio' },
+    { path: `/administrador/users`, displayName: 'Administrar Usuarios' },
+    { path: `/administrador/users/${params.id}`, displayName: 'Actualizar Usuario' },
+  ];
+  console.log(errors);
+
    return (
     <div>
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+      <div className="max-w-3xl mx-auto mt-4 p-6 bg-white rounded-md shadow-md">
+        <Breadcrumbs routes={routes} />
         <h2 className="text-2xl font-semibold mb-6 text-black">
           Actualizar Usuarios
         </h2>
+        {errors.map((error, i) => (
+        <div
+          className="bg-red-500 text-sm p-2 text-white text-center my-2"
+          key={i}
+        >
+          {error}
+        </div>
+      ))}
         <form onSubmit={onSubmit}>
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Nombre
             </label>
             <input
+              required
               type="text"
               id="name"
               name="name"
@@ -53,6 +72,7 @@ function UserUpdate() {
               Apellido
             </label>
             <input
+              required
               type="text"
               id="lastname"
               name="lastname"
@@ -66,26 +86,13 @@ function UserUpdate() {
               Correo Electrónico
             </label>
             <input
+              required
               type="email"
               id="email"
               name="email"
               placeholder="Actualice el email"
               className="w-full border p-2 rounded text-black"
               {...register("email", { required: true })}
-            />
-          </div>
-          <div className="mb-4">
-
-            <label className="block text-gray-600 text-sm font-medium mb-2">
-              Constraseña (Mas de 6 caracteres)
-            </label>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              placeholder="Actualice la contraseña"
-              className="w-full border p-2 rounded text-black"
-              {...register("password")}
             />
           </div>
           <button

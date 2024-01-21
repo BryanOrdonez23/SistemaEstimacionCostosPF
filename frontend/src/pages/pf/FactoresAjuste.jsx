@@ -21,7 +21,8 @@ const FactoresAjuste = () => {
 
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' }
+    { path: `/fases/${params.id}`, displayName: 'Fases del proyecto'},
+    { path: `/fasePFAjustado/${params.id}`, displayName: 'Fase 3: Factores de ajuste' }
   ];
 
   //popup

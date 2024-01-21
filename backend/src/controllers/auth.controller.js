@@ -40,10 +40,10 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const userFound = await User.findOne({ email });
-    if (!userFound) return res.status(400).json({ message: "User not Found" });
+    if (!userFound) return res.status(400).json({ message: "Usuario no encontrado" });
 
     const isMatch = await bcrypt.compare(password, userFound.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid Password." });
+    if (!isMatch) return res.status(400).json({ message: "Constraseña incorrecta"});
 
     const token = await createAccessToken({ id: userFound._id });
     res.cookie("token", token);
@@ -110,11 +110,11 @@ export const getUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.user.payload.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
     } catch (error) {
-    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 }
 
@@ -182,7 +182,7 @@ export const updateUserwoPassword = async (req, res) => {
       lastname,
       email
     });
-    res.json(userUpdated);
+    res.status(200).json(userUpdated);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -1,12 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
 import { useAuth } from "../../context/AuthContext";
 
 function ProfilePage() {
-    const { user } = useAuth();
+    const { user, getUserById } = useAuth();
   
-  const routes = [{ path: "/proyects", displayName: "Inicio /" }];
+  const routes = [{ path: "/proyects", displayName: "Inicio" },
+  { path: "/perfil", displayName: "Perfil de Usuario" },
+  ];
+
+  useEffect(() => { 
+    document.title = 'Perfil - App costos';
+    async function loadUser() {
+      await getUserById(user.id);
+    }
+    loadUser();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center  bg-CCE3FF">
@@ -36,7 +46,7 @@ function ProfilePage() {
         {/* Contenedor adicional solo para el botón */}
         <div className=" flex  space-x-20 text-center justify-around ">
           <Link
-            to="/editar-perfil"
+            to="/editar-datos"
             className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
           >
             Editar información

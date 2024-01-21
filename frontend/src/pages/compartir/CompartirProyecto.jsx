@@ -57,7 +57,8 @@ const handleErrorClose = () => {
   });
 
   const routes = [
-    { path: '/proyects', displayName: 'Inicio /' }
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: '/compartir', displayName: 'Compartir Proyecto' },
   ];
 
 

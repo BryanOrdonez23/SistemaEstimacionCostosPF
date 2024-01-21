@@ -9,14 +9,14 @@ function NewProyectPage() {
   const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
   const params = useParams();
-
+  
   const { user } = useAuth();
   const { proyects, createProyect, getProyects, getProyect, updateProyect } =
     useProyect();
 
   //console.log(proyects);
   useEffect(() => {
-    document.title = 'Nuevo/Actualizar Proyecto - App costos';
+    document.title = "Nuevo/Actualizar Proyecto - App costos";
     async function loadProyect() {
       if (params.id) {
         const proyectfound = await getProyect(params.id);
@@ -40,9 +40,15 @@ function NewProyectPage() {
     navigate("/proyects");
   });
 
-  const routes = [
-    { path: "/proyects", displayName: "Inicio /" }
-  ];
+  const routes = params.id
+  ? [
+      { path: "/proyects", displayName: "Inicio" },
+      { path: `/proyect/${params.id}`, displayName: "Actualizar Proyecto" },
+    ]
+  : [
+      { path: "/proyects", displayName: "Inicio" },
+      { path: "/newproyect", displayName: "Nuevo Proyecto" },
+    ];
 
   return (
     <div className="flex flex-col items-center justify-center  bg-CCE3FF">

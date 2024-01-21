@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect} from "react";
 import { registerRequest, loginRequest, verifyTokenRequest, getUserByIdRequest, changePasswordRequest, updateUserwoPasswordRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
+
 export const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -13,6 +14,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [usertwo, setUsertwo] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,6 @@ export const AuthProvider = ({ children }) => {
   const singup = async (user) => {
     try {
       const res = await registerRequest(user);
-      console.log(res.data);
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
@@ -32,7 +33,6 @@ export const AuthProvider = ({ children }) => {
   const singin = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res.data);
       setIsAuthenticated(true);
       setUser(res.data);
     } catch (error) {
@@ -50,7 +50,8 @@ export const AuthProvider = ({ children }) => {
   }
 const getUserById = async (id) => {
   try {
-    const res = await getUserByIdRequest(id);
+    const res = await getUserByIdRequest();
+    setUser(res.data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -62,7 +63,7 @@ const changePassword = async (data) => {
     const res = await changePasswordRequest(data);
     return res.data;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     setErrors([error.response.data.message]);
   }
 }
@@ -73,11 +74,9 @@ const updateUserwoPassword = async (data) => {
     return res.data;
   } catch (error) {
     console.log(error);
-    setErrors([error.response.data.message]);
+    setErrors([error.response.data])
   }
 }
-
-
   useEffect(() => {
     if (errors.length > 0) {
      const timer= setTimeout(() => {
@@ -90,9 +89,8 @@ const updateUserwoPassword = async (data) => {
   useEffect(() => {
     async function checkLogin() {
       const cookies = Cookies.get();
-
       if (!cookies.token){
-        console.log("no hay token");
+        //console.log("no hay token");
         setIsAuthenticated(false);
         setLoading(false);
         return setUser(null);
@@ -107,6 +105,7 @@ const updateUserwoPassword = async (data) => {
         }
         setIsAuthenticated(true);
         setUser(res.data);
+        console.log(res.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -132,7 +131,8 @@ const updateUserwoPassword = async (data) => {
         setUser,
         getUserById,
         changePassword,
-        updateUserwoPassword
+        updateUserwoPassword,
+        usertwo
       }}
     >
       {children}

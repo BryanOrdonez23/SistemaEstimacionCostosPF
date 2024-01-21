@@ -63,7 +63,8 @@ const CalcuiloPFSA = () => {
   };
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' },
+    { path: `/calculopfsa/${params.id}`, displayName: 'Fase 2: Puntos de Función sin Ajustar' }
   ];
 
   return (

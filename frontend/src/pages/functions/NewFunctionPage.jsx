@@ -47,6 +47,7 @@ function NewProyectPage() {
       path: `/funciones/${params.id}`,
       displayName: "Fase 1: Funcionalidades del proyecto de software",
     },
+    { path: `/newfunciones/${params.id}`, displayName: "Nueva Funcionalidad" },
   ];
   return (
     <div className="flex flex-col items-center justify-center  bg-CCE3FF my-2">

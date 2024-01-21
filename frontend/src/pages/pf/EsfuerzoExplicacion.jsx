@@ -18,7 +18,8 @@ function EsfuerzoExplicacion() {
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
     { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
-    { path: `/esfuerzopf/${params.id}`, displayName: 'Fase 5: Cálculo del Esfuerzo del Proyecto' }
+    { path: `/esfuerzopf/${params.id}`, displayName: 'Fase 5: Cálculo del Esfuerzo del Proyecto'},
+    { path: `/esfuerzoExplicacion/${params.id}`, displayName: 'Detalles'}
   ];
 
   return (

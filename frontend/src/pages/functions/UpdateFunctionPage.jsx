@@ -43,6 +43,7 @@ function NewProyectPage() {
     { path: '/proyects', displayName: 'Inicio' },
     { path: `/fases/${params.id1}`, displayName: 'Fases del proyecto' },
     { path: `/funciones/${params.id1}`, displayName: 'Fase 1: Funcionalidades del proyecto de software' },
+    { path: `/updatefuncion/${params.id1}/${params.id2}`, displayName: "Actualizar Funcionalidad" }
   ];
 
   return (

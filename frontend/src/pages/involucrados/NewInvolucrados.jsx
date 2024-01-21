@@ -29,7 +29,8 @@ function NewInvolucrados() {
     { path: '/proyects', displayName: 'Inicio' },
     { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
     { path: `/presupuesto/${params.id}`, displayName: 'Fase 6: Presupuesto del proyecto' },
-    { path: `/involucrados/${params.id}`, displayName: 'Menú involucrados' }
+    { path: `/involucrados/${params.id}`, displayName: 'Menú involucrados'},
+    { path: `/newinvolucrados/${params.id}`, displayName: 'Nuevo involucrado'}
   ];
 
 

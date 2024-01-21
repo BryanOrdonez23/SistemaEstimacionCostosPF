@@ -46,7 +46,8 @@ function NewOtrosGastos() {
     { path: '/proyects', displayName: 'Inicio' },
     { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
     { path: `/presupuesto/${params.id}`, displayName: 'Fase 6: Presupuesto del proyecto' },
-    { path: `/otrosGastos/${params.id}`, displayName: 'Menú otros gastos' }
+    { path: `/otrosGastos/${params.id}`, displayName: 'Menú otros gastos' },
+    { path: `/newotrosGastos/${params.id}`, displayName: 'Nuevo otro gasto' }
   ];
 
   return (

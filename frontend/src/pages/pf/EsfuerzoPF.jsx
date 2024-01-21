@@ -57,7 +57,8 @@ const EsfuerzoPF = () => {
 
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto' }
+    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto'},
+    { path: `/esfuerzopf/${params.id}`, displayName: 'Fase 5: Esfuerzo del Proyecto'}
   ];
 
   return (

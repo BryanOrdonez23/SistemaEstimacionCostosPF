@@ -33,6 +33,7 @@ function InicioOtrosGastos() {
       path: `/presupuesto/${params.id}`,
       displayName: "Fase 6: Presupuesto del proyecto",
     },
+    { path: `/otrosGastos/${params.id}`, displayName: "Otros Gastos" },
   ];
 
   return (

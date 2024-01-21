@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomPopup from "../components/CustomPopup";
-
+import Breadcrumbs from "../components/Breadcrumbs ";
 const Fase = ({ title, description, path, icon, isEnabled, iconok }) => {
   const linkClass = isEnabled
     ? "bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-300 ease-in-out"
@@ -55,7 +55,8 @@ const Fases = () => {
   const isFasesEnabled6 = datosPuntosFuncion && datosPuntosFuncion.functionPoints && datosPuntosFuncion.functionPoints[0].presupuesto > 0;
 
   const routes = [
-    { path: '/proyects', displayName: 'Inicio /' }
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: `/fases/${params.id}`, displayName: 'Fases' },
   ];
 
 
@@ -80,7 +81,7 @@ const Fases = () => {
   const handlePopUpClose = () => {
     setShowCustomPopup(null);
   };
-
+//      <Breadcrumbs routes={routes} />
   return (
     <div  className=" mt-2">
     <div className="flex justify-center mt-3">      

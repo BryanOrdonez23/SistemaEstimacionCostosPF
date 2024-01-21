@@ -1,3 +1,4 @@
+
 import axios from "./axios";
 
 
@@ -9,6 +10,7 @@ export const getUsersRequest = async () => axios.get(`admin/users`);
 export const getUserByNameRequest = async (name) => axios.get(`admin/userbyname/${name}`);
 export const deleteUserRequest = async (id) => axios.delete(`admin/user/${id}`);
 export const updateUserRequest = async (id, user) => axios.put(`admin/user/${id}`, user);
+export const changePasswordRequest = async (id, user) => axios.put(`admin/changepassword/${id}`, user);
 
 
 // 
@@ -26,3 +28,12 @@ export const getTipoFuncionesRequest = async () => axios.get(`admin/tipofuncion`
 export const getTipoFuncionRequest = async (id) => axios.get(`admin/tipofuncion/${id}`);
 export const updateTipoFuncionRequest = async (id, tipoFuncion) => axios.put(`admin/tipofuncion/${id}`, tipoFuncion);
 export const deleteTipoFuncionRequest = async (id) => axios.delete(`admin/deletetipofuncion/${id}`);
+
+// 
+
+export const getAdminsRequest = async () => axios.get(`admin/admins`);
+export const getAdminByIdRequest = async (id) => axios.get(`admin//admin/${id}`);
+export const deleteAdminRequest = async (id) => axios.delete(`admin/deleteadmin/${id}`);
+export const updateAdminRequest = async (id, admin) => axios.put(`admin/updateadmin/${id}`, admin);
+export const changePasswordAdminRequest = async (id, admin) => axios.put(`admin/changepasswordadmin/${id}`, admin);
+export const createAdminRequest = async (admin) => axios.post(`admin/createadmin`, admin);
