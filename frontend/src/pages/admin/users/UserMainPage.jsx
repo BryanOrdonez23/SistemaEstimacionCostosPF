@@ -8,6 +8,7 @@ function UserMainPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    document.title = "Administrar Usuarios - App Costos";
     getUsers();
   }, []);
 

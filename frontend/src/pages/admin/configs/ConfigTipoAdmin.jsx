@@ -15,6 +15,7 @@ function ConfigTipoAdmin() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    document.title = "Configuraciones del proyecto - App costos";
     getTipoFunciones();
   }, []);
 

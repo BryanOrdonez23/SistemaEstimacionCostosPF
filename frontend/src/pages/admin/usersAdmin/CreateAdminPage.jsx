@@ -17,7 +17,7 @@ function CreateAdminPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "App costos - Nuevo Admin";
+    document.title = "Nuevo Admin - App costos";
     
   }, []);
 

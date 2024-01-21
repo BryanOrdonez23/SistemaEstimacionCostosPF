@@ -20,6 +20,7 @@ const UpdateTipoAdmin = () => {
 
   // Establecer los valores iniciales cuando el componente se monta
   useEffect(() => {
+    document.title = "Actualizar Tipo de Funcionalidad - App costos";
     async function load() {
         const tipofound = await getTipoFuncion(params.id);
         setValue("tipo", tipofound.tipo);

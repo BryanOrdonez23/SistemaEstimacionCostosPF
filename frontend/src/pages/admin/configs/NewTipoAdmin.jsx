@@ -25,6 +25,10 @@ const NewTipoAdmin = () => {
     { path: `/administrador/tipofunciones/newtipofunciones`, displayName: 'Nuevo Tipo de funcionalidad' },
   ];
 
+  useEffect(() => {
+    document.title = "Nuevo Tipo de Funcionalidad - App costos";
+  }), [];
+
   return (
     <div className="max-w-3xl mx-auto mt-4 p-6 bg-white rounded-md shadow-md text-black">
       <Breadcrumbs routes={routes} />

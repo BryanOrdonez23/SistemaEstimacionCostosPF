@@ -83,8 +83,9 @@ const Fases = () => {
   };
 //      <Breadcrumbs routes={routes} />
   return (
-    <div  className=" mt-2">
-    <div className="flex justify-center mt-3">      
+    <div  className="flex flex-col items-center justify-center  bg-CCE3FF">
+      <Breadcrumbs routes={routes} />
+    <div className="flex justify-center mt-1">      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-8xl">
         <Fase
           title="Fase 1"

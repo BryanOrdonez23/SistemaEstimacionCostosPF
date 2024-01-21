@@ -20,7 +20,7 @@ function UpdateAdminPage() {
       const params = useParams();
     
       useEffect(() => {
-        document.title = "App costos - Actualizar Admin";
+        document.title = "Actualizar Admin - App costos";
         async function loadfunction() {
             if (params.id) {
               const userfound = await getAdmin(params.id);

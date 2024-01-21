@@ -130,7 +130,7 @@ function ProyectFormPage() {
         <p className="text-xl sm:text-2xl mb-4">No hay proyectos</p>
       ) : (
         <div className="overflow-x-auto overflow-y-auto max-h-[500px]">
-          <table className="min-w-full bg-gray-200 border border-gray-300 text-sm sm:text-base">
+          <table className="min-w-full bg-gray-200 border border-gray-300 text-sm sm:text-sm">
             <thead>
               <tr>
                 <th className="py-2 px-2 md:px-4 border-b text-center">

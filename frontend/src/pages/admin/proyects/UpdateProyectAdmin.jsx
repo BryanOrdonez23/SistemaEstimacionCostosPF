@@ -16,6 +16,7 @@ function UpdateProyectAdmin() {
 
   //console.log(proyects);
   useEffect(() => {
+    document.title = "Actualizar Proyecto - App costos";
     async function loadProyect() {
       if (params.id) {
         const proyectfound = await getProyect(params.id);

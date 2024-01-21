@@ -19,6 +19,7 @@ function LoginPageAdmin() {
       });
     
       useEffect(() => {
+        document.title = "Inicio de Sesión de Administrador - App costos";
         if (isAuthenticated) {
           navigate("/administrador/menu");
         }

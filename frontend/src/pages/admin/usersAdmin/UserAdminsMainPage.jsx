@@ -8,6 +8,7 @@ function UserAdminsMainPage() {
     const [searchTerm, setSearchTerm] = useState("");
   
     useEffect(() => {
+      document.title = "Administrar Administradores - App Costos";
       getAdmins();
     }, []);
   

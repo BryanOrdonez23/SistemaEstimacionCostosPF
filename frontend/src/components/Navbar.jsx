@@ -97,6 +97,7 @@ const Navbar = () => {
                       onClick={() => setShowMenu(!showMenu)}
                     >
                       <FontAwesomeIcon icon={faUser} size="xl" />
+                      {" "+user.name}
                     </div>
                     {showMenu && (
                       <ul className="absolute z-50 right-0 mt-2 min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg">

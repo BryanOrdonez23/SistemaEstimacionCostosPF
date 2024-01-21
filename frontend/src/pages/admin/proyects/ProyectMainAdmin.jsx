@@ -9,6 +9,7 @@ function ProyectMainAdmin() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    document.title = "Administrar Proyectos - App Costos";
     getAllProyects();
   }, []);
 

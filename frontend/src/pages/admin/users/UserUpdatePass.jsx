@@ -19,6 +19,10 @@ const UserUpdatePass = () => {
    }
   };
 
+  useEffect(() => {
+    document.title = 'Cambio de Contraseña Usuario - App Costos';
+  }, []);
+
   const routes = [
     { path: '/administrador/menu', displayName: 'Inicio' },
     { path: `/administrador/users`, displayName: 'Administrar Usuarios' },

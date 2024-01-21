@@ -12,6 +12,7 @@ function UserUpdate() {
   const { updateUser, getUser, errors} = useAdmin();
 
   useEffect(() => {
+    document.title = "Actualizar Usuario - App costos";
     async function loadfunction() {
       if (params.id) {
         const userfound = await getUser(params.id);

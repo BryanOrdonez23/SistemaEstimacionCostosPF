@@ -18,6 +18,9 @@ function CambioPassAdmin() {
       navigate(`/administrador/admins`);
      }
     };
+    useEffect(() => {
+     document.title = 'Cambio de Contraseña - App Costos';
+    }, []);
   
     const routes = [
       { path: '/administrador/menu', displayName: 'Inicio' },

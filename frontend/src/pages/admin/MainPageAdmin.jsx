@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faProjectDiagram, faUserPlus, faCog } from '@fortawesome/free-solid-svg-icons';
 
 function MainPageAdmin() {
+  useEffect(() => {
+    document.title = 'Página Principal Administrador - App Costos ';
+  }, []);
+  
   return (
     <div className='text-center'>
       <div className='text-5xl text-black mb-8'>Página Principal del Administrador</div>
