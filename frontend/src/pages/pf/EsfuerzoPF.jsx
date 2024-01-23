@@ -193,7 +193,7 @@ const EsfuerzoPF = () => {
                       <td>15</td>
                     </tr>
                     <tr>
-                      <td>Lenguaje de 4ta Generación</td>
+                      <td>Lenguaje de 3ra y 4ta Generación</td>
                       <td>5 – 10</td>
                       <td>8</td>
                     </tr>

@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useFunctions } from "../../context/FunctionsContext";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import { useProyect } from "../../context/ProyectContext";
+import { useAuth } from "../../context/AuthContext";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { useParams } from "react-router-dom";
@@ -29,6 +30,7 @@ function InformeFinal() {
   const [conteo, setconteo] = useState(0);
   const [prom, setprom] = useState(0);
   const [sumaotrosGastos, setsumaotrosGastos] = useState(0);
+  const { isAuthenticated, logout, user } = useAuth();
 
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
@@ -593,6 +595,28 @@ function InformeFinal() {
       pdf.text(
         `El costo estimado del proyecto es de: ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(2)} USD`,
         20,
+        posy
+      );
+      posy = validacion(pdf, posy, 40);
+      pdf.text(
+        `___________________________`,
+        32,
+        posy
+      );
+      pdf.text(
+        `___________________________`,
+        120,
+        posy
+      );
+      posy = validacion(pdf, posy, 7);
+      pdf.text(
+        `${user.name} ${user.lastname} `,
+        43,
+        posy
+      );
+      pdf.text(
+        `Revisor del informe`,
+        128,
         posy
       );
 

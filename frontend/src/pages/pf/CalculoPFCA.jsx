@@ -41,7 +41,7 @@ const CalculoPFCA = () => {
         </h1>
 
         <button
-          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded w-full transition-transform transform-gpu active:scale-95"
+          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded mx-auto transition-transform transform-gpu active:scale-95"
           onClick={handleCalcularPuntos}
         >
           Calcular Puntos de Función con ajuste

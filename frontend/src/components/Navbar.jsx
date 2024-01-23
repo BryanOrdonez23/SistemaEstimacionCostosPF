@@ -57,15 +57,30 @@ const Navbar = () => {
         <div className="flex items-center gap-2 sm:gap-4">
           <ul className="flex flex-wrap sm:flex-row items-center gap-2 sm:gap-4">
             {isAdminPage ? (
-              <li>
-                <Link
-                  to="/administrador/login"
-                  onClick={() => cerrar()}
-                  className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
-                >
-                  Cerrar Sesión
-                </Link>
-              </li>
+              adminCorrecto ? (
+                <>
+                  <li>
+                    <Link
+                      to="/administrador/login"
+                      onClick={() => cerrar()}
+                      className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                    >
+                      Cerrar Sesión
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      to="/administrador/login"
+                      className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                    >
+                      Iniciar Sesión
+                    </Link>
+                  </li>
+                </>
+              )
             ) : (
               <>
                 {!isAuthenticated && (

@@ -75,7 +75,7 @@ const CalcuiloPFSA = () => {
         <h1 className="text-blue-950 text-3xl font-bold mb-4"> Fase 2: Cálculo de Puntos de Función sin Ajustar</h1>
   
         <button
-          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded w-full transition-transform transform-gpu active:scale-95"
+          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded mx-auto transition-transform transform-gpu active:scale-95"
           onClick={handleCalcularPuntos}
         >
           Calcular Puntos de Función

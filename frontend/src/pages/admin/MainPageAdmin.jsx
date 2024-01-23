@@ -9,10 +9,10 @@ function MainPageAdmin() {
   }, []);
   
   return (
-    <div className='text-center'>
+    <div className='text-center '>
       <div className='text-5xl text-black mb-8'>Página Principal del Administrador</div>
 
-      <div className='grid grid-cols-2 gap-4'>
+      <div className='grid grid-cols-2 gap-8'>
         {/* Enlace de Usuarios */}
         <Link to='/administrador/users' className='bg-blue-500 p-6 rounded-lg block text-center'>
           <FontAwesomeIcon icon={faUsers} className='text-white text-3xl mb-2' />
