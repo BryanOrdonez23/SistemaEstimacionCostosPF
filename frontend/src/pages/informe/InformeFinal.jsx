@@ -139,30 +139,33 @@ function InformeFinal() {
       // Configuración del color del texto a negro
       pdf.setTextColor(0, 0, 0);
       pdf.setFontSize(15);
-
+      const logoImage = '/logo/logoCompu.png';
       // Agrega el título
       pdf.setFont("helvetica", "bold");
-      pdf.text("Informe de Estimación de Costos - Método de Puntos de Función", 25, 15);
+      pdf.addImage(logoImage, 'PNG', 20, 15, 16, 13);
+      pdf.text("Carrera de Ingieneria en Sistemas/Computación", 48, 20);
+      pdf.text("Informe de estimación de costos por PF ", 55, 27);
+      //pdf.text("Informe de Estimación de Costos - Método de Puntos de Función", 25, 15);
       pdf.setFontSize(10);
-      pdf.text("Proyecto: ",15,25)
+      pdf.text("Proyecto: ",15,40)
       pdf.setFont("helvetica", "normal");
-      pdf.text(""+ proyect.title,35,25)
+      pdf.text(""+ proyect.title,35,40)
       pdf.setFont("helvetica", "bold");
       ////
-      pdf.text("Descripción: ",15,30)
+      pdf.text("Descripción: ",15,45)
       pdf.setFont("helvetica", "normal");
-      pdf.text(""+ proyect.description,40,30)
+      pdf.text(""+ proyect.description,40,45)
       pdf.setFont("helvetica", "bold");
       ////
       ////
-      pdf.text("Fecha del informe: ",15,35)
+      pdf.text("Fecha del informe: ",15,50)
       pdf.setFont("helvetica", "normal");
-      pdf.text(""+ new Date().toLocaleString(),48,35)
+      pdf.text(""+ new Date().toLocaleString(),48,50)
       pdf.setFont("helvetica", "bold");
       ////
       // Primer bloque: Tabla con las columnas originales
       pdf.setFontSize(14);
-      pdf.text("1. Listado de funcionalidades del sistema:", 15, 45);pdf.setFontSize(10);
+      pdf.text("1. Listado de funcionalidades del sistema:", 15, 60);pdf.setFontSize(10);
       pdf.setFont("helvetica", "normal");
       // Verifica que haya funciones antes de intentar construir la tabla original
       if (funciones && funciones.length > 0) {
@@ -183,7 +186,7 @@ function InformeFinal() {
 
         // Configuración de la tabla original
         const tableConfigOriginal = {
-          startY: 50,
+          startY: 70,
           head: [headersOriginal],
           body: dataOriginal,
         };
@@ -619,6 +622,19 @@ function InformeFinal() {
         128,
         posy
       );
+
+      const totalPages = pdf.internal.getNumberOfPages();
+
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        pdf.setFontSize(8);
+        pdf.text(
+          `Carrera de Computación - Página ${i} de ${totalPages}`,
+          pdf.internal.pageSize.getWidth() / 2,
+          pdf.internal.pageSize.getHeight() - 10,
+          { align: 'center' }
+        );
+      }
 
       pdf.save("InformeFinal.pdf");
     } catch (error) {

@@ -3,19 +3,40 @@ import { useAdmin } from "../../../context/AdminContext";
 import { useProyect } from '../../../context/ProyectContext';
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../../components/Breadcrumbs ";
-
+import DeleteConfirmationModal from "../../../components/DeleteConfirmationModal";
 function ProyectMainAdmin() {
   const { getUsers, users, deleteUser, updateUser, getAllProyects, allproyects, deleteProyect } = useAdmin();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [proyectToDelete, setProyectToDelete] = useState(null);
 
   useEffect(() => {
     document.title = "Administrar Proyectos - App Costos";
     getAllProyects();
   }, []);
 
-  const handleDeleteProyect = (proyectId) => {
-    deleteProyect(proyectId);
-    getAllProyects();
+ const handleDeleteProyect = (proyectId) => {
+    // Mostrar el modal de confirmación antes de eliminar
+    setProyectToDelete(proyectId);
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      // Realizar la eliminación después de la confirmación
+      await deleteProyect(proyectToDelete);
+      // Actualizar la lista de proyectos u otras acciones necesarias después de la eliminación
+      getAllProyects();
+      // Ocultar el modal de confirmación
+      setShowDeleteConfirmation(false);
+    } catch (error) {
+      console.error("Error al eliminar el proyecto:", error);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    // Ocultar el modal de confirmación
+    setShowDeleteConfirmation(false);
   };
 
   const filteredProyects = allproyects ? allproyects.filter((proyect) =>
@@ -23,6 +44,7 @@ function ProyectMainAdmin() {
   proyect.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
   proyect.user.name.toLowerCase().includes(searchTerm.toLowerCase()) 
 ) : [];
+
 
 
 const routes = [
@@ -77,6 +99,12 @@ const routes = [
           </tbody>
         </table>
       </div>
+      {showDeleteConfirmation && (
+        <DeleteConfirmationModal
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 }

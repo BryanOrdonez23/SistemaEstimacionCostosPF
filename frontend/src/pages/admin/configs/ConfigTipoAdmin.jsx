@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useAdmin } from "../../../context/AdminContext";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../../components/Breadcrumbs ";
+import DeleteConfirmationModal from "../../../components/DeleteConfirmationModal";
+
 function ConfigTipoAdmin() {
   const {
     createTipoFuncion,
@@ -13,6 +15,8 @@ function ConfigTipoAdmin() {
     tipoFuncion,
   } = useAdmin();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [tipoFuncionToDelete, setTipoFuncionToDelete] = useState(null);
 
   useEffect(() => {
     document.title = "Configuraciones del proyecto - App costos";
@@ -20,8 +24,27 @@ function ConfigTipoAdmin() {
   }, []);
 
   const handleDeleteTipoFuncion = (tipoFuncionId) => {
-    deleteTipoFuncion(tipoFuncionId);
-    getTipoFunciones();
+    // Mostrar el modal de confirmación antes de eliminar
+    setTipoFuncionToDelete(tipoFuncionId);
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      // Realizar la eliminación después de la confirmación
+      await deleteTipoFuncion(tipoFuncionToDelete);
+      // Actualizar la lista de tipoFunciones u otras acciones necesarias después de la eliminación
+      getTipoFunciones();
+      // Ocultar el modal de confirmación
+      setShowDeleteConfirmation(false);
+    } catch (error) {
+      console.error("Error al eliminar el tipo de función:", error);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    // Ocultar el modal de confirmación
+    setShowDeleteConfirmation(false);
   };
 
   const routes = [
@@ -89,6 +112,12 @@ function ConfigTipoAdmin() {
           </tbody>
         </table>
       </div>
+      {showDeleteConfirmation && (
+        <DeleteConfirmationModal
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 }

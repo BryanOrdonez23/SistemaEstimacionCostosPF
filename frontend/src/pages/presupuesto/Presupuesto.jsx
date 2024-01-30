@@ -73,7 +73,7 @@ const Presupuesto = () => {
     try {
       const presu = await calcularPresupuestoEstimado(params.id);
       const mensaje =
-        "hola \n El costo estimado del proyecto es = " +
+        "El costo estimado del proyecto es = " +
         presu.toFixed(3) +
         " $";
       setpresupuesto(mensaje);

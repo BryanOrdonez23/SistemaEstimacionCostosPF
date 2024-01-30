@@ -17,14 +17,24 @@ export const useFunctions = () => {
 
 export const FunctionsProvider = ({ children }) => {
   const [funciones, setFunctions] = useState([]);
+  const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    if (errors.length > 0) {
+     const timer= setTimeout(() => {
+        setErrors([]);
+      }, 5000)
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
 
   const createFunctions = async (id, functions) => {
     try {
       const res = await createFunctionsRequest(id, functions);
       getFunctions(id);
-      console.log(res.data);
+      return res.data;
     } catch (error) {
-      console.error(error);
+      setErrors(error.response.data);
     }
   };
 
@@ -60,14 +70,12 @@ export const FunctionsProvider = ({ children }) => {
     try {
       const res = await updateFunctionRequest(id1, id2, functions);
       getFunctions(id1);
-      console.log(res.data);
+      return res.data;
     } catch (error) {
-      console.error(error);
+      setErrors(error.response.data);
     }
   
   }
-
-
 
   return (
     <FunctionsContext.Provider
@@ -77,7 +85,8 @@ export const FunctionsProvider = ({ children }) => {
         getFunctions,
         deleteFunctions,
         getFunction,
-        updateFunction
+        updateFunction,
+        errors
       }}
     >
       {children}

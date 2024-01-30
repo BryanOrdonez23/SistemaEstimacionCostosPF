@@ -11,6 +11,7 @@ export const createProyectShared = async (req, res) => {
       const newProyect = new ProyectShares({
         permissions: "all",
         keyShared: keyShared,
+        status: false,
         user: req.user.payload.id,
         proyect: proyect._id,
       });
@@ -28,8 +29,9 @@ export const getProyectsShared = async (req, res) => {
   try {
     const proyects = await ProyectShares.find({
       user: req.user.payload.id,
+      status: true
     }).populate("proyect").populate("user");
-
+console.log(proyects);
     // Verificar el estado de cada proyecto
     const proyectosValidos = await Promise.all(
       proyects.map(async (proyectoShare) => {
@@ -51,6 +53,26 @@ export const getProyectsShared = async (req, res) => {
     res.status(500).json({ error: "Error al obtener los proyectos compartidos" });
   }
 };
+
+export const getSolicitudesProyectosShared = async (req, res) => {
+  try {
+    const { proyectId } = req.body;
+
+    const proyects = await ProyectShares.find({
+      proyect: proyectId,
+      status : false
+    }).populate("user");
+
+    if (proyects.length > 0) {
+      res.json(proyects);
+    } else {
+      return res.status(400).json({ message: "Este proyecto no ha sido compartido" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener los proyectos compartidos" });
+  }
+}
 
 const validarCodigo = async (key, userId) => {
   try {
@@ -96,13 +118,14 @@ export const deleteProyectShared = async (req, res) => {
 export const getProyectsSharedByProyect = async (req, res) => {
   try {
     const { proyectId } = req.body;
-    console.log(proyectId);
 
     const proyects = await ProyectShares.find({
       proyect: proyectId,
+      status: true
     }).populate("user");
 
     if (proyects.length > 0) {
+      console.log(proyects);
       res.json(proyects);
     } else {
       return res.status(400).json({ message: "Este proyecto no ha sido compartido" });
@@ -112,3 +135,19 @@ export const getProyectsSharedByProyect = async (req, res) => {
     res.status(500).json({ error: "Error al obtener los proyectos compartidos" });
   }
 }
+
+
+export const updateStatusProyectShared = async (req, res) => {
+  try {
+    const { proyectId } = req.body; 
+    const proyect = await ProyectShares.findByIdAndUpdate(proyectId, 
+      {status: true},
+      {new: true,
+    });
+    if (!proyect)
+      return res.status(404).json({ message: "Proyecto compartido no encontrado." });
+    res.json(proyect);
+  } catch (error) {
+    return res.status(404).json({ message: "Error no se pudo actualizar el proyecto compartido." });
+  }
+};

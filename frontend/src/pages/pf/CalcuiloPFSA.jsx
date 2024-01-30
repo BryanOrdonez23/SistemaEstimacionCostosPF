@@ -68,25 +68,26 @@ const CalcuiloPFSA = () => {
   ];
 
   return (
-    
     <div className="flex flex-col items-center justify-start min-h-screen bg-CCE3FF mt-4">
       <div className="w-full max-w-screen-lg mb-4 text-center bg-white p-6 rounded-md shadow-md">
-      <Breadcrumbs routes={routes} />
-        <h1 className="text-blue-950 text-3xl font-bold mb-4"> Fase 2: Cálculo de Puntos de Función sin Ajustar</h1>
-  
+        <Breadcrumbs routes={routes} />
+        <h1 className="text-blue-950 text-3xl font-bold mb-4">
+          Fase 2: Cálculo de Puntos de Función sin Ajustar
+        </h1>
+
         <button
           className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded mx-auto transition-transform transform-gpu active:scale-95"
           onClick={handleCalcularPuntos}
         >
           Calcular Puntos de Función
         </button>
-  
+
         {puntosFuncionTotal !== 0 && (
           <div className="bg-gray-200 p-4 rounded-md mt-4">
             <p className="mb-2 text-blue-700 font-bold">
               Puntos de Función Totales (sin ajustar): {puntosFuncionTotal}
             </p>
-  
+
             <div className="text-base">
               <p className="text-gray-800">Fórmula:</p>
               <p className="text-gray-800">PFSA = Σ (Cantidad * Peso)</p>
@@ -94,48 +95,54 @@ const CalcuiloPFSA = () => {
           </div>
         )}
       </div>
-  
+
       <div className="w-full max-w-screen-lg">
-      <div className={` overflow-x-auto ${funciones.length > 7 ? 'overflow-y-auto  max-h-[370px]' : ''} bg-white p-6 rounded-md shadow-md mt-1`}>
-      <h1 className='text-gray-800 text-2xl text-center font-bold mb-2'>Listado de funcionalidades</h1>
-        {funciones.length === 0 ? (
-          <h1 className="text-xl mb-4">No hay funciones agregadas</h1>
-        ) : (
-          <table className="w-full bg-gray-200 border border-gray-300 text-sm">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b text-left text-black">Funcionalidad</th>
-                <th className="py-2 px-4 border-b text-left text-black">Tipo</th>
-                <th className="py-2 px-4 border-b text-left text-black">Complejidad</th>
-                <th className="py-2 px-4 border-b text-left text-black">Peso</th>
-                <th className="py-2 px-4 border-b text-left text-black">Cantidad</th>
-                <th className="py-2 px-4 border-b text-left text-black">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {funciones.map((funcion) => (
-                <tr key={funcion._id} className="hover:bg-gray-300">
-                  <td className="py-2 px-4 border-b text-black">{funcion.funcionalidad}</td>
-                  <td className="py-2 px-4 border-b text-black text-center">{funcion.tipo}</td>
-                  <td className="py-2 px-4 border-b text-black text-center">{funcion.complejidad}</td>
-                  <td className="py-2 px-4 border-b text-black text-center">{calcularPeso(funcion.tipo, funcion.complejidad)}</td>
-                  <td className="py-2 px-4 border-b text-black text-center">{funcion.cantidad}</td>
-                  <td className="py-2 px-4 border-b text-black text-center">{calcularPonderacion(funcion.tipo, funcion.complejidad, funcion.cantidad)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-      <div className="flex flex-col md:flex-row justify-end mt-5 my-10">
-        <Link
-          to={`/fasePFAjustado/${params.id}`}
-          className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
+        <div
+          className={`overflow-x-auto ${
+            funciones.length > 7 ? 'overflow-y-auto max-h-[570px]' : ''
+          } bg-white p-6 rounded-md shadow-md mt-1`}
         >
-          Ir a la Fase 3
-        </Link>
+          <h1 className="text-gray-800 text-2xl text-center font-bold mb-2">
+            Listado de funcionalidades
+          </h1>
+          {funciones.length === 0 ? (
+            <h1 className="text-xl mb-4">No hay funciones agregadas</h1>
+          ) : (
+            <table className="w-full bg-gray-200 border border-gray-300 text-sm">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b text-center text-black">Funcionalidad</th>
+                  <th className="py-2 px-4 border-b text-center text-black">Tipo</th>
+                  <th className="py-2 px-4 border-b text-center text-black">Complejidad</th>
+                  <th className="py-2 px-4 border-b text-center text-black">Peso</th>
+                  <th className="py-2 px-4 border-b text-center text-black">Cantidad</th>
+                  <th className="py-2 px-4 border-b text-center text-black">Total (Peso x Cantidad)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {funciones.map((funcion) => (
+                  <tr key={funcion._id} className="hover:bg-gray-300">
+                    <td className="py-2 px-4 border-b text-black text-center">{funcion.funcionalidad}</td>
+                    <td className="py-2 px-4 border-b text-black text-center">{funcion.tipo}</td>
+                    <td className="py-2 px-4 border-b text-black text-center">{funcion.complejidad}</td>
+                    <td className="py-2 px-4 border-b text-black text-center">{calcularPeso(funcion.tipo, funcion.complejidad)}</td>
+                    <td className="py-2 px-4 border-b text-black text-center">{funcion.cantidad}</td>
+                    <td className="py-2 px-4 border-b text-black text-center">{calcularPonderacion(funcion.tipo, funcion.complejidad, funcion.cantidad)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+        <div className="flex flex-col md:flex-row justify-end mt-5 my-10">
+          <Link
+            to={`/fasePFAjustado/${params.id}`}
+            className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
+          >
+            Ir a la Fase 3
+          </Link>
+        </div>
       </div>
-    </div>
     </div>
   );
    

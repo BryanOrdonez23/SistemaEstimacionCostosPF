@@ -7,13 +7,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function NewProyectPage() {
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors: errorsForm },
+  } = useForm();
   const navigate = useNavigate();
   const params = useParams();
 
   const { user } = useAuth();
   const { getProyects, getProyect } = useProyect();
-  const { getFunction, updateFunction  } = useFunctions();
+  const { getFunction, updateFunction, errors } = useFunctions();
 
   const { proyect } = useProyect();
 
@@ -35,15 +40,28 @@ function NewProyectPage() {
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(params.id1);
-    await updateFunction(params.id1, params.id2, data);
-    navigate(`/funciones/${params.id1}`);
+    const datos = {
+      funcionalidad: data.funcionalidad,
+      tipo: data.tipo,
+      complejidad: data.complejidad,
+      cantidad: parseInt(data.cantidad, 10),
+    };
+    const res = await updateFunction(params.id1, params.id2, datos);
+    if (res) {
+      navigate(`/funciones/${params.id1}`);
+    }
   });
   const routes = [
-    { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id1}`, displayName: 'Fases del proyecto' },
-    { path: `/funciones/${params.id1}`, displayName: 'Fase 1: Funcionalidades del proyecto de software' },
-    { path: `/updatefuncion/${params.id1}/${params.id2}`, displayName: "Actualizar Funcionalidad" }
+    { path: "/proyects", displayName: "Inicio" },
+    { path: `/fases/${params.id1}`, displayName: "Fases del proyecto" },
+    {
+      path: `/funciones/${params.id1}`,
+      displayName: "Fase 1: Funcionalidades del proyecto de software",
+    },
+    {
+      path: `/updatefuncion/${params.id1}/${params.id2}`,
+      displayName: "Actualizar Funcionalidad",
+    },
   ];
 
   return (
@@ -53,6 +71,14 @@ function NewProyectPage() {
         <h2 className="text-2xl font-semibold mb-6 text-black">
           Actualizar funcionalidad
         </h2>
+        {errors.map((error, i) => (
+          <div
+            className="bg-red-500 text-sm p-2 text-white text-center my-2 rounded"
+            key={i}
+          >
+            {error}
+          </div>
+        ))}
         <form onSubmit={onSubmit}>
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
@@ -64,8 +90,15 @@ function NewProyectPage() {
               name="funcionalidad"
               placeholder="Ingrese la funcionalidad"
               className="w-full border p-2 rounded text-black"
-              {...register("funcionalidad", { required: true })}
+              {...register("funcionalidad", {
+                required: "La funcionalidad es requerida",
+              })}
             />
+            {errorsForm.funcionalidad && (
+              <p className="text-red-500 text-sm mt-1">
+                {errorsForm.funcionalidad.message}
+              </p>
+            )}
           </div>
 
           <div className="mb-4">
@@ -77,7 +110,7 @@ function NewProyectPage() {
               name="tipo"
               placeholder="Ingrese el tipo de funcionalidad"
               className="w-full border p-2 rounded text-black"
-              {...register("tipo", { required: true })}
+              {...register("tipo", { required: "El tipo es requerido" })}
             >
               <option value="">Seleccione un tipo</option>
               <option value="EI">EI - Entradas Externas</option>
@@ -86,6 +119,11 @@ function NewProyectPage() {
               <option value="ILF">ILF - Archivos lógico interno</option>
               <option value="EIF">EIF - Archivos lógicos externos</option>
             </select>
+            {errorsForm.tipo && (
+              <p className="text-red-500 text-sm mt-1">
+                {errorsForm.tipo.message}
+              </p>
+            )}
           </div>
 
           <div className="mb-4">
@@ -96,13 +134,20 @@ function NewProyectPage() {
               id="complejidad"
               name="complejidad"
               className="w-full border p-2 rounded text-black"
-              {...register("complejidad", { required: true })}
+              {...register("complejidad", {
+                required: "La complejidad es requerido.",
+              })}
             >
-              <option value="">Seleccione una tecnologia</option>
+              <option value="">Seleccione una complejidad</option>
               <option value="Alta">Alta</option>
               <option value="Media">Media</option>
               <option value="Baja">Baja</option>
             </select>
+            {errorsForm.complejidad && (
+              <p className="text-red-500 text-sm mt-1">
+                {errorsForm.complejidad.message}
+              </p>
+            )}
           </div>
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
@@ -113,8 +158,13 @@ function NewProyectPage() {
               name="cantidad"
               id="cantidad"
               className="w-full border p-2 rounded text-black"
-              {...register("cantidad", { required: true })}
+              {...register("cantidad", { required: "La cantidad es requerida" })}
             />
+            {errorsForm.cantidad && (
+              <p className="text-red-500 text-sm mt-1">
+                {errorsForm.cantidad.message}
+              </p>
+            )}
           </div>
           <button
             type="submit"

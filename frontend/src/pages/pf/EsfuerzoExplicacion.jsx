@@ -4,7 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
 function EsfuerzoExplicacion() {
-  const { getPuntosFuncion, datosPuntosFuncion } = useEstimacionPF();
+  const { getPuntosFuncion, datosPuntosFuncion, errors } = useEstimacionPF();
   const [bandera, setBandera] = useState(false);
   const params = useParams();
 

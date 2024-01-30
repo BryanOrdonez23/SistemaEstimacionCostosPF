@@ -46,7 +46,11 @@ const Navbar = () => {
           }
           className="text-lg sm:text-lg font-bold text-white mb-2 sm:mb-0 transition duration-300 hover:text-gray-300 flex items-center"
         >
-          <FontAwesomeIcon icon={faHome} className="ml-2" />
+          <img
+            src="/logo/LogoCarrera.svg" // Reemplaza con la ruta correcta a tu imagen SVG
+            alt="Home Icon"
+            className="w-8 h-8 " // Puedes ajustar las clases según sea necesario
+          />
           <span className="ml-2">
             {isAdminPage
               ? "  App para estimación de Costos por PF"
@@ -88,7 +92,7 @@ const Navbar = () => {
                     <li>
                       <Link
                         to="/login"
-                        className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                        className="text-white hover:text-gray-300 transition duration-300 bg-sky-600 px-3 py-2 rounded-md block"
                       >
                         Iniciar Sesión
                       </Link>
@@ -96,7 +100,7 @@ const Navbar = () => {
                     <li>
                       <Link
                         to="/register"
-                        className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                        className="text-white hover:text-gray-300 transition duration-300 bg-sky-600 px-3 py-2 rounded-md block"
                       >
                         Registrarse
                       </Link>
@@ -112,7 +116,7 @@ const Navbar = () => {
                       onClick={() => setShowMenu(!showMenu)}
                     >
                       <FontAwesomeIcon icon={faUser} size="xl" />
-                      {" "+user.name}
+                      {" " + user.name}
                     </div>
                     {showMenu && (
                       <ul className="absolute z-50 right-0 mt-2 min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg">

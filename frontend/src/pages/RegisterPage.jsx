@@ -93,7 +93,7 @@ function RegisterPage() {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
+          className="bg-sky-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
         >
           Registrarse
         </button>

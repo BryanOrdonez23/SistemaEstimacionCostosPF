@@ -25,8 +25,13 @@ function LoginPage() {
   }, [isAuthenticated]);
 
   return (
-<div className="bg-white p-8 rounded-lg w-full md:w-1/2 mx-auto mt-10 shadow-md">
-  <h1 className="text-2xl font-bold text-gray-800 mb-4">Iniciar Sesión</h1>
+<div className="bg-white p-8 rounded-lg w-full md:w-1/2 mx-auto mt-4 shadow-md">
+<img
+      src="/logo/login-logo.png" // Reemplaza con la ruta relativa a tu logo en la carpeta public
+      alt="Logo de tu carrera"
+      className="mx-auto mb-0 w-1/3"
+    />
+  <h1 className="text-lg font-bold text-gray-800 mb-2">Iniciar Sesión</h1>
   {singinErrors.map((error, i) => (
     <div
       className="bg-red-500 text-sm p-2 text-white text-center my-2 rounded"
@@ -36,7 +41,7 @@ function LoginPage() {
     </div>
   ))}
   <form onSubmit={onSubmit}>
-    <div className="mb-4">
+    <div className="mb-2">
       <label className="text-gray-800 block">Correo Electrónico:</label>
       <input
         type="email"
@@ -67,7 +72,7 @@ function LoginPage() {
     </div>
     <button
       type="submit"
-      className="bg-blue-300 text-gray-800 font-semibold py-2 px-4 rounded hover:bg-blue-400 transition duration-300"
+      className="bg-sky-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-400 transition duration-300"
     >
       Iniciar Sesión
     </button>

@@ -5,6 +5,7 @@ import { createInvolucradosRequest, getInvolucradosRequest, deleteInvolucradoReq
 
 import {createOtrosGastosRequest, getOtrosGastosRequest, getOtroGastoRequest,updateOtroGastoRequest,deleteOtroGastoRequest, sumatoriaCostosOtrosGastosRequest} from "../api/otrosGastos";
 
+
 export const EstimacionPFContext = createContext();
 
 export const useEstimacionPF = () => {
@@ -24,7 +25,16 @@ export const EstimacionPFProvider = ({ children }) => {
   const [datosPuntosFuncion, setdatosPuntosFuncion] = useState([]);
   const [involucrados, setInvolucrados] = useState([]);
   const [otrosGastos, setOtrosGastos] = useState([]);
+  const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    if (errors.length > 0) {
+     const timer= setTimeout(() => {
+        setErrors([]);
+      }, 5000)
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
 
   const pfsaCalculo = async (id) => {
     try {
@@ -87,10 +97,11 @@ export const EstimacionPFProvider = ({ children }) => {
   const actualizarDatosPF = async (id, data) => {
     try {
       const response = await actualizarDatosPFRequest(id, data);
-      console.log(response.data);
+      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
+      setErrors(error.response.data); 
     }
   }
 //----------------------------------involucrados---------------------------------------------
@@ -111,7 +122,8 @@ const createInvolucrados = async (id, data) => {
     setInvolucrados(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error)
+    setErrors(error.response.data);
   }
 }
 
@@ -138,9 +150,9 @@ const updateInvolucrado = async (id1, id2, data) => {
   try {
     const response = await updateInvolucradoRequest(id1, id2, data);
     getInvolucrados(id1);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.log(error);
+    setErrors(error.response.data);
   }
 }
 
@@ -177,7 +189,7 @@ const updateOtroGasto = async (id1, id2, data) => {
   try {
     const response = await updateOtroGastoRequest(id1, id2, data);
     getOtrosGastos(id1);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -311,7 +323,8 @@ const createPDF = async () => {
         sumaotroGastos,
         calculoPresupuesto,
         calcularPresupuestoEstimado,
-        createPDF
+        createPDF,
+        errors
       }}
     >
       {children}

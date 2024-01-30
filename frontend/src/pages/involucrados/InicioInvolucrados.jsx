@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import Breadcrumbs from "../../components/Breadcrumbs ";
+import DeleteConfirmationModal from "../../components/DeleteConfirmationModal";
 
 function InicioInvolucrados() {
 
   const { involucrados, getInvolucrados, deleteInvolucrado } = useEstimacionPF();
   const params = useParams();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [involucradoToDelete, setInvolucradoToDelete] = useState(null);
 
   useEffect(() => {
     document.title = "Involucrados - App costos";
@@ -19,15 +22,31 @@ function InicioInvolucrados() {
     loadFunciones();
   }, []);
 
-  const handleDeleteFunctions = async (proyectid, innvolucradoid) => {
+ const handleDeleteInvolucrado = async (proyectid, involucradoid) => {
     try {
-        await deleteInvolucrado(proyectid, innvolucradoid);
-        //const res = await getFunctions(proyectid);
-        //await getProyect(proyectid);
+      // Mostrar el modal de confirmación antes de eliminar
+      setInvolucradoToDelete({ proyectid, involucradoid });
+      setShowDeleteConfirmation(true);
     } catch (error) {
-      console.error("Error al eliminar el proyecto:", error);
+      console.error("Error al eliminar el involucrado:", error);
     }
   };
+
+  const handleConfirmDelete = async () => {
+    const { proyectid, involucradoid } = involucradoToDelete;
+    try {
+      await deleteInvolucrado(proyectid, involucradoid);
+      // Actualizar la lista de involucrados o realizar otras acciones necesarias después de la eliminación
+      setShowDeleteConfirmation(false); // Ocultar el modal de confirmación
+    } catch (error) {
+      console.error("Error al eliminar el involucrado:", error);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false); // Ocultar el modal de confirmación
+  };
+
   const routes = [
     { path: '/proyects', displayName: 'Inicio' },
     { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
@@ -56,7 +75,7 @@ function InicioInvolucrados() {
               <tr>
                 <th className="py-2 px-4 border-b text-left">Nombre</th>
                 <th className="py-2 px-4 border-b text-left">Rol</th>
-                <th className="py-2 px-4 border-b text-left">Sueldo</th>
+                <th className="py-2 px-4 border-b text-left">Sueldo (USD)</th>
                 <th className="py-2 px-4 border-b text-left">Acciones</th>
               </tr>
             </thead>
@@ -74,7 +93,7 @@ function InicioInvolucrados() {
                       Editar
                     </Link>
                     <button
-                      onClick={() => handleDeleteFunctions(params.id, involucrado._id)}
+                      onClick={() => handleDeleteInvolucrado(params.id, involucrado._id)}
                       className="bg-red-300 hover:bg-red-400 text-red-950 px-3 py-1 rounded-full border border-red-400"
                     >
                       Eliminar
@@ -85,6 +104,12 @@ function InicioInvolucrados() {
             </tbody>
           </table>
         </div>
+      )}
+       {showDeleteConfirmation && (
+        <DeleteConfirmationModal
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
       )}
     </div>
   );

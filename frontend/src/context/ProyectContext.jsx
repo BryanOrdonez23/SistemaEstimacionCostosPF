@@ -5,10 +5,10 @@ import {
   getProyectRequest,
   updateProyectRequest,
   deleteProyectRequest  ,
-  getAllProyectsRequest
+  getAllProyectsRequest,
 } from "../api/proyect";
 
-import {createProyectSharedRequest, getProyectsSharedRequest, getProyectsSharedByProyectRequest, deleteProyectSharedRequest} from "../api/shared";
+import {createProyectSharedRequest, getProyectsSharedRequest, getProyectsSharedByProyectRequest, deleteProyectSharedRequest, getSolicitudesProyectosSharedRequest,   updateStatusProyectSharedRequest} from "../api/shared";
 export const ProyectContext = createContext();
 
 export const useProyect = () => {
@@ -29,6 +29,7 @@ export const ProyectProvider = ({ children }) => {
   const [proyect, setProyect] = useState([]);
   const [proyectShared, setProyectShared] = useState([]);
   const [proyectsSharedByProyect, setProyectsSharedByProyect] = useState([]);
+  const [solicitudesShared, setSolicitudesShared] = useState([]);
 
   const getProyects = async () => {
     try {
@@ -128,6 +129,25 @@ export const ProyectProvider = ({ children }) => {
       console.error(error);
     }
   }
+const getSolicitudesProyectosShared = async (proyectId) => {
+    try {
+      const res = await getSolicitudesProyectosSharedRequest({proyectId});
+      setSolicitudesShared(res.data);
+      //console.log(res.data);
+    } catch (error) {
+      setSolicitudesShared([]);
+      console.error(error);
+    }
+}
+
+const updateStatusProyectShared = async (proyectId) => {
+    try {
+      const res = await updateStatusProyectSharedRequest({proyectId});
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+}
 
   return (
     <ProyectContext.Provider
@@ -146,7 +166,10 @@ export const ProyectProvider = ({ children }) => {
         proyectsSharedByProyect,
         deleteProyectShared,
         getAllProyects,
-        allproyects
+        allproyects,
+        getSolicitudesProyectosShared,
+        solicitudesShared,
+        updateStatusProyectShared
       }}
     >
       {children}

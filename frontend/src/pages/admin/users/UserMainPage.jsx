@@ -2,19 +2,40 @@ import React, { useState, useEffect } from "react";
 import { useAdmin } from "../../../context/AdminContext";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../../components/Breadcrumbs ";
-
+import DeleteConfirmationModal from "../../../components/DeleteConfirmationModal";
 function UserMainPage() {
   const { getUsers, users, deleteUser, updateUser } = useAdmin();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   useEffect(() => {
     document.title = "Administrar Usuarios - App Costos";
     getUsers();
   }, []);
 
-  const handleDeleteUser = (userId) => {
-    deleteUser(userId);
-    getUsers();
+ const handleDeleteUser = (userId) => {
+    // Mostrar el modal de confirmación antes de eliminar
+    setUserToDelete(userId);
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      // Realizar la eliminación después de la confirmación
+      await deleteUser(userToDelete);
+      // Actualizar la lista de usuarios u otras acciones necesarias después de la eliminación
+      getUsers();
+      // Ocultar el modal de confirmación
+      setShowDeleteConfirmation(false);
+    } catch (error) {
+      console.error("Error al eliminar el usuario:", error);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    // Ocultar el modal de confirmación
+    setShowDeleteConfirmation(false);
   };
 
   const filteredUsers = users.filter((user) =>
@@ -81,6 +102,12 @@ function UserMainPage() {
           </tbody>
         </table>
       </div>
+      {showDeleteConfirmation && (
+        <DeleteConfirmationModal
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 }

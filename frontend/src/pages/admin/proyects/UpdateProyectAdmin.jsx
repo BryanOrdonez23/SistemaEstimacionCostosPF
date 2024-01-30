@@ -106,10 +106,10 @@ function UpdateProyectAdmin() {
               className="w-full border p-2 rounded text-black"
               {...register("technology", { required: true })}
             >
-              <option value="">Seleccione una tecnologia</option>
-              <option value="JavaScript">JavaScript</option>
-              <option value="Python">Python</option>
-              <option value="Php">php</option>
+ <option value="">Seleccione una tecnologia</option>
+              <option value="Ensamblador">Ensamblador</option>
+              <option value="COBOL">COBOL</option>
+              <option value="Lenguaje de 3ra y Cuarta generación (Java, JS, Python, C, etc)">Lenguaje de 3ra y 4ta generación (Java, JS, Python, C, etc)</option>
             </select>
           </div>
           <button

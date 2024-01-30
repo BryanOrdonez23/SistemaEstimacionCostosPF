@@ -139,14 +139,12 @@ import { createAccessToken } from "../libs/jwt.js";
 
   export const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, lastname, email, password } = req.body;
-    try {
-      const passhash = await bcrypt.hash(password, 10); // String aleatorio para cifrado.
+    const { name, lastname, email } = req.body;
+    try {// String aleatorio para cifrado.
       const userUpdated = await User.findByIdAndUpdate(id, {
         name,
         lastname,
         email,
-        password : passhash,
       });
       res.json(userUpdated);
     } catch (error) {

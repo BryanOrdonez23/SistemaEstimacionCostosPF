@@ -36,10 +36,10 @@ const handleErrorClose = () => {
     try {
         const res = await createProyectShared(data);
         if (res.status === 200) {
-            setSuccessMessage("Ingreso exitoso");
+            setSuccessMessage("Se enviado una solicitud de ingreso al proyecto, espera a que el propietario del proyecto acepte tu solicitud");
             setShowSuccess(true);
             setValue("keyShared", "");
-            navigate("/proyects");
+            //navigate("/proyects");
         }else{
           setValue("keyShared", "");
             setErrorMessage("No se pudo ingresar al proyecto");
@@ -48,7 +48,7 @@ const handleErrorClose = () => {
 
     } catch (error) {
       setValue("keyShared", "");
-        setErrorMessage("No se pudo ingresar al proyecto, ingrese un código de invitación válido");
+        setErrorMessage("No se pudo enviar la solicitud de ingreso, ingrese un código de invitación válido");
         setShowError(true);
         console.error(error);
     }

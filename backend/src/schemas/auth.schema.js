@@ -56,3 +56,4 @@ export const cambioContra = z.object({
       message: "La contraseña debe tener más de 6 caracteres",
     }),
 });
+

@@ -26,8 +26,10 @@ function UserUpdate() {
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
-    await updateUser(params.id, data);
-    navigate(`/administrador/users`);
+    const res = await updateUser(params.id, data);
+    if (res) {
+      navigate(`/administrador/users`);
+    }
   });
 
   const routes = [

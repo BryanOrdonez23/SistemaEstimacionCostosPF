@@ -5,11 +5,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function NewOtrosGastos() {
-  const { register, handleSubmit, setValue} = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors: errorsForm },
+  } = useForm();
   const navigate = useNavigate();
   const params = useParams();
 
-  const { getOtrosGastos, getOtroGasto, createOtrosGastos, updateOtroGasto, eliminarOtroGasto} = useEstimacionPF();
+  const {
+    getOtrosGastos,
+    getOtroGasto,
+    createOtrosGastos,
+    updateOtroGasto,
+    eliminarOtroGasto,
+  } = useEstimacionPF();
 
   useEffect(() => {
     document.title = "Nuevo Otros Gastos - App costos";
@@ -27,27 +38,39 @@ function NewOtrosGastos() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-        if (params.id2) {
-            await updateOtroGasto(params.id, params.id2, data);
-            await getOtrosGastos(params.id);
-            navigate(`/otrosGastos/${params.id}`);            
-        }else{
-            await createOtrosGastos(params.id, data);
-            await getOtrosGastos(params.id);
-            navigate(`/otrosGastos/${params.id}`);
+      const datos = {
+        descripcion: data.descripcion,
+        costo: parseFloat(data.costo, 10),
+        observacion: data.observacion,
+      };
+      if (params.id2) {
+        const res = await updateOtroGasto(params.id, params.id2, datos);
+        await getOtrosGastos(params.id);
+        if (res) {
+          navigate(`/otrosGastos/${params.id}`);
         }
+        
+      } else {
+        const res = await createOtrosGastos(params.id, datos);
+        await getOtrosGastos(params.id);
+        if (res) {
+          navigate(`/otrosGastos/${params.id}`);
+        }        
+      }
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
   });
 
-  
   const routes = [
-    { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del proyecto' },
-    { path: `/presupuesto/${params.id}`, displayName: 'Fase 6: Presupuesto del proyecto' },
-    { path: `/otrosGastos/${params.id}`, displayName: 'Menú otros gastos' },
-    { path: `/newotrosGastos/${params.id}`, displayName: 'Nuevo otro gasto' }
+    { path: "/proyects", displayName: "Inicio" },
+    { path: `/fases/${params.id}`, displayName: "Fases del proyecto" },
+    {
+      path: `/presupuesto/${params.id}`,
+      displayName: "Fase 6: Presupuesto del proyecto",
+    },
+    { path: `/otrosGastos/${params.id}`, displayName: "Menú otros gastos" },
+    { path: `/newotrosGastos/${params.id}`, displayName: "Nuevo otro gasto" },
   ];
 
   return (
@@ -55,7 +78,7 @@ function NewOtrosGastos() {
       <Breadcrumbs routes={routes} />
       <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-md shadow-md md:w-3/4 lg:w-1/2">
         <h2 className="text-2xl font-semibold mb-6 text-black">
-        {params.id2 ? "Actualizar el  gasto" : "Agregar un nuevo gasto"}
+          {params.id2 ? "Actualizar el  gasto" : "Agregar un nuevo gasto"}
         </h2>
         <form onSubmit={onSubmit}>
           <div className="mb-4">
@@ -68,21 +91,39 @@ function NewOtrosGastos() {
               name="descripcion"
               placeholder="Ingrese la descripción del gasto"
               className="w-full border p-2 rounded text-black"
-              {...register("descripcion", { required: true })}
+              {...register("descripcion", {
+                required: "La descripción es requerida",
+              })}
             />
+            {errorsForm.descripcion && (
+              <p className="text-red-500 text-sm mt-1">
+                {errorsForm.descripcion.message}
+              </p>
+            )}
           </div>
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Costo:
             </label>
             <input
-              type="Number"
+              type="text"
               name="costo"
               id="costo"
               placeholder="Ingrese el costo del gasto"
               className="w-full border p-2 rounded text-black"
-              {...register("costo", { required: true })}
+              {...register("costo", {
+                required: "El costo es requerido",
+                pattern: {
+                  value: /^\d+(\.\d{0,2})?$/, // Acepta hasta dos decimales
+                  message: "Ingrese un valor numérico válido",
+                },
+              })}
             />
+            {errorsForm.costo && (
+              <p className="text-red-500 text-sm mt-1">
+                {errorsForm.costo.message}
+              </p>
+            )}
           </div>
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
