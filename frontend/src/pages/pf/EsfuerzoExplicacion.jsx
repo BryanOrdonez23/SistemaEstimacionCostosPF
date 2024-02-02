@@ -3,6 +3,9 @@ import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import { Navigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
+
 function EsfuerzoExplicacion() {
   const { getPuntosFuncion, datosPuntosFuncion, errors } = useEstimacionPF();
   const [bandera, setBandera] = useState(false);
@@ -26,19 +29,19 @@ function EsfuerzoExplicacion() {
     <div className="flex items-center justify-center w-full flex-col bg-CCE3FF my-4">
       <div className="max-w-3x1 mb-4 text-center bg-white p-6 rounded-md shadow-md">
       <Breadcrumbs routes={routes} />
-        <h1 className="text-blue-950 text-3xl font-bold mb-4">
+        <h1 className="text-blue-950 text-2xl font-bold mb-4">
           Detalles del cálculo del esfuerzo del proyecto
         </h1>
 
         {bandera && (
           <div className="bg-gray-200 p-8 rounded-md mt-18">
-            <p className=" text-gray-800 mb-2 text-left">
+            <p className=" text-gray-800 mb-2 text-left text-base">
               Para el cálculo del esfuerzo se toma en cuenta el trabajo de un
               equipo que trabaja {datosPuntosFuncion.functionPoints[0].horasDia}{" "}
               horas al día durante{" "}
               {datosPuntosFuncion.functionPoints[0].diasTrabajados} días al mes
             </p>
-            <div className="text-lg">
+            <div className="text-base">
               <p className="text-gray-800 mb-2">
                 <span className="font-semibold">1. Fórmula:</span> <br />
                 <span className="italic"> Esfuezo = PFA * (H/PF)</span>
@@ -54,11 +57,11 @@ function EsfuerzoExplicacion() {
                 </span>
               </p>
             </div>
-            <p className="text-gray-800 mb-2 text-left">
+            <p className="text-gray-800 mb-2 text-left text-base">
               {" "}
               Aplicando la formula se obtiene lo siguiente:
             </p>
-            <div className="text-lg">
+            <div className="text-base">
               <p className="text-gray-800 mb-2">
                 <span className="italic">
                   Esfuerzo =
@@ -71,11 +74,11 @@ function EsfuerzoExplicacion() {
                 </span>{" "}
               </p>
             </div>
-            <p className="text-gray-800 mb-2 text-left">
+            <p className="text-gray-800 mb-2 text-left text-base">
               {" "}
               Ahora obtendremos los días de trabajo estimados:
             </p>
-            <div className="text-lg">
+            <div className="text-base">
               <p className="text-gray-800 mb-2">
                 <span className="italic">
                   DiasTrabajo = Esfuerzo / Horas por día <br />
@@ -97,7 +100,7 @@ function EsfuerzoExplicacion() {
               Por ultimo se calcularán los meses de trabajo estimados para el
               proyecto:{" "}
             </p>
-            <div className="text-lg">
+            <div className="text-base">
               <p className="text-gray-800 mb-2">
                 <span className="italic">
                   MesesTrabajo = Dias de trabajo / Dias por mes trabajados{" "}
@@ -142,6 +145,7 @@ function EsfuerzoExplicacion() {
           className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
         >
           Ir a la Fase 6
+          <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
         </Link>
       </div>
       </div>

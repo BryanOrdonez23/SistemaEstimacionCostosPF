@@ -115,7 +115,7 @@ export const ProyectProvider = ({ children }) => {
   const deleteProyectShared = async (id) => {
     try {
       const res = await deleteProyectSharedRequest(id);
-      console.log(res.data);
+      return res.data;
     } catch (error) {
       console.error(error);
     }

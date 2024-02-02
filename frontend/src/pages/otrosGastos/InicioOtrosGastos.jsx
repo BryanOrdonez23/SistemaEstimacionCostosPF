@@ -4,6 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import Breadcrumbs from "../../components/Breadcrumbs ";
 import DeleteConfirmationModal from "../../components/DeleteConfirmationModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+  faTrash,
+  faPlusCircle,
+  faArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 function InicioOtrosGastos() {
   const { otrosGastos, getOtrosGastos, eliminarOtroGasto } = useEstimacionPF();
@@ -66,7 +73,8 @@ function InicioOtrosGastos() {
           to={`/newotrosGastos/${params.id}`}
           className="text-justify bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
         >
-          + Agregar un nuevo Gasto
+          Nuevo Otro Gasto
+          <FontAwesomeIcon icon={faPlusCircle} className="ml-2" />
         </Link>
       </div>
       {otrosGastos.length === 0 ? (
@@ -97,7 +105,7 @@ function InicioOtrosGastos() {
                       to={`/updateotrosGastos/${params.id}/${otrosGasto._id}`}
                       className="bg-yellow-300 hover:bg-yellow-300 text-yellow-900 px-2 sm:px-3 py-1 rounded-full border border-yellow-400"
                     >
-                      Editar
+                      <FontAwesomeIcon icon={faEdit} />
                     </Link>
                     <button
                       onClick={() =>
@@ -105,7 +113,7 @@ function InicioOtrosGastos() {
                       }
                       className="bg-red-300 hover:bg-red-400 text-red-950 px-2 sm:px-3 py-1 rounded-full border border-red-400"
                     >
-                      Eliminar
+                      <FontAwesomeIcon icon={faTrash} />
                     </button>
                   </td>
                 </tr>

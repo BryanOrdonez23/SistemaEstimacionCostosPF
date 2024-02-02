@@ -4,7 +4,18 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import DeleteProyect from "../components/DeleteConfirmationModal";
 import Popup from "../components/Popup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEye,
+  faEdit,
+  faTrash,
+  faShare,
+  faPlusCircle,
+  faSignInAlt,
+} from "@fortawesome/free-solid-svg-icons";
+
 function ProyectFormPage() {
   const { user, getUserById } = useAuth();
   const {
@@ -25,6 +36,8 @@ function ProyectFormPage() {
   const [faCode, setFaCode] = useState("");
   const [userNames, setUserNames] = useState({});
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showDeleteConfirmationProyect, setShowDeleteConfirmationProyect] =
+    useState(false);
   const [proyectToDelete, setProyectToDelete] = useState(null);
   const [elementoToDelete, setElementoToDelete] = useState(null);
   const [elementoToDeleteProyect, setElementoToDeleteProyect] = useState(null);
@@ -66,57 +79,55 @@ function ProyectFormPage() {
     getProyectsShared();
   }, []);
 
-  // console.log();
-
   const toggleTableModal = () => {
     setShowTableModal(!showTableModal);
   };
   //--------- Proyectos Delete------------------------------------
   const handleDeleteProyect = async (proyectId) => {
     try {
-      // Mostrar el modal de confirmación antes de eliminar
+      console.log(proyectId);
       setProyectToDelete(proyectId);
-      setShowDeleteConfirmation(true);
+      setShowDeleteConfirmationProyect(true); // Mostrar el modal de confirmación antes de eliminar
     } catch (error) {
       console.error("Error al eliminar el proyecto:", error);
     }
   };
 
+  const handleConfirmDeleteProyect = async () => {
+    try {
+      //console.log(proyectToDelete);
+      console.log(proyectToDelete);
+      await deleteProyect(proyectToDelete);
+      getProyects();
+      setShowDeleteConfirmationProyect(false); // Ocultar el modal de confirmación
+    } catch (error) {
+      console.error("Error al eliminar el proyecto:", error);
+    }
+  };
+  const handleCancelDeleteProyect = () => {
+    setShowDeleteConfirmationProyect(false); // Ocultar el modal de confirmación
+  };
+  //-------------------------------------------------------------
   const handleConfirmarProyectoCompartido = async (proyectId) => {
     try {
       // Mostrar el modal de confirmación antes de eliminar
-      console.log(proyectId);
+      //console.log(proyectId);
       await updateStatusProyectShared(proyectId);
       await getSolicitudesProyectosShared(proyectId);
-      await getProyectsSharedByProyect(proyectId);
       setSuccessMessage("Se ha aceptado la solicitud de ingreso al proyecto.");
       setShowSuccess(true);
     } catch (error) {
       console.error("Error al eliminar el proyecto compartido:", error);
     }
   };
-
-  const handleConfirmDeleteProyect = async () => {
-    try {
-      await deleteProyect(proyectToDelete, false);
-      getProyects();
-      setShowDeleteConfirmation(false); // Ocultar el modal de confirmación
-    } catch (error) {
-      console.error("Error al eliminar el proyecto:", error);
-    }
-  };
-  const handleCancelDeleteProyect = () => {
-    setShowDeleteConfirmation(false); // Ocultar el modal de confirmación
-  };
-
-  //-------------------------------------------------------------
-
+  //----------------------------------------------------------------------
   const handleProyectShared = async (key, proyectId) => {
     setFaCode(key);
     toggleTableModal();
     await getSolicitudesProyectosShared(proyectId);
     await getProyectsSharedByProyect(proyectId);
   };
+  console.log(proyectToDelete);
 
   //--------- Proyectos Compartidos Delete Personas dentro------------------
   const handleEliminarElemento = async (id, proyectId) => {
@@ -127,7 +138,6 @@ function ProyectFormPage() {
       console.error("Error al eliminar el proyecto:", error);
     }
   };
-
 
   const handleConfirmDeleteElemento = async () => {
     try {
@@ -198,171 +208,185 @@ function ProyectFormPage() {
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 my-4">
         <Link
           to={`/newproyect`}
-          className="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+          className="flex items-center bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-full transition duration-300"
         >
-          Agegar Nuevo proyecto
+          <FontAwesomeIcon icon={faPlusCircle} className="text-base mr-2" />
+          Nuevo
         </Link>
         <Link
           to={`/compartir`}
-          className="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+          className="flex items-center bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-full transition duration-300"
         >
-          Ingresar a un proyecto
+          <FontAwesomeIcon icon={faSignInAlt} className="text-base mr-2" />
+          Ingresar
         </Link>
       </div>
-      <h1 className="text-blue-900 text-lg sm:text-2xl font-bold my-4">
-        Lista de Proyectos
+      <h1 className="text-black text-sm sm:text-base font-semibold font-sans italic mb-2">
+        Proyectos
       </h1>
       {proyects.length === 0 ? (
-        <p className="text-xl sm:text-2xl mb-4">No hay proyectos</p>
+        <p className="text-base mb-4 italic">
+          No hay proyectos, añada uno para estimar su costo.
+        </p>
       ) : (
-        <div className="overflow-x-auto overflow-y-auto max-h-[500px]">
-          <table className="min-w-full bg-gray-200 border border-gray-300 text-sm sm:text-sm">
-            <thead>
-              <tr>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Título
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Categoría
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Fecha de Creación
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Última Actualización
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {proyects.map((proyect) => (
-                <tr key={proyect._id} className="hover:bg-gray-300">
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {proyect.title}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {proyect.category}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {new Date(proyect.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {new Date(proyect.updatedAt).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b space-y-2 md:space-x-2 md:space-y-0">
-                    <Link
-                      to={`/fases/${proyect._id}`}
-                      className="block md:inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-2 py-1 rounded-md border border-blue-300 mb-2 md:mb-0 md:mr-2"
-                    >
-                      Detalles
-                    </Link>
-                    <Link
-                      to={`/proyect/${proyect._id}`}
-                      className="block md:inline-block bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-semibold px-2 py-1 rounded-md border border-yellow-300 mb-2 md:mb-0 md:mr-2"
-                    >
-                      Editar
-                    </Link>
-                    <button
-                      onClick={() => handleDeleteProyect(proyect._id)}
-                      className="block md:inline-block bg-red-500 hover:bg-red-600 text-white font-semibold px-2 py-1 rounded-md border border-red-300 mb-2 md:mb-0 md:mr-2"
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleProyectShared(proyect.keyShared, proyect._id)
-                      }
-                      className="block md:inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-2 py-1 rounded-md border border-green-300"
-                    >
-                      Compartir
-                    </button>
-                  </td>
+        <div className="overflow-x-auto overflow-y-auto max-h-[400px]">
+          <div className="rounded-lg border border-gray-200 shadow-md m-5">
+            <table className="min-w-full bg-white border-collapse text-left text-xs sm:text-sm text-gray-600">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Título
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Categoría
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Fecha de Creación
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Última Actualización
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          {showDeleteConfirmation && (
-            <DeleteConfirmationModal
-              onCancel={handleCancelDeleteProyect}
-              onConfirm={handleConfirmDeleteProyect}
-            />
-          )}
+              </thead>
+              <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+                {proyects.map((proyect) => (
+                  <tr key={proyect._id} className="hover:bg-gray-100">
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      {proyect.title}
+                    </td>
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-1 py-1 text-xxs sm:text-xs font-semibold text-blue-800">
+                        {proyect.category}
+                      </span>
+                    </td>
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      {new Date(proyect.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      {new Date(proyect.updatedAt).toLocaleDateString()}
+                    </td>
+                    <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-1 md:space-y-0">
+                      <Link
+                        to={`/fases/${proyect._id}`}
+                        className="block md:inline-block text-blue-500 hover:text-blue-600 mr-2"
+                      >
+                        <FontAwesomeIcon icon={faEye} size="lg" />
+                      </Link>
+                      <Link
+                        to={`/proyect/${proyect._id}`}
+                        className="block md:inline-block text-yellow-400 hover:text-yellow-500 mr-2"
+                      >
+                        <FontAwesomeIcon icon={faEdit} size="lg" />
+                      </Link>
+                      <button
+                        onClick={() => handleDeleteProyect(proyect._id)}
+                        className="block md:inline-block text-red-500 hover:text-red-600 mr-2"
+                      >
+                        <FontAwesomeIcon icon={faTrash} size="lg" />
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleProyectShared(proyect.keyShared, proyect._id)
+                        }
+                        className="block md:inline-block text-green-600 hover:text-green-700"
+                      >
+                        <FontAwesomeIcon icon={faShare} size="lg" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {showDeleteConfirmationProyect && (
+              <DeleteProyect
+                onCancel={handleCancelDeleteProyect}
+                onConfirm={handleConfirmDeleteProyect}
+              />
+            )}
+          </div>
         </div>
       )}
-      <br />
+{proyectShared.length === 0 ? (
+  <p className="text-base my-10 italic"></p>
+) : (
+  <div className="overflow-x-auto">
+    <h1 className="text-black text-sm sm:text-base font-sans italic mb-4 font-semibold">
+      Proyectos Compartidos
+    </h1>
+    <div className="rounded-lg border border-gray-200 shadow-md m-3">
+      <table className="min-w-full bg-white border-collapse text-left text-xs sm:text-sm text-gray-600">
+        <thead className="bg-blue-100">
+          <tr>
+            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+              Título
+            </th>
+            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+              Creado por
+            </th>
+            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+              Categoría
+            </th>
+            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+              Fecha de Creación
+            </th>
+            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+              Última Actualización
+            </th>
+            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center"></th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+          {proyectShared.map((proyect) => (
+            <tr key={proyect._id} className="hover:bg-gray-300">
+              <td className="flex gap-2 py-2 px-1 md:px-2 border-b text-center">
+                {proyect.proyect.title}
+              </td>
+              <td className="py-2 px-1 md:px-2 border-b text-center">
+                {userNames[proyect.proyect.user] || "Cargando..."}
+              </td>
+              <td className="py-2 px-1 md:px-2 border-b text-center">
+                <span className="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-1 py-1 text-xxs sm:text-xs font-semibold text-blue-800">
+                  {proyect.proyect.category}
+                </span>
+              </td>
+              <td className="py-2 px-1 md:px-2 border-b text-center">
+                {new Date(proyect.createdAt).toLocaleDateString()}
+              </td>
+              <td className="py-2 px-1 md:px-2 border-b text-center">
+                {new Date(proyect.updatedAt).toLocaleDateString()}
+              </td>
+              <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-1 md:space-y-0">
+                <Link
+                  to={`/fases/${proyect.proyect._id}`}
+                  className="block md:inline-block text-blue-500 hover:text-blue-600 mr-2"
+                >
+                  <FontAwesomeIcon icon={faEye} size="lg" />
+                </Link>
+                <button
+                  onClick={() =>
+                    handleEliminarElementoProyect(proyect._id)
+                  }
+                  className="block md:inline-block text-red-500 hover:text-red-600"
+                >
+                  <FontAwesomeIcon icon={faTrash} size="lg" />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {showDeleteConfirmation && (
+        <DeleteConfirmationModal
+          onCancel={handleCancelDeleteElementoProyect}
+          onConfirm={handleConfirmDeleteElementoProyect}
+        />
+      )}
+    </div>
+  </div>
+)}
 
-      {proyectShared.length === 0 ? (
-        <p className="text-base mb-4 italic">No hay proyectos compartidos</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <h1 className="text-blue-900 text-lg sm:text-2xl font-bold my-4">
-            Lista de Proyectos Compartidos
-          </h1>
-          <table className="min-w-full bg-gray-200 border border-gray-300 text-sm">
-            <thead>
-              <tr>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Título
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Creado por
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Categoría
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Fecha de Creación
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center">
-                  Última Actualización
-                </th>
-                <th className="py-2 px-2 md:px-4 border-b text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {proyectShared.map((proyect) => (
-                <tr key={proyect._id} className="hover:bg-gray-300">
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {proyect.proyect.title}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {userNames[proyect.proyect.user] || "Cargando..."}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {proyect.proyect.category}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {new Date(proyect.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b text-center">
-                    {new Date(proyect.updatedAt).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-2 md:px-4 border-b space-y-2 md:space-x-2 md:space-y-0">
-                    <Link
-                      to={`/fases/${proyect.proyect._id}`}
-                      className="block md:inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2 py-1 rounded-md border border-blue-300 mb-2 md:mb-0 md:mr-2"
-                    >
-                      Detalles
-                    </Link>
-                    <button
-                      onClick={() => handleEliminarElementoProyect(proyect._id)}
-                      className="block md:inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-2 py-1 rounded-md border border-red-300"
-                    >
-                      Salir del proyecto
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {showDeleteConfirmation && (
-            <DeleteConfirmationModal
-              onCancel={handleCancelDeleteElementoProyect}
-              onConfirm={handleConfirmDeleteElementoProyect}
-            />
-          )}
-        </div>
-      )}
+
       {showTableModal && (
         <div className="modal">
           <div className="modal-content">
@@ -497,7 +521,11 @@ function ProyectFormPage() {
               onConfirm={handleConfirmDeleteElemento}
             />
           )}
-          <Popup isOpen={showSuccess} message={successMessage} onClose={handleSuccessClose} />
+          <Popup
+            isOpen={showSuccess}
+            message={successMessage}
+            onClose={handleSuccessClose}
+          />
         </div>
       )}
     </div>

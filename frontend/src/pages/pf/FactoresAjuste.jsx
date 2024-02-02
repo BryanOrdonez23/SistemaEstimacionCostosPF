@@ -9,6 +9,8 @@ import Popup from "../../components/Popup";
 import CustomPopup from "../../components/CustomPopup";
 import Breadcrumbs from "../../components/Breadcrumbs ";
 
+import { faArrowRight, faCheck  } from "@fortawesome/free-solid-svg-icons";
+
 const FactoresAjuste = () => {
   const { register, handleSubmit, setValue } = useForm();
   const {
@@ -156,9 +158,10 @@ const FactoresAjuste = () => {
           <div className="flex justify-center mt-8">
             <button
               type="submit"
-              className="w-96 bg-blue-500 text-white p-3  font-bold text-base rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+              className=" bg-blue-500 text-white px-8 py-3  font-bold text-base rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
             >
               Guardar factores de ajuste
+              <FontAwesomeIcon icon={faCheck} className="ml-2" />
             </button>
           </div>
         </form>
@@ -174,6 +177,7 @@ const FactoresAjuste = () => {
               className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
             >
               Ir a la Fase 4
+              <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
             </Link>
           )}
         </div>

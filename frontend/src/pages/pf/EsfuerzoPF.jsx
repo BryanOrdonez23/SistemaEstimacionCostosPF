@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import { useProyect } from "../../context/ProyectContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle,faCalculator } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
+import Nota from "../../components/Nota";
 
 const EsfuerzoPF = () => {
   const { actualizarDatosPF, getPuntosFuncion, datosPuntosFuncion, errors } =
@@ -81,13 +82,13 @@ const EsfuerzoPF = () => {
     <div className="flex items-center justify-center w-full flex-col bg-blue-100">
       <div className="w-full max-w-screen-lg mb-4 text-center bg-white p-8 rounded-md shadow-md mt-5">
         <Breadcrumbs routes={routes} />
-        <h1 className="text-blue-950 text-4xl font-bold mb-6">
+        <h1 className="text-blue-950 text-2xl font-bold mb-6">
           Fase 5: Cálculo del Esfuerzo del Proyecto
         </h1>
 
         {bandera && (
-          <div className="bg-gray-200 p-8 rounded-md mt-6">
-            <p className="text-gray-800 mb-2">
+          <div className="bg-gray-200 p-8 rounded-md mt-2">
+            <p className="text-gray-800  text-sm">
               Existe un calculo existente del esfuerzo del proyecto de :{" "}
               <b>
                 {datosPuntosFuncion.functionPoints[0].mesesEstimados.toFixed(1)}
@@ -103,8 +104,8 @@ const EsfuerzoPF = () => {
           </div>
         )}
 
-        <div className="bg-gray-200 p-8 rounded-md mt-6">
-          <div className="text-lg">
+        <div className="bg-gray-200 p-8 rounded-md mt-2">
+          <div className="text-base">
             <p className="text-gray-800 mb-2">
               <span className="font-semibold">1. Fórmula:</span> <br />
               <span className="italic"> Esfuezo = PFA * (H/PF)</span>
@@ -119,11 +120,10 @@ const EsfuerzoPF = () => {
             </p>
           </div>
         </div>
-        <div className="bg-gray-200 p-8 rounded-md mt-4 my-4">
-          <p className="text-gray-800 mb-2">
-            Previo al cálculo del esfuerzo del proyecto, se debe ingresar la
-            siguiente información:
-          </p>
+        <div className="rounded-md mt-4 my-6">
+          <Nota>
+          Previo al cálculo del esfuerzo del proyecto, se debe llenar unos datos relacionados con el metodo de PF.
+          </Nota>
         </div>
         {errors.map((error, i) => (
           <div
@@ -156,7 +156,6 @@ const EsfuerzoPF = () => {
               name="horasPF"
               placeholder="Horas de PF de acuerdo a la tecnología"
               className="w-full border p-2 rounded text-black"
-              
               {...register("horasPF", {
                 required: "Las horas de PF son requeridas",
               })}
@@ -178,7 +177,6 @@ const EsfuerzoPF = () => {
               type="number"
               placeholder="Días laborados en el mes"
               className="w-full border p-2 rounded resize-none text-black"
-              
               {...register("diasTrabajados", {
                 required: "Los dias laborados por més son requeridos",
               })}
@@ -199,7 +197,6 @@ const EsfuerzoPF = () => {
               type="number"
               placeholder="Horas al dia trabajadas"
               className="w-full border p-2 rounded resize-none text-black"
-              
               {...register("horasDia", {
                 required: "Las horas trabajadas por dia son requeridas.",
               })}
@@ -211,51 +208,54 @@ const EsfuerzoPF = () => {
             )}
           </div>
           {showTableModal && (
-  <div className="modal fixed w-full h-full top-0 left-0 flex items-center justify-center">
-    <div className="modal-overlay fixed w-full h-full bg-gray-800 opacity-50"></div>
+            <div className="modal fixed w-full h-full top-0 left-0 flex items-center justify-center">
+              <div className="modal-overlay fixed w-full h-full bg-gray-800 opacity-50"></div>
 
-    <div className="modal-content bg-white w-96 mx-auto rounded shadow-lg z-50 p-4">
-      <span className="close absolute top-0 right-0 p-4" onClick={toggleTableModal}>
-        &times;
-      </span>
+              <div className="modal-content bg-white w-96 mx-auto rounded shadow-lg z-50 p-4">
+                <span
+                  className="close absolute top-0 right-0 p-4"
+                  onClick={toggleTableModal}
+                >
+                  &times;
+                </span>
 
-      <h1 className="text-blue-950 font-bold text-lg mb-4">
-        Tecnologia seleccionada: {proyect.technology}
-      </h1>
+                <h1 className="text-blue-950 font-bold text-lg mb-4">
+                  Tecnologia seleccionada: {proyect.technology}
+                </h1>
 
-      <table className="w-full border p-2 rounded text-black">
-        <thead>
-          <tr>
-            <th className="py-2">Lenguaje</th>
-            <th className="py-2">Horas PF (Rango)</th>
-            <th className="py-2">Horas PF (Promedio)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="py-2">Ensamblador</td>
-            <td className="py-2">20 – 30</td>
-            <td className="py-2">25</td>
-          </tr>
-          <tr>
-            <td className="py-2">COBOL</td>
-            <td className="py-2">10 – 20</td>
-            <td className="py-2">15</td>
-          </tr>
-          <tr>
-            <td className="py-2">Lenguaje de 3ra y 4ta Generación</td>
-            <td className="py-2">5 – 10</td>
-            <td className="py-2">8</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-)}
+                <table className="w-full border p-2 rounded text-black">
+                  <thead>
+                    <tr>
+                      <th className="py-2">Lenguaje</th>
+                      <th className="py-2">Horas PF (Rango)</th>
+                      <th className="py-2">Horas PF (Promedio)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="py-2">Ensamblador</td>
+                      <td className="py-2">20 – 30</td>
+                      <td className="py-2">25</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2">COBOL</td>
+                      <td className="py-2">10 – 20</td>
+                      <td className="py-2">15</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2">Lenguaje de 3ra y 4ta Generación</td>
+                      <td className="py-2">5 – 10</td>
+                      <td className="py-2">8</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
-
-          <button className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded w-full transition-transform transform-gpu active:scale-95">
+          <button className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded mx-auto transition-transform transform-gpu active:scale-95">
             Calcular el Esfuerzo del Proyecto
+            <FontAwesomeIcon icon={faCalculator} className="ml-2" />
           </button>
         </form>
       </div>

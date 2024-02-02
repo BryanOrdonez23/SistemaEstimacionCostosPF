@@ -33,7 +33,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-zinc-700 py-2 sm:py-4 px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
-      <div className="flex items-center space-x-64 justify-around flex-wrap">
+      <div className="flex items-center space-x-4 justify-between flex-wrap">
         <Link
           to={
             isAdminPage
@@ -47,43 +47,49 @@ const Navbar = () => {
           className="text-lg sm:text-lg font-bold text-white mb-2 sm:mb-0 transition duration-300 hover:text-gray-300 flex items-center"
         >
           <img
-            src="/logo/LogoCarrera.svg" // Reemplaza con la ruta correcta a tu imagen SVG
+            src="/logo/LogoCarrera.svg"
             alt="Home Icon"
-            className="w-8 h-8 " // Puedes ajustar las clases según sea necesario
+            className="w-12 h-12"
           />
-          <span className="ml-2">
+          <span className="ml-2 font-semibold">
             {isAdminPage
               ? "  App para estimación de Costos por PF"
-              : "  Estimación de Costos por Puntos de Función"}
+              : "Laboratorio de Computación - CostEstimator "}
+
+{!isAdminPage && (
+              <>
+                <br />
+                <span className="block text-xs font-normal text-gray-400">
+                Estimación de Costos por Puntos de Función
+                </span>
+              </>
+            )}
           </span>
+
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-4">
           <ul className="flex flex-wrap sm:flex-row items-center gap-2 sm:gap-4">
             {isAdminPage ? (
               adminCorrecto ? (
-                <>
-                  <li>
-                    <Link
-                      to="/administrador/login"
-                      onClick={() => cerrar()}
-                      className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
-                    >
-                      Cerrar Sesión
-                    </Link>
-                  </li>
-                </>
+                <li>
+                  <Link
+                    to="/administrador/login"
+                    onClick={() => cerrar()}
+                    className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                  >
+                    Cerrar Sesión
+                  </Link>
+                </li>
               ) : (
-                <>
-                  <li>
-                    <Link
-                      to="/administrador/login"
-                      className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
-                    >
-                      Iniciar Sesión
-                    </Link>
-                  </li>
-                </>
+                <li>
+                  <Link
+                    to="/administrador/login"
+                    className="text-white hover:text-gray-300 transition duration-300 bg-indigo-500 px-3 py-2 rounded-md block"
+                  >
+                    Iniciar Sesión
+                  </Link>
+                </li>
               )
             ) : (
               <>
@@ -115,8 +121,11 @@ const Navbar = () => {
                       }`}
                       onClick={() => setShowMenu(!showMenu)}
                     >
-                      <FontAwesomeIcon icon={faUser} size="xl" />
+                      <FontAwesomeIcon icon={faUser} size="lg" />
+                      <span className="text-xs font-normal text-gray-400">
                       {" " + user.name}
+                      </span>
+                     
                     </div>
                     {showMenu && (
                       <ul className="absolute z-50 right-0 mt-2 min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg">

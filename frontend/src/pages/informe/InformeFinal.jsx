@@ -7,7 +7,7 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
-
+import Nota from "../../components/Nota";
 function InformeFinal() {
   const contentRef = useRef(null);
   const { funciones, getFunctions } = useFunctions();
@@ -33,13 +33,13 @@ function InformeFinal() {
   const { isAuthenticated, logout, user } = useAuth();
 
   const routes = [
-    { path: '/proyects', displayName: 'Inicio' },
-    { path: `/fases/${params.id}`, displayName: 'Fases del Proyecto'},
-    { path: `/informe/${params.id}`, displayName: 'Fase 7: Informe Final'},
+    { path: "/proyects", displayName: "Inicio" },
+    { path: `/fases/${params.id}`, displayName: "Fases del Proyecto" },
+    { path: `/informe/${params.id}`, displayName: "Fase 7: Informe Final" },
   ];
 
   useEffect(() => {
-    document.title = 'Fase 7 - App costos';
+    document.title = "Fase 7 - App costos";
     async function loadFunciones() {
       if (params.id) {
         await getFunctions(params.id);
@@ -139,33 +139,34 @@ function InformeFinal() {
       // Configuración del color del texto a negro
       pdf.setTextColor(0, 0, 0);
       pdf.setFontSize(15);
-      const logoImage = '/logo/logoCompu.png';
+      const logoImage = "/logo/logoCompu.png";
       // Agrega el título
       pdf.setFont("helvetica", "bold");
-      pdf.addImage(logoImage, 'PNG', 20, 15, 16, 13);
+      pdf.addImage(logoImage, "PNG", 20, 15, 16, 13);
       pdf.text("Carrera de Ingieneria en Sistemas/Computación", 48, 20);
       pdf.text("Informe de estimación de costos por PF ", 55, 27);
       //pdf.text("Informe de Estimación de Costos - Método de Puntos de Función", 25, 15);
       pdf.setFontSize(10);
-      pdf.text("Proyecto: ",15,40)
+      pdf.text("Proyecto: ", 15, 40);
       pdf.setFont("helvetica", "normal");
-      pdf.text(""+ proyect.title,35,40)
+      pdf.text("" + proyect.title, 35, 40);
       pdf.setFont("helvetica", "bold");
       ////
-      pdf.text("Descripción: ",15,45)
+      pdf.text("Descripción: ", 15, 45);
       pdf.setFont("helvetica", "normal");
-      pdf.text(""+ proyect.description,40,45)
+      pdf.text("" + proyect.description, 40, 45);
       pdf.setFont("helvetica", "bold");
       ////
       ////
-      pdf.text("Fecha del informe: ",15,50)
+      pdf.text("Fecha del informe: ", 15, 50);
       pdf.setFont("helvetica", "normal");
-      pdf.text(""+ new Date().toLocaleString(),48,50)
+      pdf.text("" + new Date().toLocaleString(), 48, 50);
       pdf.setFont("helvetica", "bold");
       ////
       // Primer bloque: Tabla con las columnas originales
       pdf.setFontSize(14);
-      pdf.text("1. Listado de funcionalidades del sistema:", 15, 60);pdf.setFontSize(10);
+      pdf.text("1. Listado de funcionalidades del sistema:", 15, 60);
+      pdf.setFontSize(10);
       pdf.setFont("helvetica", "normal");
       // Verifica que haya funciones antes de intentar construir la tabla original
       if (funciones && funciones.length > 0) {
@@ -199,8 +200,10 @@ function InformeFinal() {
       posy = pdf.previousAutoTable.finalY + 10;
       posy = validacion(pdf, posy, 0);
       // Segundo bloque: Tabla con las columnas adicionales de Peso y Ponderación
-      pdf.setFont("helvetica", "bold");pdf.setFontSize(14);
-      pdf.text("2. Cálculo de puntos de función sin ajustar:", 15, posy);pdf.setFontSize(10);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(14);
+      pdf.text("2. Cálculo de puntos de función sin ajustar:", 15, posy);
+      pdf.setFontSize(10);
       posy = validacion(pdf, posy, 0);
       pdf.setFont("helvetica", "normal");
       // Verifica que haya funciones antes de intentar construir la segunda tabla
@@ -244,12 +247,16 @@ function InformeFinal() {
       posy = validacion(pdf, posy, 0);
 
       /////////////////// Tercer bloque: Tabla con los factores de ajuste
-      pdf.setFont("times", "bold");pdf.setFontSize(11);
-      pdf.text("- Fórmula: ", 20, posy);pdf.setFont("times", "normal");
+      pdf.setFont("times", "bold");
+      pdf.setFontSize(11);
+      pdf.text("- Fórmula: ", 20, posy);
+      pdf.setFont("times", "normal");
       posy = validacion(pdf, posy, 10);
       pdf.text("PFSA = Σ(Cantidad * Peso)", 70, posy);
-      posy = validacion(pdf, posy, 10);pdf.setFont("times", "bold");
-      pdf.text("- Aplicando la fórmula se obtiene:", 20, posy);pdf.setFont("times", "normal");
+      posy = validacion(pdf, posy, 10);
+      pdf.setFont("times", "bold");
+      pdf.text("- Aplicando la fórmula se obtiene:", 20, posy);
+      pdf.setFont("times", "normal");
       posy = validacion(pdf, posy, 10);
       pdf.text(
         "Puntos de Función Totales (sin ajustar): " +
@@ -258,8 +265,10 @@ function InformeFinal() {
         posy
       );
       posy = validacion(pdf, posy, 10);
-      pdf.setFont("helvetica", "bold");pdf.setFontSize(14);
-      pdf.text("3. Factores de ajuste:", 15, posy);pdf.setFontSize(10);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(14);
+      pdf.text("3. Factores de ajuste:", 15, posy);
+      pdf.setFontSize(10);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("helvetica", "normal");
 
@@ -289,27 +298,34 @@ function InformeFinal() {
         pdf.text("No hay valores de ajuste para mostrar en la tabla", 15, posy);
       }
       posy = pdf.previousAutoTable.finalY + 10;
-      posy = validacion(pdf, posy, 5);pdf.setFont("times", "normal");pdf.setFontSize(11);
+      posy = validacion(pdf, posy, 5);
+      pdf.setFont("times", "normal");
+      pdf.setFontSize(11);
       pdf.text(
         "Sumatoria de Factores de Ajuste: " +
           datosPuntosFuncion.functionPoints[0].SumaFA,
-          80,
+        80,
         posy
-      );pdf.setFontSize(14);
+      );
+      pdf.setFontSize(14);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("helvetica", "bold");
       pdf.text("4. Cálculo de puntos de función con Ajuste", 15, posy);
       posy = validacion(pdf, posy, 10);
-      pdf.setFont("times", "bold");pdf.setFontSize(11);
-      pdf.text("- Formula", 20, posy);pdf.setFont("times", "normal");
+      pdf.setFont("times", "bold");
+      pdf.setFontSize(11);
+      pdf.text("- Formula", 20, posy);
+      pdf.setFont("times", "normal");
       posy = validacion(pdf, posy, 10);
       pdf.text(
         "PFAjustados = PFSA x (0.65 + 0.01 * Factores de Ajuste):",
         70,
         posy
       );
-      posy = validacion(pdf, posy, 10);pdf.setFont("times", "bold");
-      pdf.text("- Aplicando la fórmula se obtiene", 20, posy);pdf.setFont("times", "normal");
+      posy = validacion(pdf, posy, 10);
+      pdf.setFont("times", "bold");
+      pdf.text("- Aplicando la fórmula se obtiene", 20, posy);
+      pdf.setFont("times", "normal");
       posy = validacion(pdf, posy, 10);
       pdf.text(
         "PFAjustados =" +
@@ -322,16 +338,19 @@ function InformeFinal() {
       );
       posy = validacion(pdf, posy, 5);
       pdf.text(
-        "PFAjustados = " + datosPuntosFuncion.functionPoints[0].calculoCA.toFixed(2),
+        "PFAjustados = " +
+          datosPuntosFuncion.functionPoints[0].calculoCA.toFixed(2),
         88,
         posy
       );
       posy = validacion(pdf, posy, 10);
       //Esfuerzo
-      pdf.setFont("helvetica", "bold");pdf.setFontSize(14);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(14);
       pdf.text("5. Cálculo del esfuerzo del proyecto", 15, posy);
       posy = validacion(pdf, posy, 11);
-      pdf.setFont("times", "normal");pdf.setFontSize(11);
+      pdf.setFont("times", "normal");
+      pdf.setFontSize(11);
       pdf.text(
         "Para el cálculo del esfuerzo se toma en cuenta el trabajo de un equipo que trabaja " +
           datosPuntosFuncion.functionPoints[0].horasDia +
@@ -341,20 +360,26 @@ function InformeFinal() {
         20,
         posy
       );
-      posy = validacion(pdf, posy, 10);pdf.setFont("times", "bold");
+      posy = validacion(pdf, posy, 10);
+      pdf.setFont("times", "bold");
       // Muestra la fórmula y los cálculos
-      pdf.text("- Fórmula:", 20, posy);pdf.setFont("times", "normal");
+      pdf.text("- Fórmula:", 20, posy);
+      pdf.setFont("times", "normal");
       posy = validacion(pdf, posy, 5);
       pdf.text("   Esfuerzo = PFA * (H/PF)", 80, posy);
-      posy = validacion(pdf, posy, 10);pdf.setFont("times", "bold");
+      posy = validacion(pdf, posy, 10);
+      pdf.setFont("times", "bold");
 
       pdf.text("- Donde:", 20, posy);
-      posy = validacion(pdf, posy, 5);pdf.setFont("times", "normal");
+      posy = validacion(pdf, posy, 5);
+      pdf.setFont("times", "normal");
       pdf.text("   PFA = Puntos de función ajustados", 80, posy);
       posy = validacion(pdf, posy, 5);
       pdf.text("   H/PF = Horas por puntos de función", 80, posy);
-      posy = validacion(pdf, posy, 5);pdf.setFont("times", "bold");
-      pdf.text("- Aplicando la fórmula se obtiene:", 20, posy);pdf.setFont("times", "normal");
+      posy = validacion(pdf, posy, 5);
+      pdf.setFont("times", "bold");
+      pdf.text("- Aplicando la fórmula se obtiene:", 20, posy);
+      pdf.setFont("times", "normal");
       posy = validacion(pdf, posy, 5);
       pdf.text(
         `   Esfuerzo = ${datosPuntosFuncion.functionPoints[0].calculoCA.toFixed(
@@ -371,10 +396,12 @@ function InformeFinal() {
         80,
         posy
       );
-      posy = validacion(pdf, posy, 5);pdf.setFont("times", "bold");
+      posy = validacion(pdf, posy, 5);
+      pdf.setFont("times", "bold");
       // Calcula y muestra los días de trabajo estimados
       pdf.text("- Días de Trabajo Estimados:", 20, posy);
-      posy = validacion(pdf, posy, 10);pdf.setFont("times", "normal");
+      posy = validacion(pdf, posy, 10);
+      pdf.setFont("times", "normal");
       pdf.text(`   DiasTrabajo = Esfuerzo / Horas por día`, 80, posy);
       posy = validacion(pdf, posy, 5);
       pdf.text(
@@ -392,10 +419,12 @@ function InformeFinal() {
         80,
         posy
       );
-      posy = validacion(pdf, posy, 10);pdf.setFont("times", "bold");
+      posy = validacion(pdf, posy, 10);
+      pdf.setFont("times", "bold");
       // Calcula y muestra los meses de trabajo estimados
       pdf.text("- Meses de Trabajo Estimados:", 20, posy);
-      posy = validacion(pdf, posy, 5);pdf.setFont("times", "normal");
+      posy = validacion(pdf, posy, 5);
+      pdf.setFont("times", "normal");
       pdf.text(
         `   MesesTrabajo = Dias de trabajo / Dias por mes trabajados`,
         80,
@@ -429,18 +458,12 @@ function InformeFinal() {
       posy = validacion(pdf, posy, 10);
 
       // Presenta el total de puntos de función ajustados
-      pdf.setFont("helvetica", "bold");pdf.setFontSize(14);
-      pdf.text(
-        "6. Cálculo del presupuesto del proyecto",
-        15,
-        posy
-      );
-      posy = validacion(pdf, posy, 10);pdf.setFontSize(10);
-      pdf.text(
-        "6.1 Listado de involucrados del proyecto",
-        15,
-        posy
-      );
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(14);
+      pdf.text("6. Cálculo del presupuesto del proyecto", 15, posy);
+      posy = validacion(pdf, posy, 10);
+      pdf.setFontSize(10);
+      pdf.text("6.1 Listado de involucrados del proyecto", 15, posy);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("helvetica", "normal");
       if (involucrados && involucrados.length > 0) {
@@ -463,20 +486,12 @@ function InformeFinal() {
         pdf.autoTable(tableConfigInvolucrados);
       } else {
         // Si no hay involucrados, agregar un mensaje para la tabla
-        pdf.text(
-          "No hay involucrados para mostrar en la tabla",
-          20,
-          posy
-        );
+        pdf.text("No hay involucrados para mostrar en la tabla", 20, posy);
       }
       // Muestra el total de otros gastos
       pdf.setFont("helvetica", "bold");
       posy = pdf.previousAutoTable.finalY + 10;
-      pdf.text(
-        "6.2 Listado de otros gastos del proyecto",
-        15,
-        posy
-      );
+      pdf.text("6.2 Listado de otros gastos del proyecto", 15, posy);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("helvetica", "normal");
       if (otrosGastos && otrosGastos.length > 0) {
@@ -498,23 +513,16 @@ function InformeFinal() {
         pdf.autoTable(tableConfigInvolucrados);
       } else {
         // Si no hay involucrados, agregar un mensaje para la tabla
-        pdf.text(
-          "No hay involucrados para mostrar en la tabla",
-          20,
-          posy
-        );
+        pdf.text("No hay involucrados para mostrar en la tabla", 20, posy);
       }
 
       ////////////////////////////////////
 
       posy = pdf.previousAutoTable.finalY + 10;
       posy = validacion(pdf, posy, 0);
-      pdf.setFont("times", "bold");pdf.setFontSize(11);
-      pdf.text(
-        "Se toma en consideración lo siguiente:",
-        20,
-        posy
-      );
+      pdf.setFont("times", "bold");
+      pdf.setFontSize(11);
+      pdf.text("Se toma en consideración lo siguiente:", 20, posy);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("times", "normal");
       pdf.text(
@@ -529,56 +537,28 @@ function InformeFinal() {
         posy
       );
       posy = validacion(pdf, posy, 5);
-      pdf.text(
-        "- Cantidad de Desarrolladores",
-        20,
-        posy
-      );
+      pdf.text("- Cantidad de Desarrolladores", 20, posy);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("times", "bold");
       pdf.text("- Formula:", 20, posy);
       posy = validacion(pdf, posy, 5);
       pdf.setFont("times", "normal");
-      pdf.text(
-        "Costo = (nd x dm x ps) + og",
-        80,
-        posy
-      );
+      pdf.text("Costo = (nd x dm x ps) + og", 80, posy);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("times", "bold");
       pdf.text("Donde:", 20, posy);
       posy = validacion(pdf, posy, 5);
       pdf.setFont("times", "normal");
-      pdf.text(
-        "- nd = Número de involucrados.",
-        20,
-        posy
-      );
+      pdf.text("- nd = Número de involucrados.", 20, posy);
       posy = validacion(pdf, posy, 5);
-      pdf.text(
-        "- dm = Duración del proyecto en meses.",
-        20,
-        posy
-      );
+      pdf.text("- dm = Duración del proyecto en meses.", 20, posy);
       posy = validacion(pdf, posy, 5);
-      pdf.text(
-        "- ps = Promedio de sueldos de los involucrados.",
-        20,
-        posy
-      );
+      pdf.text("- ps = Promedio de sueldos de los involucrados.", 20, posy);
       posy = validacion(pdf, posy, 5);
-      pdf.text(
-        "- ot = suma de otros gastos.",
-        20,
-        posy
-      );
+      pdf.text("- ot = suma de otros gastos.", 20, posy);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("times", "bold");
-      pdf.text(
-        "- Aplicando las formula:",
-        20,
-        posy
-      );
+      pdf.text("- Aplicando las formula:", 20, posy);
       posy = validacion(pdf, posy, 5);
       pdf.setFont("times", "normal");
       pdf.text(
@@ -590,38 +570,27 @@ function InformeFinal() {
       );
       posy = validacion(pdf, posy, 5);
       pdf.text(
-        `Costo = ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(2)}`,
+        `Costo = ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(
+          2
+        )}`,
         95,
         posy
       );
-      posy = validacion(pdf, posy, 20);pdf.setFontSize(11);
+      posy = validacion(pdf, posy, 20);
+      pdf.setFontSize(11);
       pdf.text(
-        `El costo estimado del proyecto es de: ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(2)} USD`,
+        `El costo estimado del proyecto es de: ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(
+          2
+        )} USD`,
         20,
         posy
       );
       posy = validacion(pdf, posy, 40);
-      pdf.text(
-        `___________________________`,
-        32,
-        posy
-      );
-      pdf.text(
-        `___________________________`,
-        120,
-        posy
-      );
+      pdf.text(`___________________________`, 32, posy);
+      pdf.text(`___________________________`, 120, posy);
       posy = validacion(pdf, posy, 7);
-      pdf.text(
-        `${user.name} ${user.lastname} `,
-        43,
-        posy
-      );
-      pdf.text(
-        `Revisor del informe`,
-        128,
-        posy
-      );
+      pdf.text(`${user.name} ${user.lastname} `, 43, posy);
+      pdf.text(`Revisor del informe`, 128, posy);
 
       const totalPages = pdf.internal.getNumberOfPages();
 
@@ -632,7 +601,7 @@ function InformeFinal() {
           `Carrera de Computación - Página ${i} de ${totalPages}`,
           pdf.internal.pageSize.getWidth() / 2,
           pdf.internal.pageSize.getHeight() - 10,
-          { align: 'center' }
+          { align: "center" }
         );
       }
 
@@ -645,15 +614,14 @@ function InformeFinal() {
   return (
     <div className="max-w-3xl mx-auto mt-8 p-8 bg-white rounded shadow-md">
       <Breadcrumbs routes={routes} />
-      <h1 className="text-3xl font-bold mb-4 text-black">
+      <h1 className="text-2xl font-bold mb-4 text-black">
         Fase 7: Informe Final
       </h1>
-      <div className="text-black" ref={contentRef}>
-        <p className="mb-4">
-          Este informe proporciona una estimación de costos basada en Puntos de
-          Función.
-        </p>
-        <p className="mb-4">De clic en el botón "Descargar Informe", y espere unos segundos.</p>
+      <div className="text-black" ref={contentRef}></div>
+      <div className="mt-5 my-5">
+        <Nota>
+          Luego de realizar todas lac modificaciones en el proyecto, de clic en el botón "Descargar Informe", y espere unos segundos.
+        </Nota>
       </div>
       <button
         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"

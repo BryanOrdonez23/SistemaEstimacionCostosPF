@@ -13,7 +13,7 @@ const router = Router();
 router.post("/share", authRequired, createProyectShared);
 router.get("/share", authRequired, getProyectsShared);
 router.post("/getProyectsShared", authRequired, getProyectsSharedByProyect);
-router.delete("/deleteProyectShared/:id", authRequired, deleteProyectShared);
+router.delete("/deleteProyectShared/:id", deleteProyectShared);
 router.post("/getSolicitudesProyectosShared", authRequired, getSolicitudesProyectosShared);
 router.post("/updateStatusProyectShared", authRequired, updateStatusProyectShared);
 

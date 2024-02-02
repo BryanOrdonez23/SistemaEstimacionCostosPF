@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import Breadcrumbs from "../../components/Breadcrumbs ";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faCalculator } from "@fortawesome/free-solid-svg-icons";
 const CalculoPFCA = () => {
   const { datosPuntosFuncion, getPuntosFuncion, sumaValorFactoresAjuste } =
     useEstimacionPF();
@@ -33,18 +34,19 @@ const CalculoPFCA = () => {
     }
   };
   return (
-    <div className="flex items-center justify-start h-screen flex-col bg-CCE3FF mt-6">
+    <div className="flex items-center justify-start h-screen flex-col bg-CCE3FF mt-4">
       <div className="w-full max-w-screen-lg mb-2 text-center bg-white p-6 rounded-md shadow-md">
       <Breadcrumbs routes={routes} />
-        <h1 className="text-blue-950 text-3xl font-bold mb-4">
+        <h1 className="text-blue-950 text-2xl font-bold mb-10 mt-2">
           Fase 4: Cálculo de Puntos de Función con Ajuste
         </h1>
 
         <button
-          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded mx-auto transition-transform transform-gpu active:scale-95"
+          className="mb-8 block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded mx-auto transition-transform transform-gpu active:scale-95"
           onClick={handleCalcularPuntos}
         >
-          Calcular Puntos de Función con ajuste
+          Calcular PF con ajuste
+          <FontAwesomeIcon icon={faCalculator} className="ml-2" />
         </button>
 
         {arreglo > 0 && (
@@ -62,18 +64,18 @@ const CalculoPFCA = () => {
               </b>
               <p className="text-gray-800 mt-4">
                 {" "}
-                <b>Formula: </b> <br /> <b>PFAjustados =</b> PFSA x (0.65 + 0.01
+                <b>Formula: </b> <br /> <b>PFAjustados =</b> Puntos de función sin ajuste * (0.65 + 0.01
                 * Factores de Ajuste)
               </p>
               <p className="text-gray-800 mt-2">
                 {" "}
                 <b>PFAjustados =</b>{" "}
-                {datosPuntosFuncion.functionPoints[0].calculoSA} x (0.65 + 0.01
+                {datosPuntosFuncion.functionPoints[0].calculoSA} * (0.65 + 0.01
                 * {datosPuntosFuncion.functionPoints[0].SumaFA})
               </p>
               <p className="text-gray-800 mt-4">
                 <b>PFAjustados =</b>{" "}
-                {datosPuntosFuncion.functionPoints[0].calculoSA} x (
+                {datosPuntosFuncion.functionPoints[0].calculoSA} * (
                 {0.65 + 0.01 * datosPuntosFuncion.functionPoints[0].SumaFA})
               </p>
               <p className="text-gray-800 mt-4">
@@ -88,6 +90,7 @@ const CalculoPFCA = () => {
                 className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
               >
                 Ir a la Fase 5
+                <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
               </Link>
             </div>
           </div>

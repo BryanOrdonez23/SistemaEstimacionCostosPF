@@ -108,7 +108,9 @@ const validarEstado = async (key) => {
 export const deleteProyectShared = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id) return res.status(400).json({ message: "Id no encontrado" });
     const proyect = await ProyectShares.findByIdAndDelete(id);
+    if (!proyect) return res.status(400).json({ message: "Proyecto no encontrado" });
     res.json(proyect);
   } catch (error) {
     console.error(error);

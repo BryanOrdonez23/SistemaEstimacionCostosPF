@@ -5,7 +5,9 @@ import { useProyect } from "../../context/ProyectContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers, faDollarSign, faArrowRight, faInfoCircle, faCalculator} from "@fortawesome/free-solid-svg-icons";
+import  Nota from "../../components/Nota";
 const Presupuesto = () => {
   const {
     actualizarDatosPF,
@@ -89,34 +91,37 @@ const Presupuesto = () => {
 
   return (
     <div className="flex items-center justify-center w-full flex-col bg-blue-100 ">
-      <div className="max-w-4xl  mt-6 text-center bg-white p-8 rounded-md shadow-md">
+      <div className="w-full max-w-screen-lg mt-6 text-center bg-white p-8 rounded-md shadow-md">
         <Breadcrumbs routes={routes} />
-        <h1 className="text-blue-950 text-4xl font-bold mb-1">
+        <h1 className="text-blue-950 text-2xl font-bold mb-1">
           Fase 6: Presupuesto del proyecto
         </h1>
-        <p className="text-blue-950 text-1xl font-bold mb-6 text-justify">
-          Antes de realizar el cálculo del esfuerzo es recomendable agregar los
-          involucrados y otros gastos del proyecto.
-        </p>
-        <div className="flex justify-between mb-4">
+        <div className="flex justify-between mb-4 mt-8">
           <Link
             to={`/involucrados/${params.id}`}
             className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 rounded"
           >
+             <FontAwesomeIcon icon={faUsers} className="mr-2" />
             Gestionar Involucrados
           </Link>
           <Link
             to={`/otrosGastos/${params.id}`}
             className="bg-green-500 hover:bg-green-400 text-white font-bold py-4 px-6 rounded"
           >
+            <FontAwesomeIcon icon={faDollarSign} className="mr-2" />
             Gestionar Otros Gastos
           </Link>
         </div>
 
+        <Nota>
+        Antes de realizar el cálculo del esfuerzo es necesario agregar los
+        involucrados y otros gastos del proyecto.
+      </Nota>
+
         <div className="bg-gray-200 p-8 rounded-md mt-6">
-          <div className="text-lg">
+          <div className="text-base">
             <p className="text-gray-800 mb-2 text-justify">
-              <span className="font-semibold text-justify">
+              <span className="font-semibold  text-justify">
                 {" "}
                 Se toma en consideración lo siguiente:{" "}
               </span>{" "}
@@ -154,7 +159,7 @@ const Presupuesto = () => {
             </p>
 
             {bandera ? (
-              <div>
+              <div className="bg-gray-50 mt-4">
                 <p className="text-gray-800 mb-2">
                   <span className="font-semibold">Aplicando las formula: </span>{" "}
                   <br />
@@ -167,21 +172,18 @@ const Presupuesto = () => {
                 </p>
               </div>
             ) : (
-              <p className="text-gray-800 mb-2 text-justify">
-                {/* Alternative content when conditions are not met */}
-                Para cálcular el presupuesto del proyecto se necesita al menos:{" "}
-                <br />- 1 involucrado agregado (que tenga un sueldo superior a 0
-                $) <br />- 1 otro gasto agregado.
-              </p>
+              <div></div>
+            
             )}
           </div>
         </div>
         <br />
         <button
           onClick={() => mostrar()}
-          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded w-full transition-transform transform-gpu active:scale-95"
+          className="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded mx-auto transition-transform transform-gpu active:scale-95"
         >
           Calcular el presupuesto del Proyecto
+          <FontAwesomeIcon icon={faCalculator} className="ml-2" />
         </button>
 
         {bandera2 ? (
@@ -191,6 +193,7 @@ const Presupuesto = () => {
           className="bg-green-500 text-white px-4 py-2 rounded text-center hover:bg-green-600"
         >
           Ir a la Fase 7
+          <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
         </Link>
       </div>
       ): <div></div>}
