@@ -1,12 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
+export const connectDB = async () => {
+  try {
+    await mongoose.connect("mongodb://mongo/swcostospf", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 20000, // 20 segundos
+    });
 
-export const connectDB = async ()=> {
-    try {
-        await mongoose.connect("mongodb://localhost/swcostospf");
-        console.log(">>> DB is connected.!");
-    } catch (error) {
-        console.log(error);
-    }
-}
-
+    console.log(">>> DB is connected.!");
+  } catch (error) {
+    console.log(error);
+  }
+};

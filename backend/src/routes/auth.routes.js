@@ -9,7 +9,8 @@ import {
   getUserById,
   changePassword,
   updateUser,
-  updateUserwoPassword
+  updateUserwoPassword,
+  mostrar
 } from "../controllers/auth.controller.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
 import { registerSchema, loginSchema, cambiodatosSchema } from "../schemas/auth.schema.js";
@@ -25,4 +26,5 @@ router.get("/getUser", authRequired, getUserById);
 router.put("/changePassword", authRequired, changePassword);
 router.put("/updateUser", authRequired, updateUser);
 router.put("/updateUserwoPassword",validateSchema(cambiodatosSchema), authRequired, updateUserwoPassword);
+router.get("/prueba",   mostrar);
 export default router;

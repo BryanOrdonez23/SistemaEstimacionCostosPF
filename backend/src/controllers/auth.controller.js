@@ -187,3 +187,8 @@ export const updateUserwoPassword = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+
+export const mostrar = async (req, res) => {
+  res.send("Hola mundo")
+}
