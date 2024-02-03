@@ -44,6 +44,7 @@ function ProyectFormPage() {
   const [showTableModalContent, setShowTableModalContent] = useState("users");
   const [showSuccess, setShowSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [name, setName] = useState("");
 
   const handleSuccessClose = () => {
     setShowSuccess(false);
@@ -74,11 +75,21 @@ function ProyectFormPage() {
     fetchUserNames();
   }, [proyectShared]);
 
+
+  const getUserName = async (id) => {
+    try {
+      const user = await getUserById(id);
+      setName(user);
+    } catch (error) {
+      console.error("Error al obtener el usuario:", error);
+    } 
+  };
+
   useEffect(() => {
     getProyects();
     getProyectsShared();
   }, []);
-
+console.log(proyectShared);
   const toggleTableModal = () => {
     setShowTableModal(!showTableModal);
   };
@@ -95,8 +106,6 @@ function ProyectFormPage() {
 
   const handleConfirmDeleteProyect = async () => {
     try {
-      //console.log(proyectToDelete);
-      console.log(proyectToDelete);
       await deleteProyect(proyectToDelete);
       getProyects();
       setShowDeleteConfirmationProyect(false); // Ocultar el modal de confirmación
@@ -127,7 +136,6 @@ function ProyectFormPage() {
     await getSolicitudesProyectosShared(proyectId);
     await getProyectsSharedByProyect(proyectId);
   };
-  console.log(proyectToDelete);
 
   //--------- Proyectos Compartidos Delete Personas dentro------------------
   const handleEliminarElemento = async (id, proyectId) => {
@@ -328,9 +336,6 @@ function ProyectFormPage() {
               Categoría
             </th>
             <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
-              Fecha de Creación
-            </th>
-            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
               Última Actualización
             </th>
             <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center"></th>
@@ -339,19 +344,16 @@ function ProyectFormPage() {
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
           {proyectShared.map((proyect) => (
             <tr key={proyect._id} className="hover:bg-gray-300">
-              <td className="flex gap-2 py-2 px-1 md:px-2 border-b text-center">
+              <td className="py-2 px-1 md:px-2 border-b text-center">
                 {proyect.proyect.title}
               </td>
               <td className="py-2 px-1 md:px-2 border-b text-center">
-                {userNames[proyect.proyect.user] || "Cargando..."}
+                {userNames[proyect.proyect.user] || "Usuario Desconocido"}
               </td>
               <td className="py-2 px-1 md:px-2 border-b text-center">
                 <span className="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-1 py-1 text-xxs sm:text-xs font-semibold text-blue-800">
                   {proyect.proyect.category}
                 </span>
-              </td>
-              <td className="py-2 px-1 md:px-2 border-b text-center">
-                {new Date(proyect.createdAt).toLocaleDateString()}
               </td>
               <td className="py-2 px-1 md:px-2 border-b text-center">
                 {new Date(proyect.updatedAt).toLocaleDateString()}
@@ -396,8 +398,7 @@ function ProyectFormPage() {
             <div className="text-blue-950 mb-4 text-center">
               <div className="bg-gray-200 p-4 rounded mx-auto">
                 <h1 className="mb-2">
-                  Codigo de acceso del proyecto, puedes compartir este código
-                  con los usuarios que desees compartir el proyecto:
+                Código de acceso del proyecto, puedes compartir este código con los usuarios que desees compartir el proyecto:
                 </h1>
                 <div className="bg-white p-2 rounded-md mb-3">
                   <h1 className="font-bold text-2xl">{faCode}</h1>

@@ -46,6 +46,8 @@ const Presupuesto = () => {
         setconteo(contar.numeroInvolucrados);
         setprom(promedio.promedio);
 
+        console.log(promedio)
+
         if (sumaOtrosGastos.totalCosto > 0) {
           setsumaotrosGastos(sumaOtrosGastos.totalCosto);
         } else {
@@ -63,6 +65,8 @@ const Presupuesto = () => {
     carga();
   }, [bandera]);
 
+
+
   const carga = async (meses) => {
     setmesesEstimados(meses);
   };
@@ -75,8 +79,8 @@ const Presupuesto = () => {
     try {
       const presu = await calcularPresupuestoEstimado(params.id);
       const mensaje =
-        "El costo estimado del proyecto es = " +
-        presu.toFixed(3) +
+        "El presupuesto estimado del proyecto es = " +
+        presu.toFixed(2) +
         " $";
       setpresupuesto(mensaje);
       setBandera2(true);
@@ -164,11 +168,16 @@ const Presupuesto = () => {
                   <span className="font-semibold">Aplicando las formula: </span>{" "}
                   <br />
                   <span className="italic">
-                    Costo = ({conteo} ∗ {mesesEstimados} ∗ {prom.toFixed(2)}) +{" "}
+                    Presupuesto = ({conteo} ∗ {mesesEstimados} ∗ {prom}) +{" "}
                     {sumaotrosGastos}
                   </span>{" "}
                   <br />
-                  <span className="italic">{presupuesto}</span> <br />
+                  <span className="italic">
+                  Presupuesto = {(conteo * mesesEstimados * prom).toFixed(2)} + {sumaotrosGastos}
+
+                  </span>{" "}
+                  <br />
+                  <span className="italic font-semibold mt-4">{presupuesto}</span> <br />
                 </p>
               </div>
             ) : (

@@ -318,7 +318,7 @@ function InformeFinal() {
       pdf.setFont("times", "normal");
       posy = validacion(pdf, posy, 10);
       pdf.text(
-        "PFAjustados = PFSA x (0.65 + 0.01 * Factores de Ajuste):",
+        "PFAjustados = PFSA * (0.65 + 0.01 * Factores de Ajuste):",
         70,
         posy
       );
@@ -330,7 +330,7 @@ function InformeFinal() {
       pdf.text(
         "PFAjustados =" +
           datosPuntosFuncion.functionPoints[0].calculoSA +
-          " x(0.65 + 0.01 *" +
+          " * (0.65 + 0.01 *" +
           datosPuntosFuncion.functionPoints[0].SumaFA +
           ")",
         70,
@@ -543,7 +543,7 @@ function InformeFinal() {
       pdf.text("- Formula:", 20, posy);
       posy = validacion(pdf, posy, 5);
       pdf.setFont("times", "normal");
-      pdf.text("Costo = (nd x dm x ps) + og", 80, posy);
+      pdf.text("Costo = (nd * dm * ps) + og", 80, posy);
       posy = validacion(pdf, posy, 10);
       pdf.setFont("times", "bold");
       pdf.text("Donde:", 20, posy);
@@ -562,15 +562,23 @@ function InformeFinal() {
       posy = validacion(pdf, posy, 5);
       pdf.setFont("times", "normal");
       pdf.text(
-        `Costo = (${conteo} x ${datosPuntosFuncion.functionPoints[0].mesesEstimados.toFixed(
+        `Presupuesto = (${conteo} * ${datosPuntosFuncion.functionPoints[0].mesesEstimados.toFixed(
           2
-        )} x ${prom.toFixed(2)}) + ${sumaotrosGastos}`,
+        )} * ${prom.toFixed(2)}) + ${sumaotrosGastos}`,
         80,
         posy
       );
       posy = validacion(pdf, posy, 5);
       pdf.text(
-        `Costo = ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(
+        `Presupuesto = (${(conteo * datosPuntosFuncion.functionPoints[0].mesesEstimados.toFixed(
+          2
+        ) * prom.toFixed(2)).toFixed(2)}) + ${sumaotrosGastos}`,
+        80,
+        posy
+      );
+      posy = validacion(pdf, posy, 5);
+      pdf.text(
+        `Presupuesto = ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(
           2
         )}`,
         95,
@@ -579,7 +587,7 @@ function InformeFinal() {
       posy = validacion(pdf, posy, 20);
       pdf.setFontSize(11);
       pdf.text(
-        `El costo estimado del proyecto es de: ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(
+        `El presupuesto estimado del proyecto es de: ${datosPuntosFuncion.functionPoints[0].presupuesto.toFixed(
           2
         )} USD`,
         20,
@@ -598,7 +606,7 @@ function InformeFinal() {
         pdf.setPage(i);
         pdf.setFontSize(8);
         pdf.text(
-          `Carrera de Computación - Página ${i} de ${totalPages}`,
+          `CostEstimator - Página ${i} de ${totalPages}`,
           pdf.internal.pageSize.getWidth() / 2,
           pdf.internal.pageSize.getHeight() - 10,
           { align: "center" }
@@ -620,7 +628,7 @@ function InformeFinal() {
       <div className="text-black" ref={contentRef}></div>
       <div className="mt-5 my-5">
         <Nota>
-          Luego de realizar todas lac modificaciones en el proyecto, de clic en el botón "Descargar Informe", y espere unos segundos.
+          Luego de realizar todas las modificaciones en el proyecto, de clic en el botón "Descargar Informe", y espere unos segundos.
         </Nota>
       </div>
       <button

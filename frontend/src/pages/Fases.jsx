@@ -6,7 +6,10 @@ import { useEstimacionPF } from "../context/EstimacionPFContext";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faProjectDiagram,
+} from "@fortawesome/free-solid-svg-icons";
 import CustomPopup from "../components/CustomPopup";
 import Breadcrumbs from "../components/Breadcrumbs ";
 const Fase = ({ title, description, path, icon, isEnabled, iconok }) => {
@@ -29,7 +32,7 @@ const Fase = ({ title, description, path, icon, isEnabled, iconok }) => {
       </Link>
       {isEnabled && title !== "Fase 7" && (
         <div className="text-xs italic text-gray-400 mt-4">
-          Volver a ejecutarce en caso de modificaciónes
+          Volver a ejecutarse en caso de modificaciones
         </div>
       )}
     </div>
@@ -111,6 +114,13 @@ const Fases = () => {
   return (
     <div className="flex flex-col items-center justify-center  bg-CCE3FF">
       <Breadcrumbs routes={routes} />
+      <div className="bg-blue-500 p-4 py-1 rounded-md shadow-xl mb-4 ">
+      <h1 className="text-sm font-semibold text-white italic flex items-center">
+        <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" size="1x" />
+        {proyect.title}
+      </h1>
+    </div>
+
       <div className="flex justify-center mt-1">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-8xl">
           <Fase
@@ -209,7 +219,7 @@ const Fases = () => {
           />
           <Fase
             title="Fase 5"
-            description="Cálculo del esfuerzo del proyecto"
+            description="Cálculo del presupuesto del proyecto"
             path={`/esfuerzopf/${proyect._id}`}
             icon={
               <FontAwesomeIcon

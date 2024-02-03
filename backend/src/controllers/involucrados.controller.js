@@ -219,8 +219,9 @@ export const promedioSueldosInvolucrados = async (req, res) => {
     });
 
     const promedio = sumatoria / foundInvolucrados.length;
+    const promedioRedondeado = parseFloat(promedio.toFixed(2));
 
-    res.status(200).json({ promedio });
+    res.status(200).json({ promedio: promedioRedondeado});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al obtener el involucrado" });

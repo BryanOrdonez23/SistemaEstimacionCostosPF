@@ -22,7 +22,7 @@ const Breadcrumbs = ({ routes }) => {
                 {route.path === '/proyects' && (
                   <FontAwesomeIcon icon={faHome} className="mr-2" style={{ color: '#1E90FF' }} />
                 )}
-                <span className={`mx-2 text-lg select-none text-2xl font-base leading-normal text-zinc-900 antialiased ${route.path === '/proyects' ? 'text-blue-gray-900' : 'text-zinc-900'}`}>
+                <span className={`mx-2 text-base select-none text-2xl font-base leading-normal text-zinc-900 antialiased ${route.path === '/proyects' ? 'text-blue-gray-900' : 'text-zinc-900'}`}>
                   {route.displayName}
                 </span>
               </Link>

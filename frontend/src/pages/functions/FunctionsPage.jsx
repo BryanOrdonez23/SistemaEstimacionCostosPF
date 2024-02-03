@@ -85,9 +85,9 @@ function FunctionsPage() {
         </Link>
       </div>
       {funciones.length === 0 ? (
-        <div className="text-center">
-          <h1 className="text-xl mb-4">No hay funciones agregadas</h1>
-          <div className="flex items-center justify-center">
+        <div className="text-left">
+          <h1 className="text-xl mb-4">No hay funcionaliades agregadas</h1>
+          <div className="flex items-center justify-start">
             <Link
               to={`/fases/${params.id}`}
               className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded"
@@ -126,7 +126,9 @@ function FunctionsPage() {
                       {funcion.funcionalidad}
                     </td>
                     <td className="py-2 px-1 md:px-2 border-b text-center">
-                      {funcion.tipo}
+                      <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-1 py-1 text-xxs sm:text-xs font-semibold text-blue-800">
+                        {funcion.tipo}
+                      </span>
                     </td>
                     <td className="py-2 px-1 md:px-2 border-b text-center">
                       {funcion.complejidad}
@@ -139,7 +141,10 @@ function FunctionsPage() {
                         to={`/updatefuncion/${proyect._id}/${funcion._id}`}
                         className="block md:inline-block text-yellow-400 hover:text-yellow-500 mr-2  "
                       >
-                        <FontAwesomeIcon icon={faEdit} className="text-lg mr-2" />
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          className="text-lg mr-2"
+                        />
                       </Link>
                       <button
                         onClick={() =>
@@ -147,7 +152,10 @@ function FunctionsPage() {
                         }
                         className="block md:inline-block text-red-500 hover:text-red-600 mr-2"
                       >
-                        <FontAwesomeIcon icon={faTrash} className="text-xl mr-2" />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="text-xl mr-2"
+                        />
                       </button>
                     </td>
                   </tr>

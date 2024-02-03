@@ -50,8 +50,7 @@ export const AuthProvider = ({ children }) => {
   }
 const getUserById = async (id) => {
   try {
-    const res = await getUserByIdRequest();
-    setUser(res.data);
+    const res = await getUserByIdRequest({id});
     return res.data;
   } catch (error) {
     console.log(error);

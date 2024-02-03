@@ -130,7 +130,7 @@ function NewInvolucrados() {
           </div>
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
-              Sueldo ($ Dólar Americano):
+              Sueldo (USD):
             </label>
             <input
               type="text"

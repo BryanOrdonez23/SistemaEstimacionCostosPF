@@ -313,9 +313,9 @@ export const resetValorFactoresAjuste = async (projectId) => {
     });
 
     if (deletedRegistro) {
-      return { message: 'Registro eliminado exitosamente.' };
+      return { message: "Registro eliminado exitosamente." };
     } else {
-      return { message: 'No existe un registro para el proyecto.' };
+      return { message: "No existe un registro para el proyecto." };
     }
   } catch (error) {
     console.error(error);
@@ -355,11 +355,22 @@ export const guardaryActualizarDatosPF = async (req, res) => {
         functionPoints.horasDia > 0
       ) {
         functionPoints.esfuerzo =
-          functionPoints.calculoCA * functionPoints.horasPF;
-        functionPoints.diasEstimados =
-          functionPoints.esfuerzo / functionPoints.horasDia;
-        functionPoints.mesesEstimados =
-          functionPoints.diasEstimados / functionPoints.diasTrabajados;
+        functionPoints.calculoCA * functionPoints.horasPF;
+      
+      // Redondea esfuerzo a dos decimales
+      functionPoints.esfuerzo = parseFloat(functionPoints.esfuerzo.toFixed(2));
+
+      functionPoints.diasEstimados =
+        functionPoints.esfuerzo / functionPoints.horasDia;
+
+      // Redondea diasEstimados a dos decimales
+      functionPoints.diasEstimados = parseFloat(functionPoints.diasEstimados.toFixed(2));
+
+      functionPoints.mesesEstimados =
+        functionPoints.diasEstimados / functionPoints.diasTrabajados;
+
+      // Redondea mesesEstimados a dos decimales
+      functionPoints.mesesEstimados = parseFloat(functionPoints.mesesEstimados.toFixed(2));
       }
       await functionPoints.save();
     } else {
@@ -400,15 +411,9 @@ export const calcularPresupuesto = async (req, res) => {
   const { id } = req.params; // Cambiado de req.body a req.params
   try {
     const functionPoints = await FunctionPoints.findOne({ proyect: id });
-    const sumatoriaOtrosGastos = await sumatoriaCostosOtrosGastos(id);
+    const  sumatoriaOtrosGastos = await sumatoriaCostosOtrosGastos(id);
     const promedioSueldos = await promedioSueldosInvolucrados(id);
     const numeroInvolucrados = await contarInvolucrados(id);
-    console.log(
-      functionPoints.mesesEstimados,
-      sumatoriaOtrosGastos,
-      promedioSueldos,
-      numeroInvolucrados
-    );
 
     if (
       (functionPoints,
@@ -416,10 +421,16 @@ export const calcularPresupuesto = async (req, res) => {
       promedioSueldos,
       numeroInvolucrados)
     ) {
-      // Si ya existe, actualiza los campos necesarios
-      functionPoints.presupuesto =
+      const presupuestoCalculado =
         numeroInvolucrados * functionPoints.mesesEstimados * promedioSueldos +
-        sumatoriaOtrosGastos; // Ajusta según tus necesidades
+        sumatoriaOtrosGastos;
+
+      // Redondea el resultado a dos decimales
+      const presupuestoRedondeado = parseFloat(presupuestoCalculado.toFixed(2));
+
+      // Asigna el presupuesto redondeado al campo correspondiente
+      functionPoints.presupuesto = presupuestoRedondeado;
+
       // Actualiza otros campos según sea necesario
       await functionPoints.save();
       res.status(200).json({ presupuesto: functionPoints.presupuesto });
@@ -501,7 +512,9 @@ const sumatoriaCostosOtrosGastos = async (id) => {
       0
     );
 
-    return totalCosto;
+    const totalCostoRedondeado = parseFloat(totalCosto.toFixed(2));
+
+    return totalCostoRedondeado;
   } catch (error) {
     console.error(error);
     throw error; // Puedes lanzar el error para manejarlo más arriba si es necesario
@@ -532,15 +545,20 @@ const promedioSueldosInvolucrados = async (id) => {
       );
     }
 
-    let sumatoria = 0;
+    let sumatoria = 0.0;
 
     foundInvolucrados.forEach((involucrado) => {
-      sumatoria += involucrado.sueldo;
+      sumatoria += parseFloat(involucrado.sueldo);
     });
+    
 
     const promedio = sumatoria / foundInvolucrados.length;
 
-    return promedio;
+    // Redondea el resultado a dos decimales
+    const promedioRedondeado = parseFloat(promedio.toFixed(2));
+
+
+    return promedioRedondeado;
   } catch (error) {
     console.error(error);
     throw error; // Puedes lanzar el error para manejarlo más arriba si es necesario

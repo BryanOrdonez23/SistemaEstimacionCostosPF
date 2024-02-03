@@ -942,7 +942,15 @@ const CustomPopup = ({ isOpen, message, onClose }) => {
         </table>
       </div>
       ),
-
+      cantidad: (
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-black mb-2">Cantidad de Funciones</h3>
+          <p className="text-black">
+            La cantidad de funciones se refiere a la cantidad de veces que se repite cada tipo de funcionalidad en el proyecto de software.
+          </p>
+        </div>
+        ),
+  
     };
 
     // Retorna el contenido personalizado o el mensaje original si no hay coincidencia

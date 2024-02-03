@@ -37,12 +37,12 @@ const CalculoPFCA = () => {
     <div className="flex items-center justify-start h-screen flex-col bg-CCE3FF mt-4">
       <div className="w-full max-w-screen-lg mb-2 text-center bg-white p-6 rounded-md shadow-md">
       <Breadcrumbs routes={routes} />
-        <h1 className="text-blue-950 text-2xl font-bold mb-10 mt-2">
+        <h1 className="text-blue-950 text-2xl font-bold mb-8 mt-2">
           Fase 4: Cálculo de Puntos de Función con Ajuste
         </h1>
 
         <button
-          className="mb-8 block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded mx-auto transition-transform transform-gpu active:scale-95"
+          className="mb-4 block bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded mx-auto transition-transform transform-gpu active:scale-95"
           onClick={handleCalcularPuntos}
         >
           Calcular PF con ajuste

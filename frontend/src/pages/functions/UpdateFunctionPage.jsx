@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { useProyect } from "../../context/ProyectContext";
 import { useFunctions } from "../../context/FunctionsContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
+import CustomPopup from "../../components/CustomPopup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 function NewProyectPage() {
   const {
@@ -15,7 +18,7 @@ function NewProyectPage() {
   } = useForm();
   const navigate = useNavigate();
   const params = useParams();
-
+  const [showCustomPopup, setShowCustomPopup] = useState(null);
   const { user } = useAuth();
   const { getProyects, getProyect } = useProyect();
   const { getFunction, updateFunction, errors } = useFunctions();
@@ -38,7 +41,13 @@ function NewProyectPage() {
     }
     loadfunction();
   }, []);
+  const mostrarPopUp = (key) => {
+    setShowCustomPopup(key);
+  };
 
+  const handlePopUpClose = () => {
+    setShowCustomPopup(null);
+  };
   const onSubmit = handleSubmit(async (data) => {
     const datos = {
       funcionalidad: data.funcionalidad,
@@ -104,6 +113,12 @@ function NewProyectPage() {
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Tipo
+              <FontAwesomeIcon
+                icon={faInfoCircle}
+                onClick={() => mostrarPopUp("Tipo")}
+                className="ml-2 text-blue-500 cursor-pointer"
+                size="1x"
+              />
             </label>
             <select
               id="tipo"
@@ -129,6 +144,12 @@ function NewProyectPage() {
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Complejidad
+              <FontAwesomeIcon
+                icon={faInfoCircle}
+                onClick={() => mostrarPopUp("Complejidad")}
+                className="ml-2 text-blue-500 cursor-pointer"
+                size="1x"
+              />
             </label>
             <select
               id="complejidad"
@@ -152,6 +173,12 @@ function NewProyectPage() {
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Cantidad
+              <FontAwesomeIcon
+                icon={faInfoCircle}
+                onClick={() => mostrarPopUp("cantidad")}
+                className="ml-2 text-blue-500 cursor-pointer"
+                size="1x"
+              />
             </label>
             <input
               type="number"
@@ -173,6 +200,11 @@ function NewProyectPage() {
             Guardar
           </button>
         </form>
+        <CustomPopup
+          isOpen={showCustomPopup}
+          message={showCustomPopup}
+          onClose={handlePopUpClose}
+        />
       </div>
     </div>
   );

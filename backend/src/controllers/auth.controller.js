@@ -109,8 +109,9 @@ export const getUsers = async (req, res) => {
 };
 
 export const getUserById = async (req, res) => {
+  const { id } = req.body;
   try {
-    const user = await User.findById(req.user.payload.id);
+    const user = await User.findById(id);
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
     } catch (error) {

@@ -115,7 +115,7 @@ const CalcuiloPFSA = () => {
             Listado de funcionalidades
           </h1>
           {funciones.length === 0 ? (
-            <h1 className="text-xl mb-4">No hay funciones agregadas</h1>
+            <h1 className="text-xl mb-4 text-left">No hay funcionalidades agregadas</h1>
           ) : (
             <div className="overflow-x-auto">
               <div className="rounded-lg border border-gray-200 shadow-md m-5">

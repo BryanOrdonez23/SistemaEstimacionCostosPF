@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useEstimacionPF } from "../../context/EstimacionPFContext";
 import { useProyect } from "../../context/ProyectContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle,faCalculator } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faCalculator } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/Breadcrumbs ";
@@ -89,7 +89,8 @@ const EsfuerzoPF = () => {
         {bandera && (
           <div className="bg-gray-200 p-8 rounded-md mt-2">
             <p className="text-gray-800  text-sm">
-              Existe un calculo existente del esfuerzo del proyecto de :{" "}
+              Existe un cálculo existente del esfuerzo del proyecto de: 14.1
+              meses estimados.{" "}
               <b>
                 {datosPuntosFuncion.functionPoints[0].mesesEstimados.toFixed(1)}
               </b>{" "}
@@ -122,7 +123,8 @@ const EsfuerzoPF = () => {
         </div>
         <div className="rounded-md mt-4 my-6">
           <Nota>
-          Previo al cálculo del esfuerzo del proyecto, se debe llenar unos datos relacionados con el metodo de PF.
+            Previo al cálculo del esfuerzo del proyecto, es necesario llenar
+            datos relacionados con el método de PF.
           </Nota>
         </div>
         {errors.map((error, i) => (
@@ -219,33 +221,41 @@ const EsfuerzoPF = () => {
                   &times;
                 </span>
 
-                <h1 className="text-blue-950 font-bold text-lg mb-4">
-                  Tecnologia seleccionada: {proyect.technology}
+                <h1 className="text-blue-950 font-semibold text-base mb-4">
+                  Tecnologia seleccionada en el prente proyecto: {proyect.technology}
                 </h1>
 
-                <table className="w-full border p-2 rounded text-black">
-                  <thead>
+                <table className="w-full border-collapse border p-2 rounded text-black">
+                  <thead className="bg-gray-200">
                     <tr>
-                      <th className="py-2">Lenguaje</th>
-                      <th className="py-2">Horas PF (Rango)</th>
-                      <th className="py-2">Horas PF (Promedio)</th>
+                      <th className="py-2 px-4 text-center font-semibold">
+                        Lenguaje
+                      </th>
+                      <th className="py-2 px-4 text-center font-semibold">
+                        Horas PF (Rango)
+                      </th>
+                      <th className="py-2 px-4 text-center font-semibold">
+                        Horas PF (Promedio)
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="py-2">Ensamblador</td>
-                      <td className="py-2">20 – 30</td>
-                      <td className="py-2">25</td>
+                    <tr className="hover:bg-gray-100">
+                      <td className="py-2 px-4 text-center">Ensamblador</td>
+                      <td className="py-2 px-4 text-center">20 – 30</td>
+                      <td className="py-2 px-4 text-center">25</td>
                     </tr>
-                    <tr>
-                      <td className="py-2">COBOL</td>
-                      <td className="py-2">10 – 20</td>
-                      <td className="py-2">15</td>
+                    <tr className="hover:bg-gray-100">
+                      <td className="py-2 px-4 text-center">COBOL</td>
+                      <td className="py-2 px-4 text-center">10 – 20</td>
+                      <td className="py-2 px-4 text-center">15</td>
                     </tr>
-                    <tr>
-                      <td className="py-2">Lenguaje de 3ra y 4ta Generación</td>
-                      <td className="py-2">5 – 10</td>
-                      <td className="py-2">8</td>
+                    <tr className="hover:bg-gray-100">
+                      <td className="py-2 px-4 text-center">
+                        Lenguaje de 3ra y 4ta Generación
+                      </td>
+                      <td className="py-2 px-4 text-center">5 – 10</td>
+                      <td className="py-2 px-4 text-center">8</td>
                     </tr>
                   </tbody>
                 </table>
