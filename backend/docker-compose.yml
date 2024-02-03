@@ -6,13 +6,31 @@ services:
     restart: always
     build: .
     ports:
-      - "5000:4000"
+      - "4000:4000"
     links:
       - mongo
+    volumes:
+      - backend-data:/app/data
 
   mongo:
     container_name: mymongo
     image: mongo
     ports:
       - "27018:27017"
-    
+
+  frontend:
+    container_name: frontendcostos
+    restart: always
+    build: ../frontend
+    ports:
+      - "8080:8080"
+    volumes:
+      - frontend-data:/app
+    depends_on:
+      - web
+    tty: true
+
+volumes:
+  backend-data:
+  frontend-data:
+  

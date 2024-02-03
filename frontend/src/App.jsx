@@ -7,7 +7,6 @@ import { ProyectProvider } from "./context/ProyectContext";
 import { FunctionsProvider } from "./context/FunctionsContext";
 import { EstimacionPFProvider } from "./context/EstimacionPFContext";
 import { AdminProvider } from "./context/AdminContext";
-import Homepage from "../src/pages/Homepage";
 import NewProyectPage from "./pages/NewProyectPage";
 import ProyectFormPage from "./pages/Dashboard";
 import Protected from "./Protected";
