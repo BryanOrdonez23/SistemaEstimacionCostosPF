@@ -21,7 +21,7 @@ router.post("/login", validateSchema(loginSchema), login);
 router.post("/logout", logout);
 router.get("/profile", authRequired, profile);
 router.get("/verify", verifyToken);
-router.get("/getUser", authRequired, getUserById);
+router.post("/getUser", authRequired, getUserById);
 router.put("/changePassword", authRequired, changePassword);
 router.put("/updateUser", authRequired, updateUser);
 router.put("/updateUserwoPassword",validateSchema(cambiodatosSchema), authRequired, updateUserwoPassword);

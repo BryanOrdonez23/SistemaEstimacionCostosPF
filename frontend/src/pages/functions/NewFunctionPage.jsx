@@ -163,6 +163,12 @@ function NewProyectPage() {
           <div className="mb-4">
             <label className="block text-gray-600 text-sm font-medium mb-2">
               Cantidad
+              <FontAwesomeIcon
+                icon={faInfoCircle}
+                onClick={() => mostrarPopUp("cantidad")}
+                className="ml-2 text-blue-500 cursor-pointer"
+                size="1x"
+              />
             </label>
             <input
               type="number"
