@@ -184,6 +184,7 @@ function NewProyectPage() {
               type="number"
               name="cantidad"
               id="cantidad"
+              placeholder="Ingrese la cantidad"
               className="w-full border p-2 rounded text-black"
               {...register("cantidad", { required: "La cantidad es requerida" })}
             />

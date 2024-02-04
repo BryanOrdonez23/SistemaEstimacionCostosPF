@@ -14,6 +14,7 @@ import {
   faShare,
   faPlusCircle,
   faSignInAlt,
+  faSignOutAlt 
 } from "@fortawesome/free-solid-svg-icons";
 
 function ProyectFormPage() {
@@ -75,21 +76,20 @@ function ProyectFormPage() {
     fetchUserNames();
   }, [proyectShared]);
 
-
   const getUserName = async (id) => {
     try {
       const user = await getUserById(id);
       setName(user);
     } catch (error) {
       console.error("Error al obtener el usuario:", error);
-    } 
+    }
   };
 
   useEffect(() => {
     getProyects();
     getProyectsShared();
   }, []);
-console.log(proyectShared);
+  console.log(proyectShared);
   const toggleTableModal = () => {
     setShowTableModal(!showTableModal);
   };
@@ -150,6 +150,7 @@ console.log(proyectShared);
   const handleConfirmDeleteElemento = async () => {
     try {
       await deleteProyectShared(elementoToDelete.id);
+      await getProyectsSharedByProyect(elementoToDelete.proyectId);
       await getSolicitudesProyectosShared(elementoToDelete.proyectId);
       setShowDeleteConfirmation(false);
     } catch (error) {
@@ -269,10 +270,24 @@ console.log(proyectShared);
                       </span>
                     </td>
                     <td className="py-2 px-1 md:px-2 border-b text-center">
-                      {new Date(proyect.createdAt).toLocaleDateString()}
+                      {new Intl.DateTimeFormat("es-ES", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false, // Para mostrar en formato de 24 horas
+                      }).format(new Date(proyect.createdAt))}
                     </td>
                     <td className="py-2 px-1 md:px-2 border-b text-center">
-                      {new Date(proyect.updatedAt).toLocaleDateString()}
+                      {new Intl.DateTimeFormat("es-ES", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false, // Para mostrar en formato de 24 horas
+                      }).format(new Date(proyect.updatedAt))}
                     </td>
                     <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-1 md:space-y-0">
                       <Link
@@ -315,79 +330,85 @@ console.log(proyectShared);
           </div>
         </div>
       )}
-{proyectShared.length === 0 ? (
-  <p className="text-base my-10 italic"></p>
-) : (
-  <div className="overflow-x-auto">
-    <h1 className="text-black text-sm sm:text-base font-sans italic mb-4 font-semibold">
-      Proyectos Compartidos
-    </h1>
-    <div className="rounded-lg border border-gray-200 shadow-md m-3">
-      <table className="min-w-full bg-white border-collapse text-left text-xs sm:text-sm text-gray-600">
-        <thead className="bg-blue-100">
-          <tr>
-            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
-              Título
-            </th>
-            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
-              Creado por
-            </th>
-            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
-              Categoría
-            </th>
-            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
-              Última Actualización
-            </th>
-            <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center"></th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-          {proyectShared.map((proyect) => (
-            <tr key={proyect._id} className="hover:bg-gray-300">
-              <td className="py-2 px-1 md:px-2 border-b text-center">
-                {proyect.proyect.title}
-              </td>
-              <td className="py-2 px-1 md:px-2 border-b text-center">
-                {userNames[proyect.proyect.user] || "Usuario Desconocido"}
-              </td>
-              <td className="py-2 px-1 md:px-2 border-b text-center">
-                <span className="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-1 py-1 text-xxs sm:text-xs font-semibold text-blue-800">
-                  {proyect.proyect.category}
-                </span>
-              </td>
-              <td className="py-2 px-1 md:px-2 border-b text-center">
-                {new Date(proyect.updatedAt).toLocaleDateString()}
-              </td>
-              <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-1 md:space-y-0">
-                <Link
-                  to={`/fases/${proyect.proyect._id}`}
-                  className="block md:inline-block text-blue-500 hover:text-blue-600 mr-2"
-                >
-                  <FontAwesomeIcon icon={faEye} size="lg" />
-                </Link>
-                <button
-                  onClick={() =>
-                    handleEliminarElementoProyect(proyect._id)
-                  }
-                  className="block md:inline-block text-red-500 hover:text-red-600"
-                >
-                  <FontAwesomeIcon icon={faTrash} size="lg" />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {showDeleteConfirmation && (
-        <DeleteConfirmationModal
-          onCancel={handleCancelDeleteElementoProyect}
-          onConfirm={handleConfirmDeleteElementoProyect}
-        />
+      {proyectShared.length === 0 ? (
+        <p className="text-base my-10 italic"></p>
+      ) : (
+        <div className="overflow-x-auto">
+          <h1 className="text-black text-sm sm:text-base font-sans italic mb-4 font-semibold">
+            Proyectos Compartidos
+          </h1>
+          <div className="rounded-lg border border-gray-200 shadow-md m-3">
+            <table className="min-w-full bg-white border-collapse text-left text-xs sm:text-sm text-gray-600">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Título
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Propietario
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Categoría
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center">
+                    Última Actualización
+                  </th>
+                  <th className="py-1 px-1 md:px-2 font-semibold text-blue-800 border-b text-center"></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+                {proyectShared.map((proyect) => (
+                  <tr key={proyect._id} className="hover:bg-gray-300">
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      {proyect.proyect.title}
+                    </td>
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      {userNames[proyect.proyect.user] || "Usuario Desconocido"}
+                    </td>
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-1 py-1 text-xxs sm:text-xs font-semibold text-blue-800">
+                        {proyect.proyect.category}
+                      </span>
+                    </td>
+                    <td className="py-2 px-1 md:px-2 border-b text-center">
+                      {new Intl.DateTimeFormat("es-ES", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false, // Para mostrar en formato de 24 horas
+                      }).format(new Date(proyect.proyect.updatedAt))}
+                    </td>
+                    <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-1 md:space-y-0">
+                      <Link
+                        to={`/fases/${proyect.proyect._id}`}
+                        className="block md:inline-block text-blue-500 hover:text-blue-600 mr-2"
+                      >
+                        <FontAwesomeIcon icon={faEye} size="lg" />
+                      </Link>
+                      <button
+                        onClick={() =>
+                          handleEliminarElementoProyect(proyect._id)
+                        }
+                        className="block md:inline-block text-red-500 hover:text-red-600"
+                      >
+                        <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {showDeleteConfirmation && (
+              <DeleteConfirmationModal
+                onCancel={handleCancelDeleteElementoProyect}
+                onConfirm={handleConfirmDeleteElementoProyect}
+              />
+            )}
+          </div>
+        </div>
       )}
-    </div>
-  </div>
-)}
-
 
       {showTableModal && (
         <div className="modal">
@@ -398,7 +419,8 @@ console.log(proyectShared);
             <div className="text-blue-950 mb-4 text-center">
               <div className="bg-gray-200 p-4 rounded mx-auto">
                 <h1 className="mb-2">
-                Código de acceso del proyecto, puedes compartir este código con los usuarios que desees compartir el proyecto:
+                  Código de acceso del proyecto, puedes compartir este código
+                  con los usuarios que desees compartir el proyecto:
                 </h1>
                 <div className="bg-white p-2 rounded-md mb-3">
                   <h1 className="font-bold text-2xl">{faCode}</h1>
@@ -494,7 +516,7 @@ console.log(proyectShared);
                           onClick={() =>
                             handleConfirmarProyectoCompartido(elemento._id)
                           }
-                          className="bg-green-700 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-300 mr-2"
+                          className="bg-green-700 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-300 mr-2"
                         >
                           Aceptar Invitación
                         </button>

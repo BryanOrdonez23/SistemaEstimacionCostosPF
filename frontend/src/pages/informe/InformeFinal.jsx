@@ -121,7 +121,7 @@ function InformeFinal() {
   };
 
   const validacion = (pdf, posy, incremento) => {
-    if (posy > 270) {
+    if (posy > 265) {
       pdf.addPage();
       return 20; // Restaurar posy a 10 después de agregar una nueva página
     } else {
@@ -190,6 +190,16 @@ function InformeFinal() {
           startY: 70,
           head: [headersOriginal],
           body: dataOriginal,
+          columnStyles: {
+            0: { halign: "center" }, // Alinea la columna 0 (Funcionalidad) a la izquierda
+            1: { halign: "center" }, // Alinea la columna 1 (Tipo) al centro
+            2: { halign: "center" }, // Alinea la columna 2 (Complejidad) al centro
+            3: { halign: 'center' }, // Alinea la columna 3 (Peso) al centro
+            4: { halign: 'center' }, // Alinea la columna 4 (Cantidad) al centro
+          },
+          headStyles: {
+            halign: 'center', // Alinea los headers al centro
+          },
         };
         // Agrega la tabla original
         pdf.autoTable(tableConfigOriginal);
@@ -215,7 +225,7 @@ function InformeFinal() {
           "Complejidad",
           "Peso",
           "Cantidad",
-          "Ponderación",
+          "Total(Peso*Cantidad)",
         ];
         // Mapea los datos para obtener una matriz que pueda ser utilizada por autoTable
         const dataAdicional = funciones.map((item) => [
@@ -232,6 +242,17 @@ function InformeFinal() {
           startY: pdf.previousAutoTable.finalY + 15,
           head: [headersAdicionales],
           body: dataAdicional,
+          columnStyles: {
+            0: { halign: "center" }, // Alinea la columna 0 (Funcionalidad) a la izquierda
+            1: { halign: "center" }, // Alinea la columna 1 (Tipo) al centro
+            2: { halign: "center" }, // Alinea la columna 2 (Complejidad) al centro
+            3: { halign: 'center' }, // Alinea la columna 3 (Peso) al centro
+            4: { halign: 'center' }, // Alinea la columna 4 (Cantidad) al centro
+            5: { halign: 'center' }, // Alinea la columna 5 (Total) al centro
+          },
+          headStyles: {
+            halign: 'center', // Alinea los headers al centro
+          },
         };
         // Agrega la segunda tabla
         pdf.autoTable(tableConfigAdicional);
@@ -291,6 +312,13 @@ function InformeFinal() {
           startY: posy,
           head: [headersValoresAjuste],
           body: dataValoresAjuste,
+          columnStyles: {
+            0: { halign: "center" }, // Alinea la columna 0 (Funcionalidad) a la izquierda
+            1: { halign: "center" }, // Alinea la columna 1 (Tipo) al centro
+          },
+          headStyles: {
+            halign: 'center', // Alinea los headers al centro
+          },
         };
 
         pdf.autoTable(tableConfigValoresAjuste);
@@ -481,6 +509,14 @@ function InformeFinal() {
           startY: posy,
           head: [headersInvolucrados],
           body: dataInvolucrados,
+          columnStyles: {
+            0: { halign: "center" }, // Alinea la columna 0 (Funcionalidad) a la izquierda
+            1: { halign: "center" }, // Alinea la columna 1 (Tipo) al centro
+            2: { halign: "center" }, // Alinea la columna 2 (Complejidad) al centro
+          },
+          headStyles: {
+            halign: 'center', // Alinea los headers al centro
+          },
         };
         // Agrega la tabla de involucrados
         pdf.autoTable(tableConfigInvolucrados);
@@ -496,7 +532,7 @@ function InformeFinal() {
       pdf.setFont("helvetica", "normal");
       if (otrosGastos && otrosGastos.length > 0) {
         // Selecciona las propiedades que deseas incluir en la tabla de involucrados
-        const headersInvolucrados = ["descripcion", "costo", "observacion"];
+        const headersInvolucrados = ["Descripcion", "Costo", "Observacion"];
         // Mapea los datos de involucrados para obtener una matriz que pueda ser utilizada por autoTable
         const dataInvolucrados = otrosGastos.map((item) => [
           item.descripcion,
@@ -508,6 +544,14 @@ function InformeFinal() {
           startY: posy,
           head: [headersInvolucrados],
           body: dataInvolucrados,
+          columnStyles: {
+            0: { halign: "center" }, // Alinea la columna 0 (Funcionalidad) a la izquierda
+            1: { halign: "center" }, // Alinea la columna 1 (Tipo) al centro
+            2: { halign: "center" }, // Alinea la columna 2 (Complejidad) al centro
+          },
+          headStyles: {
+            halign: 'center', // Alinea los headers al centro
+          },
         };
         // Agrega la tabla de involucrados
         pdf.autoTable(tableConfigInvolucrados);
