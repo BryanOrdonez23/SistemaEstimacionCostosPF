@@ -89,8 +89,7 @@ const EsfuerzoPF = () => {
         {bandera && (
           <div className="bg-gray-200 p-8 rounded-md mt-2">
             <p className="text-gray-800  text-sm">
-              Existe un cálculo existente del esfuerzo del proyecto de: 14.1
-              meses estimados.{" "}
+              Existe un cálculo existente del esfuerzo del proyecto de: {" "}
               <b>
                 {datosPuntosFuncion.functionPoints[0].mesesEstimados.toFixed(1)}
               </b>{" "}

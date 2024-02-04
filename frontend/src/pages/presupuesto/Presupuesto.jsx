@@ -164,9 +164,11 @@ const Presupuesto = () => {
 
             {bandera ? (
               <div className="bg-gray-50 mt-4">
-                <p className="text-gray-800 mb-2">
-                  <span className="font-semibold">Aplicando las formula: </span>{" "}
+                <p className="text-gray-800 mb-2 text-left">
+                  <span className="font-semibold ">Aplicando las formula: </span>{" "}
                   <br />
+                </p>
+                <p className="text-gray-800 mb-2">
                   <span className="italic">
                     Presupuesto = ({conteo} ∗ {mesesEstimados} ∗ {prom}) +{" "}
                     {sumaotrosGastos}
