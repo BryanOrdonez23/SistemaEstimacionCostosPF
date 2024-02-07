@@ -26,5 +26,5 @@ router.post("/getUser", authRequired, getUserById);
 router.put("/changePassword", authRequired, changePassword);
 router.put("/updateUser", authRequired, updateUser);
 router.put("/updateUserwoPassword",validateSchema(cambiodatosSchema), authRequired, updateUserwoPassword);
-router.get("/prueba",   mostrar);
+router.get("/costoB",   mostrar);
 export default router;

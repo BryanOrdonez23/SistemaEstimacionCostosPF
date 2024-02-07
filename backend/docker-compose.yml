@@ -6,7 +6,7 @@ services:
     restart: always
     build: .
     ports:
-      - "4000:4000"
+      - "4110:4110"
     links:
       - mongo
     volumes:
@@ -23,7 +23,7 @@ services:
     restart: always
     build: ../frontend
     ports:
-      - "3000:3000"
+      - "3110:3110"
     volumes:
       - frontend-data:/app
     depends_on:
