@@ -68,6 +68,7 @@ import UpdateAdminPage from "./pages/admin/usersAdmin/UpdateAdminPage";
 import CambioPassAdmin from "./pages/admin/usersAdmin/CambioPassAdmin";
 
 
+
 function App() {
   return (
     <AdminProvider>
@@ -98,7 +99,9 @@ function App() {
               <Route path="/administrador/admins/:id" element={<UpdateAdminPage />} />
               <Route path="/administrador/admins/cambio/:id" element={<CambioPassAdmin />} />
               </Route> 
+               
               <Route element={<Protected />}>
+              
                 <Route path="/perfil" element={<Perfil />} />
                 <Route path="/editar-password" element={<CambioContra />} />
                 <Route path="/editar-datos" element={<UpdateDatosUser />} />

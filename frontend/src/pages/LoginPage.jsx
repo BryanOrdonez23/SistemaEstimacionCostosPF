@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 function LoginPage() {
   const {
     register,
@@ -12,7 +13,7 @@ function LoginPage() {
 
   const { singin, errors: singinErrors, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
+  const [showPassword, setShowPassword] = useState(false);
   const onSubmit = handleSubmit(async (data) => {
     singin(data);
   });
@@ -24,6 +25,9 @@ function LoginPage() {
     }
   }, [isAuthenticated]);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
 <div className="bg-white p-8 rounded-lg w-full md:w-1/2 mx-auto mt-4 shadow-md">
 <img
@@ -56,20 +60,33 @@ function LoginPage() {
       )}
     </div>
     <div className="mb-4">
-      <label className="text-gray-800 block">Contraseña:</label>
-      <input
-        type="password"
-        name="password"
-        autoComplete="on"
-        className="w-full p-2 bg-gray-200 text-gray-800 border rounded"
-        {...register("password", { required: true })}
-      />
-      {errors.password && (
-        <span className="text-red-500 text-sm">
-          El campo contraseña es requerido
-        </span>
-      )}
-    </div>
+          <label className="text-gray-800 block">Contraseña:</label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              autoComplete="on"
+              className="w-full p-2 bg-gray-200 text-gray-800 border rounded"
+              {...register("password", { required: true })}
+            />
+            <button
+              type="button"
+              className="absolute top-0 right-0 mt-2 mr-3 focus:outline-none text-gray-800"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? (
+                <FontAwesomeIcon icon={faEyeSlash} />
+              ) : (
+                <FontAwesomeIcon icon={faEye} />
+              )}
+            </button>
+          </div>
+          {errors.password && (
+            <span className="text-red-500 text-sm">
+              El campo contraseña es requerido
+            </span>
+          )}
+        </div>
     <button
       type="submit"
       className="bg-sky-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-400 transition duration-300"
