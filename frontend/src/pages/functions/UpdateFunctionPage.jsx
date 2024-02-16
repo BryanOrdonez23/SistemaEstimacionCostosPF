@@ -128,11 +128,11 @@ function NewProyectPage() {
               {...register("tipo", { required: "El tipo es requerido" })}
             >
               <option value="">Seleccione un tipo</option>
-              <option value="EI">EI - Entradas Externas</option>
-              <option value="EO">EO - Salidas Externas</option>
-              <option value="EQ">EQ - Consultas Externas</option>
-              <option value="ILF">ILF - Archivos lógico interno</option>
-              <option value="EIF">EIF - Archivos lógicos externos</option>
+              <option value="EE">EE - Entradas Externas</option>
+              <option value="SE">SE - Salidas Externas</option>
+              <option value="CE">CE - Consultas Externas</option>
+              <option value="ALI">ALI - Archivos lógico interno</option>
+              <option value="AIE">AIE - Archivos de Interfaz Externos</option>
             </select>
             {errorsForm.tipo && (
               <p className="text-red-500 text-sm mt-1">

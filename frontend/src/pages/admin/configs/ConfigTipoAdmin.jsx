@@ -3,6 +3,9 @@ import { useAdmin } from "../../../context/AdminContext";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../../components/Breadcrumbs ";
 import DeleteConfirmationModal from "../../../components/DeleteConfirmationModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import CustomPopup from "../../../components/CustomPopup";
 
 function ConfigTipoAdmin() {
   const {
@@ -17,7 +20,15 @@ function ConfigTipoAdmin() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [tipoFuncionToDelete, setTipoFuncionToDelete] = useState(null);
+  const [showCustomPopup, setShowCustomPopup] = useState(null);
+  
+  const mostrarPopUp = (key) => {
+    setShowCustomPopup(key);
+  };
 
+  const handlePopUpClose = () => {
+    setShowCustomPopup(null);
+  };
   useEffect(() => {
     document.title = "Configuraciones del proyecto - App costos";
     getTipoFunciones();
@@ -48,14 +59,16 @@ function ConfigTipoAdmin() {
   };
 
   const routes = [
-    { path: '/administrador/menu', displayName: 'Inicio' },
-    { path: `/administrador/tipofunciones`, displayName: 'Configuraciones del proyecto' },
+    { path: "/administrador/menu", displayName: "Inicio" },
+    {
+      path: `/administrador/tipofunciones`,
+      displayName: "Configuraciones del proyecto",
+    },
   ];
 
   const filteredTipoFunciones = tipoFunciones
-    ? tipoFunciones.filter(
-        (tipoFuncion) =>
-          tipoFuncion.tipo.toLowerCase().includes(searchTerm.toLowerCase())
+    ? tipoFunciones.filter((tipoFuncion) =>
+        tipoFuncion.tipo.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
   return (
@@ -80,7 +93,16 @@ function ConfigTipoAdmin() {
         <table className="table-auto w-full">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border px-4 py-2">Tipo</th>
+              <th className="border px-4 py-2">
+                <FontAwesomeIcon
+                  icon={faInfoCircle}
+                  onClick={() => mostrarPopUp("Tipo")}
+                  className="ml-2 text-blue-500 cursor-pointer"
+                  size="1x"
+                />
+                Tipo
+              </th>
+
               <th className="border px-4 py-2">Valor Alto</th>
               <th className="border px-4 py-2">Valor Medio</th>
               <th className="border px-4 py-2">Valor Bajo</th>
@@ -118,6 +140,12 @@ function ConfigTipoAdmin() {
           onConfirm={handleConfirmDelete}
         />
       )}
+
+      <CustomPopup
+        isOpen={showCustomPopup}
+        message={showCustomPopup}
+        onClose={handlePopUpClose}
+      />
     </div>
   );
 }

@@ -14,7 +14,8 @@ const UpdateTipoAdmin = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  const { updateTipoFuncion, getTipoFunciones, getTipoFuncion, tipoFuncion } = useAdmin();
+  const { updateTipoFuncion, getTipoFunciones, getTipoFuncion, tipoFuncion } =
+    useAdmin();
 
   // Simulación de valores iniciales, deberías obtener estos valores del servidor
 
@@ -22,14 +23,13 @@ const UpdateTipoAdmin = () => {
   useEffect(() => {
     document.title = "Actualizar Tipo de Funcionalidad - App costos";
     async function load() {
-        const tipofound = await getTipoFuncion(params.id);
-        setValue("tipo", tipofound.tipo);
-        setValue("valorAlto", tipofound.valorAlto);
-        setValue("valorMedio", tipofound.valorMedio);
-        setValue("valorBajo", tipofound.valorBajo);
+      const tipofound = await getTipoFuncion(params.id);
+      setValue("tipo", tipofound.tipo);
+      setValue("valorAlto", tipofound.valorAlto);
+      setValue("valorMedio", tipofound.valorMedio);
+      setValue("valorBajo", tipofound.valorBajo);
     }
     load();
-
   }, []);
 
   const onSubmit = async (data) => {
@@ -40,9 +40,15 @@ const UpdateTipoAdmin = () => {
   };
 
   const routes = [
-    { path: '/administrador/menu', displayName: 'Inicio' },
-    { path: `/administrador/tipofunciones`, displayName: 'Configuraciones del proyecto' },
-    { path: `/administrador/tipofunciones/${params.id}`, displayName: 'Actualizar Tipo de funciones' },
+    { path: "/administrador/menu", displayName: "Inicio" },
+    {
+      path: `/administrador/tipofunciones`,
+      displayName: "Configuraciones del proyecto",
+    },
+    {
+      path: `/administrador/tipofunciones/${params.id}`,
+      displayName: "Actualizar Tipo de funciones",
+    },
   ];
 
   return (
@@ -68,11 +74,11 @@ const UpdateTipoAdmin = () => {
             <option value="" disabled>
               Seleccione un tipo
             </option>
-            <option value="EI">EI</option>
-            <option value="EO">EO</option>
-            <option value="EQ">EQ</option>
-            <option value="ILF">ILF</option>
-            <option value="EIF">EIF</option>
+            <option value="EE">EE - Entradas Externas</option>
+            <option value="SE">SE - Salidas Externas</option>
+            <option value="CE">CE - Consultas Externas</option>
+            <option value="ALI">ALI - Archivos lógico interno</option>
+            <option value="AIE">AIE - Archivos de Interfaz Externos</option>
           </select>
           {errors.tipo && <p className="text-red-500">{errors.tipo.message}</p>}
         </div>

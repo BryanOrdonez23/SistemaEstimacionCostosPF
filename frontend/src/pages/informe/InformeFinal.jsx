@@ -67,11 +67,11 @@ function InformeFinal() {
   const calcularPeso = (tipo, complejidad) => {
     // Definir los valores de peso según el tipo y la complejidad
     const pesos = {
-      EI: { Alta: 6, Media: 4, Baja: 3 },
-      EO: { Alta: 7, Media: 5, Baja: 4 },
-      EQ: { Alta: 6, Media: 4, Baja: 3 },
-      ILF: { Alta: 15, Media: 10, Baja: 7 },
-      EIF: { Alta: 10, Media: 10, Baja: 5 },
+      EE: { Alta: 6, Media: 4, Baja: 3 },
+      SE: { Alta: 7, Media: 5, Baja: 4 },
+      CE: { Alta: 6, Media: 4, Baja: 3 },
+      ALI: { Alta: 15, Media: 10, Baja: 7 },
+      AIE: { Alta: 10, Media: 10, Baja: 5 },
     };
 
     // Obtener el peso correspondiente
@@ -83,11 +83,11 @@ function InformeFinal() {
   const calcularPonderacion = (tipo, complejidad, cantidad) => {
     // Definir los valores de ponderación según el tipo y la complejidad
     const ponderaciones = {
-      EI: { Alta: 6, Media: 4, Baja: 3 },
-      EO: { Alta: 7, Media: 5, Baja: 4 },
-      EQ: { Alta: 6, Media: 4, Baja: 3 },
-      ILF: { Alta: 15, Media: 10, Baja: 7 },
-      EIF: { Alta: 10, Media: 10, Baja: 5 },
+      EE: { Alta: 6, Media: 4, Baja: 3 },
+      SE: { Alta: 7, Media: 5, Baja: 4 },
+      CE: { Alta: 6, Media: 4, Baja: 3 },
+      ALI: { Alta: 15, Media: 10, Baja: 7 },
+      AIE: { Alta: 10, Media: 10, Baja: 5 },
     };
 
     // Obtener la ponderación correspondiente

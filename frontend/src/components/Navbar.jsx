@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useAdmin } from "../context/AdminContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faUser, faSignOutAlt, faAngleDown, faSignInAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -56,16 +56,15 @@ const Navbar = () => {
               ? "  App para estimación de Costos por PF"
               : "Laboratorio de Computación - CostEstimator "}
 
-{!isAdminPage && (
+            {!isAdminPage && (
               <>
                 <br />
                 <span className="block text-xs font-normal text-gray-400">
-                Estimación de Costos por Puntos de Función
+                  Estimación de Costos por Puntos de Función
                 </span>
               </>
             )}
           </span>
-
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-4">
@@ -98,16 +97,18 @@ const Navbar = () => {
                     <li>
                       <Link
                         to="/login"
-                        className="text-white hover:text-gray-300 transition duration-300 bg-sky-600 px-3 py-2 rounded-md block"
+                        className="text-white text-sm hover:text-gray-300 transition duration-300 bg-sky-600 px-3 py-2 rounded-md block"
                       >
+                        <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
                         Iniciar Sesión
                       </Link>
                     </li>
                     <li>
                       <Link
                         to="/register"
-                        className="text-white hover:text-gray-300 transition duration-300 bg-sky-600 px-3 py-2 rounded-md block"
+                        className="text-white text-sm hover:text-gray-300 transition duration-300 bg-sky-600 px-3 py-2 rounded-md block"
                       >
+                        <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
                         Registrarse
                       </Link>
                     </li>
@@ -115,37 +116,36 @@ const Navbar = () => {
                 )}
                 {isAuthenticated && (
                   <li className="relative group" ref={menuRef}>
-                    <div
-                      className={`text-white cursor-pointer hover:text-gray-300 transition duration-300 ${
-                        showMenu ? "bg-gray-800" : ""
-                      }`}
+                    <button
                       onClick={() => setShowMenu(!showMenu)}
+                      className="text-white hover:text-gray-300 transition duration-300 bg-gray-800 px-3 py-2 rounded-md flex items-center"
                     >
-                      <FontAwesomeIcon icon={faUser} size="lg" />
-                      <span className="text-xs font-normal text-gray-400">
-                      {" " + user.name}
-                      </span>
-                     
-                    </div>
+                      <FontAwesomeIcon icon={faUser} size="base" />
+                      <span className="ml-2 text-sm ">{user.name}</span>
+                      <FontAwesomeIcon icon={faAngleDown} size="sm" className="ml-1" />
+                    </button>
                     {showMenu && (
                       <ul className="absolute z-50 right-0 mt-2 min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg">
                         <li>
                           <Link
                             to="/perfil"
-                            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
+                            className="block w-full py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900"
+                            onClick={closeMenu}
                           >
+                            <FontAwesomeIcon icon={faUser} className="mr-2" />
                             Ver Perfil
                           </Link>
                         </li>
                         <li>
                           <Link
                             to="/login"
+                            className="block w-full py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900"
                             onClick={() => {
-                              setShowMenu(false);
+                              closeMenu();
                               logout();
                             }}
-                            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400"
                           >
+                            <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                             Cerrar Sesión
                           </Link>
                         </li>

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import DeleteProyect from "../components/DeleteConfirmationModal";
 import Popup from "../components/Popup";
+import SlideBar from "../components/SlideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -14,7 +15,8 @@ import {
   faShare,
   faPlusCircle,
   faSignInAlt,
-  faSignOutAlt 
+  faSignOutAlt,
+  faProjectDiagram
 } from "@fortawesome/free-solid-svg-icons";
 
 function ProyectFormPage() {
@@ -117,14 +119,16 @@ function ProyectFormPage() {
     setShowDeleteConfirmationProyect(false); // Ocultar el modal de confirmación
   };
   //-------------------------------------------------------------
-  const handleConfirmarProyectoCompartido = async (proyectId) => {
+  const handleConfirmarProyectoCompartido = async (idshared, proyectId) => {
     try {
       // Mostrar el modal de confirmación antes de eliminar
       //console.log(proyectId);
-      await updateStatusProyectShared(proyectId);
+      await updateStatusProyectShared(idshared);
+      await getProyectsSharedByProyect(proyectId);
       await getSolicitudesProyectosShared(proyectId);
       setSuccessMessage("Se ha aceptado la solicitud de ingreso al proyecto.");
       setShowSuccess(true);
+      //setShowTableModal(false);
     } catch (error) {
       console.error("Error al eliminar el proyecto compartido:", error);
     }
@@ -214,6 +218,7 @@ function ProyectFormPage() {
 
   return (
     <div className="container mx-auto my-6 bg-white text-gray-800 p-4 md:p-8 rounded-md shadow-md">
+      
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 my-4">
         <Link
           to={`/newproyect`}
@@ -289,7 +294,7 @@ function ProyectFormPage() {
                         hour12: false, // Para mostrar en formato de 24 horas
                       }).format(new Date(proyect.updatedAt))}
                     </td>
-                    <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-1 md:space-y-0">
+                    <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-3 md:space-y-0">
                       <Link
                         to={`/fases/${proyect._id}`}
                         className="block md:inline-block text-blue-500 hover:text-blue-600 mr-2"
@@ -314,7 +319,7 @@ function ProyectFormPage() {
                         }
                         className="block md:inline-block text-green-600 hover:text-green-700"
                       >
-                        <FontAwesomeIcon icon={faShare} size="lg" />
+                        <FontAwesomeIcon icon={faProjectDiagram} size="lg" />
                       </button>
                     </td>
                   </tr>
@@ -380,7 +385,7 @@ function ProyectFormPage() {
                         hour12: false, // Para mostrar en formato de 24 horas
                       }).format(new Date(proyect.proyect.updatedAt))}
                     </td>
-                    <td className="py-1 px-1 md:px-2 border-b space-y-1 md:space-x-1 md:space-y-0">
+                    <td className="py-1 px-1 md:px-2 border-b space-y-1 md:sc md:space-y-0">
                       <Link
                         to={`/fases/${proyect.proyect._id}`}
                         className="block md:inline-block text-blue-500 hover:text-blue-600 mr-2"
@@ -514,7 +519,7 @@ function ProyectFormPage() {
                       <td className="py-2 px-2 md:px-4 border-b text-center">
                         <button
                           onClick={() =>
-                            handleConfirmarProyectoCompartido(elemento._id)
+                            handleConfirmarProyectoCompartido(elemento._id, elemento.proyect)
                           }
                           className="bg-green-700 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-300 mr-2"
                         >

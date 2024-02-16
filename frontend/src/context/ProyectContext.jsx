@@ -134,6 +134,7 @@ const getSolicitudesProyectosShared = async (proyectId) => {
       const res = await getSolicitudesProyectosSharedRequest({proyectId});
       setSolicitudesShared(res.data);
       //console.log(res.data);
+      return res.data;
     } catch (error) {
       setSolicitudesShared([]);
       console.error(error);

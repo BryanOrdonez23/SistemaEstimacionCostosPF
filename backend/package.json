@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
+    "local": "nodemon node src/index.js 10.20.137.120",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

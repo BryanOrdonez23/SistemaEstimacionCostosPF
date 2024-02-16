@@ -612,20 +612,22 @@ const CustomPopup = ({ isOpen, message, onClose }) => {
       ),
       "Facilidades de cambio": (
         <div className="mb-6">
-          <h3 className="text-lg font-semibold text-black mb-2">
+          <h3 className="text-lg font-semibold text-black">
             14. Facilidad de Modificación
           </h3>
           <p className="text-black">
             La aplicación ha sido específicamente diseñada, desarrollada, y
-            soportada como para facilitar modificaciones. Por ejemplo:
+            soportada como para facilitar modificaciones.
           </p>
+          {/*
           <p className="text-black">
             Se proporciona una capacidad flexible para la realización de
             consultas o producción de informes. Los datos de control se agrupan
             en tablas que pueden ser mantenidas por el usuario.
-          </p>
+          </p> */}
+          
           <p className="text-black">El puntaje es el siguiente:</p>
-          <ul className="list-disc ml-8 text-black">
+          <ul className="list-disc ml-2 text-black ">
             <li>
               No existe ningún requerimiento especial del usuario para diseñar
               la aplicación para minimizar o facilitar las modificaciones:{" "}
@@ -636,7 +638,7 @@ const CustomPopup = ({ isOpen, message, onClose }) => {
                 Seleccionar cuál de los items siguientes se pueden aplicar al
                 sistema y valuar de 1 a 5:
               </p>
-              <ol className="list-disc ml-8">
+              <ol className="list-disc ml-4">
                 <li>
                   Se proporcionan facilidades flexibles para la realización de
                   consultas o producción de informes que pueden manejar pedidos
@@ -693,11 +695,11 @@ const CustomPopup = ({ isOpen, message, onClose }) => {
             Los tipos de funcionalidades que se deben identificar son:
           </p>
           <ul className="list-disc ml-8 text-black">
-            <li>EI (Entrada Externa)</li>
-            <li>EO (Salida Externa)</li>
-            <li>EQ (Consulta Externa)</li>
-            <li>ILF (Archivo Lógico Interno)</li>
-            <li>EIF (Archivo de Interfaz Externo)</li>
+            <li>EE (Entrada Externa)</li>
+            <li>SE (Salida Externa)</li>
+            <li>CE (Consulta Externa)</li>
+            <li>ALI (Archivo Lógico Interno)</li>
+            <li>AIE (Archivo de Interfaz Externo)</li>
           </ul>
         </div>
       ),
@@ -871,23 +873,23 @@ const CustomPopup = ({ isOpen, message, onClose }) => {
           </thead>
           <tbody>
             <tr>
-              <td className="py-2 px-4 border-b">EI (Entrada Externa)</td>
+              <td className="py-2 px-4 border-b">EE (Entrada Externa)</td>
               <td className="py-2 px-4 border-b">Número de interfaces en donde el usuario ingresa información al software.</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b">EO (Salida Externa)</td>
+              <td className="py-2 px-4 border-b">SE (Salida Externa)</td>
               <td className="py-2 px-4 border-b">Generan información dentro de la aplicación y la muestra al usuario. Se relaciona con listados de datos, mensajes de error, vistas e informes.</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b">EQ (Consulta Externa)</td>
+              <td className="py-2 px-4 border-b">CE (Consulta Externa)</td>
               <td className="py-2 px-4 border-b">Hace referencia a las búsquedas de información que los usuarios realizan en el sistema.</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b">ILF (Archivo Lógico Interno)</td>
+              <td className="py-2 px-4 border-b">ALI (Archivo Lógico Interno)</td>
               <td className="py-2 px-4 border-b">Son grupos de datos que tienen relación entre sí, y son almacenados en la aplicación. Por ejemplo, una base de datos.</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b">EIF (Archivo de Interfaz Externo)</td>
+              <td className="py-2 px-4 border-b">AIE (Archivo de Interfaz Externo)</td>
               <td className="py-2 px-4 border-b">Un conjunto organizado de datos que existe fuera de la aplicación pero que suministra información útil para su uso en la misma.</td>
             </tr>
           </tbody>
@@ -909,31 +911,31 @@ const CustomPopup = ({ isOpen, message, onClose }) => {
           </thead>
           <tbody>
             <tr>
-              <td className="py-2 px-4 border-b text-center">EI (Entrada Externa)</td>
+              <td className="py-2 px-4 border-b text-center">EE (Entrada Externa)</td>
               <td className="py-2 px-4 border-b text-center">3</td>
               <td className="py-2 px-4 border-b text-center">4</td>
               <td className="py-2 px-4 border-b text-center">6</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b text-center">EO (Salida Externa)</td>
+              <td className="py-2 px-4 border-b text-center">SE (Salida Externa)</td>
               <td className="py-2 px-4 border-b text-center">4</td>
               <td className="py-2 px-4 border-b text-center">5</td>
               <td className="py-2 px-4 border-b text-center">7</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b text-center">EQ (Consulta Externa)</td>
+              <td className="py-2 px-4 border-b text-center">CE (Consulta Externa)</td>
               <td className="py-2 px-4 border-b text-center">3</td>
               <td className="py-2 px-4 border-b text-center">4</td>
               <td className="py-2 px-4 border-b text-center">6</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b text-center">ILF (Archivo Lógico Interno)</td>
+              <td className="py-2 px-4 border-b text-center">ALI (Archivo Lógico Interno)</td>
               <td className="py-2 px-4 border-b text-center">7</td>
               <td className="py-2 px-4 border-b text-center">10</td>
               <td className="py-2 px-4 border-b text-center">15</td>
             </tr>
             <tr>
-              <td className="py-2 px-4 border-b text-center">EIF (Archivo de Interfaz Externo)</td>
+              <td className="py-2 px-4 border-b text-center">AIE (Archivo de Interfaz Externo)</td>
               <td className="py-2 px-4 border-b text-center">5</td>
               <td className="py-2 px-4 border-b text-center">10</td>
               <td className="py-2 px-4 border-b text-center">10</td>
