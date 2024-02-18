@@ -23,7 +23,7 @@ services:
     restart: always
     build: ../frontend
     ports:
-      - "3110:3110"
+      - "4173:4173"
     volumes:
       - frontend-data:/app
     depends_on:

@@ -12,7 +12,7 @@ import otrosGastos from './routes/otrosGastos.routes.js';
 import cors from 'cors';
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:3110',
+    origin: 'http://localhost:4173',
     credentials: true,
 }));
 app.use(morgan("dev"));
