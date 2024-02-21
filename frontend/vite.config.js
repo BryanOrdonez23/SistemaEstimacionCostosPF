@@ -9,5 +9,7 @@ export default defineConfig({
     host: true,
     strictPort: true,
     port: 4173,
-  }
+  },
+
+  base: 'https://computacion.unl.edu.ec/apps/costo/',
 })
