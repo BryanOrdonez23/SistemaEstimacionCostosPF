@@ -11,5 +11,5 @@ export default defineConfig({
     port: 4173,
   },
 
-  base: 'https://computacion.unl.edu.ec/apps/costo/',
+  base: '/apps/costo/',
 })
