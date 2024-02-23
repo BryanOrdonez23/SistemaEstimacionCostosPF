@@ -11,10 +11,11 @@ import involucradosRoutes from './routes/involucrados.routes.js';
 import otrosGastos from './routes/otrosGastos.routes.js';
 import cors from 'cors';
 const app = express();
-app.use(cors({
+/*app.use(cors({
     origin: 'http://localhost:4173',
     credentials: true,
-}));
+}));*/
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
