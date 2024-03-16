@@ -31,8 +31,8 @@ function LoginPage() {
   return (
 <div className="bg-white p-8 rounded-lg w-full md:w-1/2 mx-auto mt-4 shadow-md">
 <img
-      src="/logo/login-logo.png" // Reemplaza con la ruta relativa a tu logo en la carpeta public
-      alt="Logo de tu carrera"
+      src="https://computacion.unl.edu.ec/apps/costo/logo/login-logo.png" // Reemplaza con la ruta relativa a tu logo en la carpeta public
+      alt="Logo de tu carrera para el login"
       className="mx-auto mb-0 w-1/3"
     />
   <h1 className="text-lg font-bold text-gray-800 mb-2">Iniciar Sesión</h1>

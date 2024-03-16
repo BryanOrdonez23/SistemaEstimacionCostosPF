@@ -139,7 +139,7 @@ function InformeFinal() {
       // Configuración del color del texto a negro
       pdf.setTextColor(0, 0, 0);
       pdf.setFontSize(15);
-      const logoImage = "/logo/logoCompu.png";
+      const logoImage = "https://computacion.unl.edu.ec/apps/costo/logo/logoCompu.png";
       // Agrega el título
       pdf.setFont("helvetica", "bold");
       pdf.addImage(logoImage, "PNG", 20, 15, 16, 13);

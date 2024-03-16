@@ -47,7 +47,7 @@ const Navbar = () => {
           className="text-lg sm:text-lg font-bold text-white mb-2 sm:mb-0 transition duration-300 hover:text-gray-300 flex items-center"
         >
           <img
-            src="/logo/LogoCarrera.svg"
+            src="https://computacion.unl.edu.ec/apps/costo/logo/LogoCarrera.svg"
             alt="Home Icon"
             className="w-12 h-12"
           />
@@ -110,6 +110,15 @@ const Navbar = () => {
                       >
                         <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
                         Registrarse
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/administrador/login"
+                        className="text-white text-sm hover:text-gray-300 transition duration-300 bg-sky-600 px-3 py-2 rounded-md block"
+                      >
+                        <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
+                        administrador
                       </Link>
                     </li>
                   </>
