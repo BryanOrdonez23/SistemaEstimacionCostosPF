@@ -71,6 +71,39 @@ describe("getProyects", () => {
     expect(response.body).toEqual(expect.objectContaining(projectData));
   });
 
+  test('actualizar un proyecto con status 200 para datos válidos', async () => {
+    // Autenticación y obtención del token, igual que en tu prueba anterior
+    const userData = {
+      email: "brasito45@gmail.com",
+      password: "123456",
+    };
+    // Autentica al usuario antes de cada prueba
+    const respuesta = await request(app).post("/api/login").send({
+      email: userData.email,
+      password: userData.password,
+    });
+    const setCookieHeader = respuesta.headers["set-cookie"];
+    const token =
+      setCookieHeader && setCookieHeader[0].match(/token=(.*?);/)?.[1];
+    // Datos de ejemplo para actualizar un proyecto
+    const projectData = {
+      title : "test prueba actualizar",
+      description: 'This is a test project',
+      category: 'test',
+      technology: 'test',
+      // Añade aquí cualquier otro campo que necesites para un proyecto
+    };
+    // Realiza la solicitud supertest a tu endpoint de actualización de proyectos
+    const response = await request(app)
+      .put('/api/proyecto/65f634e0290d5f94b2658c9a') // Asegúrate de ajustar esta ruta a la ruta correcta para actualizar proyectos en tu aplicación
+      .set('Cookie', `token=${token}`) // Envía el token de autenticación
+      .send(projectData); // Envía los datos del proyecto
+    // Verifica que la respuesta tenga un código de estado 200 (OK)
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual(expect.objectContaining(projectData));
+  }
+  );
+
 
 });
 
