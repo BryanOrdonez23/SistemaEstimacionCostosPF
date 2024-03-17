@@ -4,10 +4,11 @@ import {
   getProyectsRequest,
   getProyectRequest,
   updateProyectRequest,
-  deleteProyectRequest,
+  deleteProyectRequest  ,
+  getAllProyectsRequest,
 } from "../api/proyect";
 
-import {createProyectSharedRequest, getProyectsSharedRequest} from "../api/shared";
+import {createProyectSharedRequest, getProyectsSharedRequest, getProyectsSharedByProyectRequest, deleteProyectSharedRequest, getSolicitudesProyectosSharedRequest,   updateStatusProyectSharedRequest} from "../api/shared";
 export const ProyectContext = createContext();
 
 export const useProyect = () => {
@@ -24,8 +25,11 @@ export const useProyect = () => {
 
 export const ProyectProvider = ({ children }) => {
   const [proyects, setProyects] = useState([]);
+  const [allproyects, setAllProyects] = useState([]);
   const [proyect, setProyect] = useState([]);
   const [proyectShared, setProyectShared] = useState([]);
+  const [proyectsSharedByProyect, setProyectsSharedByProyect] = useState([]);
+  const [solicitudesShared, setSolicitudesShared] = useState([]);
 
   const getProyects = async () => {
     try {
@@ -81,11 +85,11 @@ export const ProyectProvider = ({ children }) => {
       setProyectShared(res.data);
       console.log(res.data);
     } catch (error) {
+      setProyectShared([]);
       console.error(error);
     }
   }
-
-
+  
   const createProyectShared = async (proyect) => {
     try {
       const res = await createProyectSharedRequest(proyect);
@@ -96,6 +100,55 @@ export const ProyectProvider = ({ children }) => {
       console.error(error);
     }
   }
+
+  const getProyectsSharedByProyect = async (proyectId) => {
+    try {
+      const res = await getProyectsSharedByProyectRequest({proyectId});
+      setProyectsSharedByProyect(res.data);
+      //console.log(res.data);
+    } catch (error) {
+      setProyectsSharedByProyect([]);
+      console.error(error);
+    }
+  }
+
+  const deleteProyectShared = async (id) => {
+    try {
+      const res = await deleteProyectSharedRequest(id);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const getAllProyects = async () => {
+    try {
+      const res = await getAllProyectsRequest();
+      setAllProyects(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+const getSolicitudesProyectosShared = async (proyectId) => {
+    try {
+      const res = await getSolicitudesProyectosSharedRequest({proyectId});
+      setSolicitudesShared(res.data);
+      //console.log(res.data);
+      return res.data;
+    } catch (error) {
+      setSolicitudesShared([]);
+      console.error(error);
+    }
+}
+
+const updateStatusProyectShared = async (proyectId) => {
+    try {
+      const res = await updateStatusProyectSharedRequest({proyectId});
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+}
 
   return (
     <ProyectContext.Provider
@@ -109,7 +162,15 @@ export const ProyectProvider = ({ children }) => {
         proyect,
         getProyectsShared,
         proyectShared,
-        createProyectShared
+        createProyectShared,
+        getProyectsSharedByProyect,
+        proyectsSharedByProyect,
+        deleteProyectShared,
+        getAllProyects,
+        allproyects,
+        getSolicitudesProyectosShared,
+        solicitudesShared,
+        updateStatusProyectShared
       }}
     >
       {children}

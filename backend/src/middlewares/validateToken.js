@@ -9,7 +9,6 @@ export const authRequired = (req, res, next) => {
     (err, user) => {
       if (err) return res.status(403).json({ message: "Token no valido" });
       req.user = user;
-      //console.log(req.user);
       next();
     });
 };

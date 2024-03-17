@@ -10,3 +10,30 @@ export const getPuntosFuncionRequest = async (id) => axios.get(`/getPuntosFuncio
 export const sumaValorFactoresAjusteRequest = async (id) => axios.get(`/sumaValorFactoresAjsute/${id}`);
 
 export const actualizarDatosPFRequest = async (id, datosPF) => axios.post(`/actualizarDatosPF/${id}`, datosPF);
+
+export const calcularPresupuestoRequest = async (id) => axios.get(`/calcularpresupuesto/${id}`);
+
+export const createPDFRequest = async (fileName) => {
+    try {
+      const response = await axios.get('/createPDF', {
+        responseType: 'blob',
+      });
+  
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+  
+      // Crear un enlace temporal y asignar el Blob a su atributo 'href'
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+  
+      // Establecer el atributo 'download' con el nombre del archivo deseado
+      link.download = fileName || 'informePDF.pdf';
+  
+      // Simular un clic en el enlace para iniciar la descarga
+      link.click();
+  
+      // Liberar recursos del enlace
+      window.URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };

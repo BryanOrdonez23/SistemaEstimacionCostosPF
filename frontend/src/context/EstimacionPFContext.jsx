@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { actualizarDatosPFRequest, sumaValorFactoresAjusteRequest, getPuntosFuncionRequest,calcuarPFSARequest, getFactoresAjusteRequest, getValorFactoresAjusteRequest, createValorFactoresAjusteRequest } from "../api/pf";
+import { actualizarDatosPFRequest, sumaValorFactoresAjusteRequest, getPuntosFuncionRequest,calcuarPFSARequest, getFactoresAjusteRequest, getValorFactoresAjusteRequest, createValorFactoresAjusteRequest, calcularPresupuestoRequest, createPDFRequest } from "../api/pf";
 // involucrados
 import { createInvolucradosRequest, getInvolucradosRequest, deleteInvolucradoRequest, getInvolucradoRequest, updateInvolucradoRequest, sumatoriaCostosInvolucradosRequest, promedioSueldosInvolucradosRequest, contarInvolucradosRequest } from "../api/involucrados";
 
 import {createOtrosGastosRequest, getOtrosGastosRequest, getOtroGastoRequest,updateOtroGastoRequest,deleteOtroGastoRequest, sumatoriaCostosOtrosGastosRequest} from "../api/otrosGastos";
+
 
 export const EstimacionPFContext = createContext();
 
@@ -24,7 +25,16 @@ export const EstimacionPFProvider = ({ children }) => {
   const [datosPuntosFuncion, setdatosPuntosFuncion] = useState([]);
   const [involucrados, setInvolucrados] = useState([]);
   const [otrosGastos, setOtrosGastos] = useState([]);
+  const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    if (errors.length > 0) {
+     const timer= setTimeout(() => {
+        setErrors([]);
+      }, 5000)
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
 
   const pfsaCalculo = async (id) => {
     try {
@@ -87,10 +97,11 @@ export const EstimacionPFProvider = ({ children }) => {
   const actualizarDatosPF = async (id, data) => {
     try {
       const response = await actualizarDatosPFRequest(id, data);
-      console.log(response.data);
+      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
+      setErrors(error.response.data); 
     }
   }
 //----------------------------------involucrados---------------------------------------------
@@ -111,7 +122,8 @@ const createInvolucrados = async (id, data) => {
     setInvolucrados(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error)
+    setErrors(error.response.data);
   }
 }
 
@@ -138,9 +150,9 @@ const updateInvolucrado = async (id1, id2, data) => {
   try {
     const response = await updateInvolucradoRequest(id1, id2, data);
     getInvolucrados(id1);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.log(error);
+    setErrors(error.response.data);
   }
 }
 
@@ -177,7 +189,7 @@ const updateOtroGasto = async (id1, id2, data) => {
   try {
     const response = await updateOtroGastoRequest(id1, id2, data);
     getOtrosGastos(id1);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -209,7 +221,7 @@ const promedioSueldosInvolucrados = async (id) => {
     const response = await promedioSueldosInvolucradosRequest(id);
     return response.data;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 
@@ -218,7 +230,7 @@ const contarInvolucrados = async (id) => {
     const response = await contarInvolucradosRequest(id);
     return response.data;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 
@@ -227,7 +239,7 @@ const sumaotroGastos = async (id) => {
     const response = await sumatoriaCostosOtrosGastosRequest(id);
     return response.data;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 }
 
@@ -256,6 +268,24 @@ const generarCodigoProyecto = () => {
   }
 
   return codigo;
+}
+
+const calcularPresupuestoEstimado = async (id) => {
+  try {
+    const response = await calcularPresupuestoRequest(id);
+    //console.log(response.data);
+    return response.data.presupuesto;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const createPDF = async () => {
+  try {
+    await createPDFRequest("informe.pdf");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
   return (
@@ -290,7 +320,10 @@ const generarCodigoProyecto = () => {
         promedioSueldosInvolucrados,
         contarInvolucrados,
         sumaotroGastos,
-        calculoPresupuesto
+        calculoPresupuesto,
+        calcularPresupuestoEstimado,
+        createPDF,
+        errors
       }}
     >
       {children}

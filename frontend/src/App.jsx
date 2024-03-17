@@ -6,15 +6,20 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProyectProvider } from "./context/ProyectContext";
 import { FunctionsProvider } from "./context/FunctionsContext";
 import { EstimacionPFProvider } from "./context/EstimacionPFContext";
+import { AdminProvider } from "./context/AdminContext";
 import Homepage from "../src/pages/Homepage";
 import NewProyectPage from "./pages/NewProyectPage";
 import ProyectFormPage from "./pages/Dashboard";
 import Protected from "./Protected";
-import { Navbar } from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import Fases from "./pages/Fases";
 import Funciones from "./pages/functions/FunctionsPage";
 import NewFuncionPage from "./pages/functions/NewFunctionPage";
 import UpdateFuncionPage from "./pages/functions/UpdateFunctionPage";
+
+import Perfil from "./pages/profile/ProfilePage";
+import CambioContra from "./pages/profile/CambioContra";
+import UpdateDatosUser from "./pages/profile/UpdateDatosUser";
 
 //pf
 import PuntosDeFuncionCalculadora from "./pages/pf/CalcuiloPFSA";
@@ -44,8 +49,30 @@ import Compartir from "./pages/compartir/CompartirProyecto";
 
 import InformeFinal from "./pages/informe/InformeFinal";
 
+
+// admin
+
+import LoginPageAdmin from "./pages/admin/LoginPageAdmin";
+import MenuAdmin from "./pages/admin/MainPageAdmin";
+import ProtectedAdmin from "./ProtectedAdmin";
+import UserMainPage from "./pages/admin/users/UserMainPage"
+import UserUpdate from "./pages/admin/users/UserUpdate"
+import ProyectMainAdmin from "./pages/admin/proyects/ProyectMainAdmin";
+import UpdateProyectAdmin from "./pages/admin/proyects/UpdateProyectAdmin";
+import ConfigTipoAdmin from "./pages/admin/configs/ConfigTipoAdmin";
+import NewTipoAdmin from "./pages/admin/configs/NewTipoAdmin";
+import UpdateTipoAdmin from "./pages/admin/configs/UpdateTipoAdmin";
+import UserUpdatePass from "./pages/admin/users/UserUpdatePass";
+import UserAdminsMainPage from "./pages/admin/usersAdmin/UserAdminsMainPage";
+import CreateAdminPage from "./pages/admin/usersAdmin/CreateAdminPage";
+import UpdateAdminPage from "./pages/admin/usersAdmin/UpdateAdminPage";
+import CambioPassAdmin from "./pages/admin/usersAdmin/CambioPassAdmin";
+
+
+
 function App() {
   return (
+    <AdminProvider>
     <AuthProvider>
       <ProyectProvider>
         <FunctionsProvider>
@@ -53,10 +80,34 @@ function App() {
           <BrowserRouter>
             <Navbar />
             <Routes>
-              <Route path="/" element={<Homepage />} />
+              <Route path="/" element={<LoginPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/administrador/login" element={<LoginPageAdmin />} />
+              
+              <Route element={<ProtectedAdmin />}>
+              <Route path="/administrador/menu" element={<MenuAdmin />} />
+              <Route path="/administrador/users" element={<UserMainPage />} />
+              <Route path="/administrador/users/:id" element={<UserUpdate />} />
+              <Route path="/administrador/proyects" element={<ProyectMainAdmin />} />
+              <Route path="/administrador/proyects/:id" element={<UpdateProyectAdmin />} />
+              <Route path="/administrador/tipofunciones" element={<ConfigTipoAdmin />} />
+              <Route path="/administrador/tipofunciones/newtipofunciones" element={<NewTipoAdmin />} />
+              <Route path="/administrador/tipofunciones/:id" element={<UpdateTipoAdmin />} />
+              <Route path="/administrador/users/cambio/:id" element={<UserUpdatePass />} />
+              <Route path="/administrador/admins" element={<UserAdminsMainPage />} />
+              <Route path="/administrador/admins/create" element={<CreateAdminPage />} />
+              <Route path="/administrador/admins/:id" element={<UpdateAdminPage />} />
+              <Route path="/administrador/admins/cambio/:id" element={<CambioPassAdmin />} />
+              </Route> 
+               
               <Route element={<Protected />}>
+              
+                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/editar-password" element={<CambioContra />} />
+                <Route path="/editar-datos" element={<UpdateDatosUser />} />
+
+
                 <Route path="/newproyect" element={<NewProyectPage />} />
                 <Route path="/proyects" element={<ProyectFormPage />} />
                 <Route path="/proyect/:id" element={<NewProyectPage />} />
@@ -84,17 +135,17 @@ function App() {
                 <Route path="/otrosGastos/:id" element={<InicioOtrosGastos />} />
 
                 <Route path="/presupuesto/:id" element={<Presupuesto />} />
-
                 <Route path="/compartir" element={<Compartir />} />
-
                 <Route path="/informe/:id" element={<InformeFinal />} />
               </Route>
+            
             </Routes>
           </BrowserRouter>
           </EstimacionPFProvider>
         </FunctionsProvider>
       </ProyectProvider>
     </AuthProvider>
+    </AdminProvider>
   );
 }
 export default App;

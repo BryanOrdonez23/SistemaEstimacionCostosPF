@@ -10,7 +10,7 @@ const Popup = ({ isOpen, message, onClose }) => {
     if (isOpen) {
       timeoutId = setTimeout(() => {
         onClose();
-      }, 1000);
+      }, 2000);
     }
 
     return () => {

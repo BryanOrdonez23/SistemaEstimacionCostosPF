@@ -8,15 +8,20 @@ import { useForm } from "react-hook-form";
 
 import Popup from "../../components/Popup";
 import PopupError from "../../components/PopuoError";
+import Breadcrumbs from "../../components/Breadcrumbs ";
 
 function CompartirProyecto() {
   const {createProyectShared} = useProyect();
-  const { register, handleSubmit} = useForm();
+  const { register, handleSubmit, setValue} = useForm();
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    document.title = "Compartir Proyecto - App costos";
+  }, []);
   
   const handleSuccessClose = () => {
     setShowSuccess(false);
@@ -31,16 +36,19 @@ const handleErrorClose = () => {
     try {
         const res = await createProyectShared(data);
         if (res.status === 200) {
-            setSuccessMessage("Ingreso exitoso");
+            setSuccessMessage("Se enviado una solicitud de ingreso al proyecto, espera a que el propietario del proyecto acepte tu solicitud");
             setShowSuccess(true);
+            setValue("keyShared", "");
             //navigate("/proyects");
         }else{
+          setValue("keyShared", "");
             setErrorMessage("No se pudo ingresar al proyecto");
             setShowError(true);
         }
 
     } catch (error) {
-        setErrorMessage("No se pudo ingresar al proyecto, ingrese un código de invitación válido");
+      setValue("keyShared", "");
+        setErrorMessage("No se pudo enviar la solicitud de ingreso, ingrese un código de invitación válido");
         setShowError(true);
         console.error(error);
     }
@@ -48,9 +56,16 @@ const handleErrorClose = () => {
     //navigate("/proyects");
   });
 
+  const routes = [
+    { path: '/proyects', displayName: 'Inicio' },
+    { path: '/compartir', displayName: 'Compartir Proyecto' },
+  ];
+
+
   return (
-    <div className="flex items-center justify-center h-screen flex-col bg-blue-100">
-      <div className="max-w-6x1 mb-4 text-center bg-white p-6 rounded-md shadow-md">
+    <div className="flex items-center justify-start my-12 h-screen flex-col bg-CCE3FF">
+      <Breadcrumbs routes={routes} />
+      <div className="max-w-xl mb-4 text-center bg-white p-6 rounded-md shadow-md">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
           Ingresar a un Proyecto:
         </h1>
@@ -62,7 +77,10 @@ const handleErrorClose = () => {
         <form onSubmit={onSubmit}>
           <input
             type="text"
-            placeholder="Ingresa el código alfanumérico"
+            id="keyShared"
+            name="keyShared"
+            placeholder="Ingresa el código de invitación"
+            required
             className="border border-gray-300 text-gray-800 p-4 mb-4 rounded-md w-full text-center text-3xl"
             {...register("keyShared", { required: true })}
           />{" "}
