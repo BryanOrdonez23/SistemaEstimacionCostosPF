@@ -33,6 +33,6 @@ test('Post /login credenciales incorrectas', async () => {
     password: "1234567",
   });
   expect(response.statusCode).toBe(400);
-  expect(response.text).toEqual(expect.stringMatching(/Invalid email|Invalid Password/));
+  expect(response.text).toEqual(expect.stringMatching(/Constraseña incorrecta/));
   
 }); 

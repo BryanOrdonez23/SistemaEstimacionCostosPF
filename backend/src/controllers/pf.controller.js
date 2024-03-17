@@ -58,6 +58,42 @@ export const calcularPuntosDeFuncionsinAjuste = async (req, res) => {
     res.status(500).json({ error: "Error al calcular los Puntos de Función." });
   }
 };
+export const calcularPresupuesto = async (req, res) => {
+  const { id } = req.params; // Cambiado de req.body a req.params
+  try {
+    const functionPoints = await FunctionPoints.findOne({ proyect: id });
+    const  sumatoriaOtrosGastos = await sumatoriaCostosOtrosGastos(id);
+    const promedioSueldos = await promedioSueldosInvolucrados(id);
+    const numeroInvolucrados = await contarInvolucrados(id);
+
+    if (
+      (functionPoints,
+      sumatoriaOtrosGastos,
+      promedioSueldos,
+      numeroInvolucrados)
+    ) {
+      const presupuestoCalculado =
+        numeroInvolucrados * functionPoints.mesesEstimados * promedioSueldos +
+        sumatoriaOtrosGastos;
+
+      // Redondea el resultado a dos decimales
+      const presupuestoRedondeado = parseFloat(presupuestoCalculado.toFixed(2));
+
+      // Asigna el presupuesto redondeado al campo correspondiente
+      functionPoints.presupuesto = presupuestoRedondeado;
+
+      // Actualiza otros campos según sea necesario
+      await functionPoints.save();
+      res.status(200).json({ presupuesto: functionPoints.presupuesto });
+    } else {
+      // Si no existe, puedes manejar este caso según tus necesidades
+      res.status(400).json({ error: "Error al calcular el presupuesto" });
+    }
+  } catch (error) {
+    console.error("Error al actualizar FunctionPoints:", error);
+    res.status(500).json({ error: "Error al calcular el presupuesto" });
+  }
+};
 //
 const actualizarFunctionPoints = async (id, puntosFuncionTotal) => {
   try {
